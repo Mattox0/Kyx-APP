@@ -5,15 +5,16 @@ module.exports = {
     theme: {
         extend: {
             colors: {
-                "bg-background": "#231C38",
-                "bg-container": "#3B344D",
-                "text-primary": "#FFFFFF",
-                "accent-pink": "#F6339A",
-                "accent-cyan": "#06B6D4",
-                "accent-yellow": "#F59E0B",
-                "color-gray": "#99A1AF",
-                "color-green": "#24936E",
-                "color-red": "#AE2525",
+                "background": "#231C38",
+                "border": "#2F3247",
+                "container": "#3B344D",
+                "white": "#FFFFFF",
+                "pink": "#F6339A",
+                "cyan": "#06B6D4",
+                "yellow": "#F59E0B",
+                "gray": "#99A1AF",
+                "green": "#24936E",
+                "red": "#AE2525",
             }
         },
     },

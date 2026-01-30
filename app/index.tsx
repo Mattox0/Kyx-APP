@@ -1,10 +1,14 @@
-import {SafeAreaView} from "react-native-safe-area-context";
 import {Text} from "react-native";
+import {Page} from "@/containers/Page";
 
 export default function Index() {
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <Text>Welcome to the App!</Text>
-        </SafeAreaView>
+        <Page
+            showSettings
+            scrollable={false}
+            logoAction={() => {}}
+        >
+            <Text className="text-white">Hello, World!</Text>
+        </Page>
     )
 }
