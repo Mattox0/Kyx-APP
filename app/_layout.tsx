@@ -7,6 +7,7 @@ import {LogBox, StatusBar, View} from "react-native";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import '@/assets/globals.css';
 import I18nProvider from "@/providers/TranslationProvider";
+import {useCustomFonts} from "@/hooks/use-fonts";
 
 SplashScreen.preventAutoHideAsync().catch(() => {
 });
@@ -34,12 +35,16 @@ export default function RootLayout() {
 
 const App = () => {
     const [isAppReady, setIsAppReady] = useState(true);
+    const {fontsLoaded, fontError} = useCustomFonts();
 
     useEffect(() => {
-        if (isAppReady) {
+        if (fontError) {
+            console.error('Error loading fonts:', fontError);
+        }
+        if (fontsLoaded || isAppReady) {
             SplashScreen.hideAsync();
         }
-    }, [isAppReady]);
+    }, [isAppReady, fontsLoaded, fontError]);
 
     if (!isAppReady) {
         return null;

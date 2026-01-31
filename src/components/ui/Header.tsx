@@ -1,8 +1,10 @@
 import {ReactNode} from "react";
 import {View, TouchableOpacity, Image} from "react-native";
+import {LinearGradient} from "expo-linear-gradient";
 import SettingIcon from "@/assets/icons/settings.svg";
 import ArrowLeftIcon from "@/assets/icons/arrow-left.svg";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
+import {Text} from "@/components/ui/Text";
 
 interface HeaderProps {
     backButtonAction?: () => void;
@@ -27,9 +29,8 @@ export default function Header({
         <View
             className="absolute w-full px-4"
             style={{paddingTop: insets.top + 16}}
-
         >
-            <View className="flex-row items-start justify-between border">
+            <View className="flex-row items-start justify-between">
                 <View className="flex-1 flex-row justify-start">
                     {backButtonAction && (
                         <TouchableOpacity
@@ -41,19 +42,19 @@ export default function Header({
                     )}
                 </View>
 
-                {/*AJOUTER LA POLICE AULIEU D'UNE IMAGE*/}
                 <View className="flex-1 items-center">
                     {logoAction && (
-                        <TouchableOpacity
-                            onPress={logoAction}
-                            disabled={!logoAction}
-                        >
-                            <Image
-                                source={require('@/assets/images/logo-header.png')}
-                                className="w-24 h-20"
-                                resizeMode="contain"
+                        <View>
+                            <Text className="font-kavoon text-5xl">
+                                KYX
+                            </Text>
+                            <LinearGradient
+                                colors={['#F6339A', '#AD46FF']}
+                                start={{x: 0, y: 0}}
+                                end={{x: 1, y: 0}}
+                                style={{height: 4, alignSelf: 'stretch', marginTop: 4, borderRadius: 50}}
                             />
-                        </TouchableOpacity>
+                        </View>
                     )}
                 </View>
 

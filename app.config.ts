@@ -77,7 +77,18 @@ const config: ExpoConfig = {
         [
             "expo-font",
             {
-                fonts: []
+                fonts: [
+                    "./src/assets/fonts/Kavoon-Regular.ttf",
+                    "./src/assets/fonts/Poppins-Black.ttf",
+                    "./src/assets/fonts/Poppins-Bold.ttf",
+                    "./src/assets/fonts/Poppins-ExtraBold.ttf",
+                    "./src/assets/fonts/Poppins-ExtraLight.ttf",
+                    "./src/assets/fonts/Poppins-Light.ttf",
+                    "./src/assets/fonts/Poppins-Medium.ttf",
+                    "./src/assets/fonts/Poppins-Regular.ttf",
+                    "./src/assets/fonts/Poppins-SemiBold.ttf",
+                    "./src/assets/fonts/Poppins-Thin.ttf",
+                ]
             }
         ],
     ],
