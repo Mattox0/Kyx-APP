@@ -2,5 +2,10 @@
     "buttons": {
         "createParty": "Créer une partie",
         "joinParty": "Rejoindre une partie"
+    },
+    "text": {
+        "welcome": "Salut, {{username}} !",
+        "instructions": "Tu peux jouer localement sur ce téléphone, ou lancer une partie sur plusieurs téléphones.",
+        "helperText": "Rejoins la partie de tes potes avec leur code, ou crée la tienne."
     }
 }

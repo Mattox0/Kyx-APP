@@ -13,6 +13,7 @@ interface PageProps {
     showHeader?: boolean;
     containerClassName?: string;
     headerButtons?: HeaderButton[];
+    bottomChildren?: ReactNode;
 }
 
 export const Page = ({
@@ -23,7 +24,8 @@ export const Page = ({
                          scrollable = true,
                          showHeader = true,
                          containerClassName = '',
-                         headerButtons
+                         headerButtons,
+                         bottomChildren
                      }: PageProps) => {
     const Container = scrollable ? ScrollView : View;
 
@@ -40,6 +42,7 @@ export const Page = ({
             <Container className={`flex-1 px-4 ${showHeader ? "mt-24" : ""} ${containerClassName}`}>
                 {children}
             </Container>
+            {bottomChildren}
         </SafeAreaView>
     );
 };

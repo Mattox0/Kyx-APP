@@ -3,11 +3,12 @@ import {SplashScreen, Stack} from 'expo-router';
 import 'react-native-reanimated';
 import {useEffect, useState} from "react";
 import {LinearGradient} from "expo-linear-gradient";
-import {LogBox, StatusBar, View} from "react-native";
+import {StatusBar, View} from "react-native";
 import {SafeAreaProvider} from "react-native-safe-area-context";
 import '@/assets/globals.css';
 import I18nProvider from "@/providers/TranslationProvider";
 import {useCustomFonts} from "@/hooks/use-fonts";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync().catch(() => {
 });
@@ -22,13 +23,15 @@ const theme = {
 
 export default function RootLayout() {
     return (
-        <SafeAreaProvider>
-            <ThemeProvider value={theme}>
-                <I18nProvider>
-                    <App/>
-                </I18nProvider>
-            </ThemeProvider>
-        </SafeAreaProvider>
+        <GestureHandlerRootView>
+            <SafeAreaProvider>
+                <ThemeProvider value={theme}>
+                    <I18nProvider>
+                        <App/>
+                    </I18nProvider>
+                </ThemeProvider>
+            </SafeAreaProvider>
+        </GestureHandlerRootView>
     );
 }
 

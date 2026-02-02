@@ -1,0 +1,21 @@
+{
+    "title": "Créer votre personnage",
+    "input": {
+        "placeholder": "Nom du joueur"
+    },
+    "category": {
+        "skin": "Peau",
+        "hair": "Cheveux",
+        "face": "Visage",
+        "accessories": "Accessoires"
+    },
+    "hair": "Coupe",
+    "hairColor": "Couleur",
+    "eyes": "Yeux",
+    "eyebrows": "Sourcils",
+    "mouth": "Bouche",
+    "skinColor": "Teinte",
+    "earrings": "Boucles d'oreilles",
+    "glasses": "Lunettes",
+    "features": "Traits",
+}
