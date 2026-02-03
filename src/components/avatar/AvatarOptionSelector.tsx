@@ -1,88 +1,62 @@
-import {View, Pressable, FlatList} from 'react-native';
+import {View, Pressable} from 'react-native';
 import {Text} from '@/components/ui/Text';
-import Avatar, {AvatarOptions} from './Avatar';
-import {useMemo, useCallback, memo} from 'react';
+import {AvatarOptions} from './Avatar';
+import {useMemo, useCallback, Fragment} from 'react';
+import OptionItem from './OptionItem';
+import ColorItem from './ColorItem';
+import ColorWheelIcon from '@/assets/icons/color-wheel.svg';
 
-type OptionType = 'hair' | 'eyes' | 'eyebrows' | 'mouth' | 'skinColor' | 'hairColor' | 'earrings' | 'glasses' | 'features';
+type OptionType = 'hair' | 'eyes' | 'eyebrows' | 'mouth' | 'skinColor' | 'glasses';
 
 interface AvatarOptionSelectorProps {
-    title: string;
     optionType: OptionType;
     options: string[];
     currentOptions: AvatarOptions;
     selectedValue: string | undefined;
     onSelect: (value: string | undefined) => void;
-    isColor?: boolean;
+    colorOptions?: string[];
+    selectedColorValue?: string;
+    onColorSelect?: (value: string) => void;
     isOptional?: boolean;
 }
 
-interface OptionItemProps {
-    option: string;
-    previewOptions: AvatarOptions;
-    isSelected: boolean;
-    onSelect: () => void;
-    isColor: boolean;
-}
-
-const OptionItem = memo(function OptionItem({option, previewOptions, isSelected, onSelect, isColor}: OptionItemProps) {
-    return (
-        <Pressable
-            onPress={onSelect}
-            className={`rounded-xl p-1 mr-3 ${isSelected ? 'border-2 border-accent-pink' : 'border-2 border-transparent'}`}
-        >
-            {isColor ? (
-                <View
-                    className="w-16 h-16 rounded-lg"
-                    style={{backgroundColor: `#${option}`}}
-                />
-            ) : (
-                <View className="bg-container rounded-lg overflow-hidden">
-                    <Avatar options={previewOptions} size={64} />
-                </View>
-            )}
-        </Pressable>
-    );
-});
-
 export default function AvatarOptionSelector({
-    title,
     optionType,
     options,
     currentOptions,
     selectedValue,
     onSelect,
-    isColor = false,
+    colorOptions,
+    selectedColorValue,
+    onColorSelect,
     isOptional = false,
 }: AvatarOptionSelectorProps) {
     const getPreviewOptions = useCallback((option: string): AvatarOptions => {
         const newOptions: AvatarOptions = {...currentOptions};
 
-        if (isColor) {
-            if (optionType === 'skinColor') {
-                newOptions.skinColor = [option];
-            } else if (optionType === 'hairColor') {
-                newOptions.hairColor = [option];
-            }
-        } else {
-            if (optionType === 'hair') {
+        switch (optionType) {
+            case 'hair':
                 newOptions.hair = [option];
-            } else if (optionType === 'eyes') {
+                break;
+            case 'eyes':
                 newOptions.eyes = [option];
-            } else if (optionType === 'eyebrows') {
+                break;
+            case 'eyebrows':
                 newOptions.eyebrows = [option];
-            } else if (optionType === 'mouth') {
+                break;
+            case 'mouth':
                 newOptions.mouth = [option];
-            } else if (optionType === 'earrings') {
-                newOptions.earrings = [option];
-            } else if (optionType === 'glasses') {
+                break;
+            case 'glasses':
                 newOptions.glasses = [option];
-            } else if (optionType === 'features') {
-                newOptions.features = [option];
-            }
+                break;
+            case 'skinColor':
+                newOptions.skinColor = [option];
+                break;
         }
 
         return newOptions;
-    }, [currentOptions, optionType, isColor]);
+    }, [currentOptions, optionType]);
 
     const data = useMemo(() => {
         const items = options.map(option => ({
@@ -95,52 +69,63 @@ export default function AvatarOptionSelector({
         return items;
     }, [options, getPreviewOptions, isOptional, currentOptions]);
 
-    const renderItem = useCallback(({item}: {item: {option: string; previewOptions: AvatarOptions}}) => {
-        if (item.option === '__none__') {
-            return (
-                <Pressable
-                    onPress={() => onSelect(undefined)}
-                    className={`rounded-xl p-1 mr-3 ${!selectedValue ? 'border-2 border-accent-pink' : 'border-2 border-transparent'}`}
-                >
-                    <View className="w-16 h-16 rounded-lg bg-container items-center justify-center">
-                        <Text className="text-2xl">✕</Text>
-                    </View>
-                </Pressable>
-            );
-        }
-
-        return (
-            <OptionItem
-                option={item.option}
-                previewOptions={item.previewOptions}
-                isSelected={selectedValue === item.option}
-                onSelect={() => onSelect(item.option)}
-                isColor={isColor}
-            />
-        );
-    }, [selectedValue, onSelect, isColor]);
-
-    const keyExtractor = useCallback((item: {option: string}) => item.option, []);
+    const openColorWheel = () => {
+        console.log('Open color wheel');
+    }
 
     return (
-        <View className="mb-6">
-            <Text className="text-lg font-semibold mb-3 text-primary">{title}</Text>
-            <FlatList
-                horizontal
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={keyExtractor}
-                showsHorizontalScrollIndicator={false}
-                initialNumToRender={6}
-                maxToRenderPerBatch={4}
-                windowSize={5}
-                removeClippedSubviews={true}
-                getItemLayout={(_, index) => ({
-                    length: 72,
-                    offset: 72 * index,
-                    index,
+        <View className="mb-6 w-full">
+            <View className="flex-row flex-wrap -mx-0.5">
+                {data.map((item) => {
+                    if (item.option === '__none__') {
+                        return (
+                            <View key="__none__" className="flex-1 basis-0 min-w-[16.666%] max-w-[16.666%] items-center mb-2 px-0.5">
+                                <Pressable
+                                    onPress={() => onSelect(undefined)}
+                                    className={`rounded-xl ${!selectedValue ? 'border-2 border-pink' : 'border-2 border-transparent'}`}
+                                >
+                                    <View className="w-[55px] h-[55px] rounded-lg bg-container items-center justify-center">
+                                        <Text className="text-2xl">✕</Text>
+                                    </View>
+                                </Pressable>
+                            </View>
+                        );
+                    }
+
+                    return (
+                        <View key={item.option} className="flex-1 basis-0 min-w-[16.666%] max-w-[16.666%] items-center mb-2 px-0.5">
+                            <OptionItem
+                                previewOptions={item.previewOptions}
+                                isSelected={selectedValue === item.option}
+                                onSelect={() => onSelect(item.option)}
+                            />
+                        </View>
+                    );
                 })}
-            />
+            </View>
+
+            {colorOptions && colorOptions.length > 0 && (
+                <Fragment>
+                    <View className="w-3/4 h-[3px] self-center bg-gray rounded-2xl mb-6 mt-2" />
+                    <View className="flex-row flex-wrap -mx-0.5">
+                        <View className="w-[14.285%] items-center mb-2 px-0.5">
+                            <Pressable onPress={openColorWheel}>
+                                <ColorWheelIcon width={48} height={48} />
+                            </Pressable>
+                        </View>
+
+                        {colorOptions.map((color) => (
+                            <View key={color} className="w-[14.285%] items-center mb-2 px-0.5">
+                                <ColorItem
+                                    color={color}
+                                    isSelected={selectedColorValue === color}
+                                    onSelect={() => onColorSelect?.(color)}
+                                />
+                            </View>
+                        ))}
+                    </View>
+                </Fragment>
+            )}
         </View>
     );
 }

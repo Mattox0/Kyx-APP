@@ -6,28 +6,30 @@ import useTranslations from "@/hooks/use-translations";
 import {Pressable, View} from "react-native";
 import Button from "@/components/ui/Button";
 import RandomIcon from "@/assets/icons/random.svg";
+import MaleIcon from "@/assets/icons/male.svg";
+import FemaleIcon from "@/assets/icons/female.svg";
 import {
     Avatar,
-    AvatarOptionSelector,
     AvatarOptions,
+    AvatarOptionSelector,
     CategoryTabs,
     CategoryType,
     DEFAULT_OPTIONS,
-    HAIR_OPTIONS,
-    EYES_OPTIONS,
     EYEBROWS_OPTIONS,
+    EYES_OPTIONS,
+    GLASSES_OPTIONS,
+    HAIR_COLOR_OPTIONS,
+    HAIR_OPTIONS,
     MOUTH_OPTIONS,
     SKIN_COLOR_OPTIONS,
-    HAIR_COLOR_OPTIONS,
-    EARRINGS_OPTIONS,
-    GLASSES_OPTIONS,
-    FEATURES_OPTIONS,
 } from "@/components/avatar";
 import Input from "@/components/ui/Input";
+import {Gender} from "@/types/Gender";
 
 export default function CreateProfilePage() {
     const router = useRouter();
     const i18n = useTranslations();
+    const [gender, setGender] = useState<Gender>(Gender.MALE);
     const [avatarOptions, setAvatarOptions] = useState<AvatarOptions>(DEFAULT_OPTIONS);
     const [selectedCategory, setSelectedCategory] = useState<CategoryType>('skin');
 
@@ -65,101 +67,72 @@ export default function CreateProfilePage() {
 
     const renderCategoryContent = () => {
         switch (selectedCategory) {
-            case 'skin':
+            case 'hair':
                 return (
                     <AvatarOptionSelector
-                        title={i18n.t("profile.skinColor")}
+                        optionType="hair"
+                        options={HAIR_OPTIONS}
+                        colorOptions={HAIR_COLOR_OPTIONS}
+                        currentOptions={avatarOptions}
+                        selectedValue={avatarOptions.hair?.[0]}
+                        selectedColorValue={avatarOptions.hairColor?.[0]}
+                        onSelect={(value) => updateOption('hair', value)}
+                        onColorSelect={(value) => updateOption('hairColor', value)}
+                    />
+                );
+            case "eye":
+                return (
+                    <AvatarOptionSelector
+                        optionType="eyes"
+                        options={EYES_OPTIONS}
+                        currentOptions={avatarOptions}
+                        selectedValue={avatarOptions.eyes?.[0]}
+                        onSelect={(value) => updateOption('eyes', value)}
+                    />
+                );
+            case "eyebrow":
+                return (
+                    <AvatarOptionSelector
+                        optionType="eyebrows"
+                        options={EYEBROWS_OPTIONS}
+                        currentOptions={avatarOptions}
+                        selectedValue={avatarOptions.eyebrows?.[0]}
+                        onSelect={(value) => updateOption('eyebrows', value)}
+                    />
+                );
+            case "mouth":
+                return (
+                    <AvatarOptionSelector
+                        optionType="mouth"
+                        options={MOUTH_OPTIONS}
+                        currentOptions={avatarOptions}
+                        selectedValue={avatarOptions.mouth?.[0]}
+                        onSelect={(value) => updateOption('mouth', value)}
+                    />
+                );
+            case "glasses":
+                return (
+                    <AvatarOptionSelector
+                        optionType="glasses"
+                        options={GLASSES_OPTIONS}
+                        currentOptions={avatarOptions}
+                        selectedValue={avatarOptions.glasses?.[0]}
+                        onSelect={(value) => updateOption('glasses', value)}
+                        isOptional={true}
+                    />
+                );
+            case "skin":
+                return (
+                    <AvatarOptionSelector
                         optionType="skinColor"
                         options={SKIN_COLOR_OPTIONS}
                         currentOptions={avatarOptions}
                         selectedValue={avatarOptions.skinColor?.[0]}
                         onSelect={(value) => updateOption('skinColor', value)}
-                        isColor
                     />
                 );
-            case 'hair':
-                return (
-                    <>
-                        <AvatarOptionSelector
-                            title={i18n.t("profile.hair")}
-                            optionType="hair"
-                            options={HAIR_OPTIONS}
-                            currentOptions={avatarOptions}
-                            selectedValue={avatarOptions.hair?.[0]}
-                            onSelect={(value) => updateOption('hair', value)}
-                        />
-                        <AvatarOptionSelector
-                            title={i18n.t("profile.hairColor")}
-                            optionType="hairColor"
-                            options={HAIR_COLOR_OPTIONS}
-                            currentOptions={avatarOptions}
-                            selectedValue={avatarOptions.hairColor?.[0]}
-                            onSelect={(value) => updateOption('hairColor', value)}
-                            isColor
-                        />
-                    </>
-                );
-            case 'face':
-                return (
-                    <>
-                        <AvatarOptionSelector
-                            title={i18n.t("profile.eyes")}
-                            optionType="eyes"
-                            options={EYES_OPTIONS}
-                            currentOptions={avatarOptions}
-                            selectedValue={avatarOptions.eyes?.[0]}
-                            onSelect={(value) => updateOption('eyes', value)}
-                        />
-                        <AvatarOptionSelector
-                            title={i18n.t("profile.eyebrows")}
-                            optionType="eyebrows"
-                            options={EYEBROWS_OPTIONS}
-                            currentOptions={avatarOptions}
-                            selectedValue={avatarOptions.eyebrows?.[0]}
-                            onSelect={(value) => updateOption('eyebrows', value)}
-                        />
-                        <AvatarOptionSelector
-                            title={i18n.t("profile.mouth")}
-                            optionType="mouth"
-                            options={MOUTH_OPTIONS}
-                            currentOptions={avatarOptions}
-                            selectedValue={avatarOptions.mouth?.[0]}
-                            onSelect={(value) => updateOption('mouth', value)}
-                        />
-                        <AvatarOptionSelector
-                            title={i18n.t("profile.features")}
-                            optionType="features"
-                            options={FEATURES_OPTIONS}
-                            currentOptions={avatarOptions}
-                            selectedValue={avatarOptions.features?.[0]}
-                            onSelect={(value) => updateOption('features', value)}
-                            isOptional
-                        />
-                    </>
-                );
-            case 'accessories':
-                return (
-                    <>
-                        <AvatarOptionSelector
-                            title={i18n.t("profile.earrings")}
-                            optionType="earrings"
-                            options={EARRINGS_OPTIONS}
-                            currentOptions={avatarOptions}
-                            selectedValue={avatarOptions.earrings?.[0]}
-                            onSelect={(value) => updateOption('earrings', value)}
-                            isOptional
-                        />
-                        <AvatarOptionSelector
-                            title={i18n.t("profile.glasses")}
-                            optionType="glasses"
-                            options={GLASSES_OPTIONS}
-                            currentOptions={avatarOptions}
-                            selectedValue={avatarOptions.glasses?.[0]}
-                            onSelect={(value) => updateOption('glasses', value)}
-                            isOptional
-                        />
-                    </>
-                );
+            default:
+                return null;
         }
     };
 
@@ -190,6 +163,16 @@ export default function CreateProfilePage() {
 
             <View className="px-10 mb-6">
                 <Input placeholder={i18n.t("profile.input.placeholder")} />
+            </View>
+
+            <View className="flex-row gap-10 justify-center mb-6">
+                <Pressable onPress={() => setGender(Gender.MALE)} className={`bg-background rounded-2xl p-2 border-2  ${gender === Gender.MALE ? 'border-[#2B7FFF]' : 'border-transparent opacity-50'}`}>
+                    <MaleIcon width={60} height={60} color="#2B7FFF" />
+                </Pressable>
+
+                <Pressable onPress={() => setGender(Gender.FEMALE)} className={`bg-background rounded-2xl p-2 border-2 ${gender === Gender.FEMALE ? 'border-[#F6339A]' : 'border-transparent opacity-50'}`}>
+                    <FemaleIcon width={60} height={60} color="#F6339A" />
+                </Pressable>
             </View>
 
             <CategoryTabs

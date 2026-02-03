@@ -8,8 +8,6 @@ export interface AvatarOptions {
     eyebrows?: string[];
     mouth?: string[];
     skinColor?: string[];
-    earrings?: string[];
-    features?: string[];
     glasses?: string[];
 }
 
@@ -49,15 +47,13 @@ export const MOUTH_OPTIONS = [
 export const SKIN_COLOR_OPTIONS = ['f2d3b1', 'ecad80', '9e5622', '763900'];
 
 export const HAIR_COLOR_OPTIONS = [
-    'ac6511', 'cb6820', 'ab2a18', 'e5d7a3', 'b9a05f', '796a45', '6a4e35',
-    '562306', '0e0e0e', 'afafaf', '3eac2c', '85c2c6', 'dba3be', '592454'
+    '000000', '0C0C0C', '1C1C1C', '2C1608', '3D2314', '4E3B31', '5C4033',
+    '6A4E42', '724133', '8B6C5C', '9C8169', 'B89778', 'A58D7F', 'B8935E',
+    'D4A76A', 'E5C08E', 'F3E5AB', 'FAF0BE', '8B4513', 'A0522D', 'B55239',
+    'CB6D51', 'D68A59', 'FF6347', '808080', 'A9A9A9'
 ];
 
-export const EARRINGS_OPTIONS = ['variant01', 'variant02', 'variant03', 'variant04', 'variant05', 'variant06'];
-
 export const GLASSES_OPTIONS = ['variant01', 'variant02', 'variant03', 'variant04', 'variant05'];
-
-export const FEATURES_OPTIONS = ['mustache', 'blush', 'birthmark', 'freckles'];
 
 export const DEFAULT_OPTIONS: AvatarOptions = {
     hair: ['short01'],
@@ -78,9 +74,10 @@ function buildAvatarUrl(options: AvatarOptions, seed?: string): string {
     if (options.eyebrows?.[0]) params.append('eyebrows', options.eyebrows[0]);
     if (options.mouth?.[0]) params.append('mouth', options.mouth[0]);
     if (options.skinColor?.[0]) params.append('skinColor', options.skinColor[0]);
-    if (options.earrings?.[0]) params.append('earrings', options.earrings[0]);
-    if (options.features?.[0]) params.append('features', options.features[0]);
-    if (options.glasses?.[0]) params.append('glasses', options.glasses[0]);
+    if (options.glasses?.[0]) {
+        params.append('glasses', options.glasses[0]);
+        params.append('glassesProbability', '100');
+    }
 
     return `https://api.dicebear.com/9.x/adventurer/svg?${params.toString()}`;
 }

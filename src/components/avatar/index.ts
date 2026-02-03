@@ -1,7 +1,8 @@
 export {default as Avatar} from './Avatar';
 export {default as AvatarOptionSelector} from './AvatarOptionSelector';
 export {default as CategoryTabs} from './CategoryTabs';
-export type {CategoryType} from './CategoryTabs';
+export {default as OptionItem} from './OptionItem';
+export {default as ColorItem} from './ColorItem';
 export {
     AvatarOptions,
     DEFAULT_OPTIONS,
@@ -11,7 +12,6 @@ export {
     MOUTH_OPTIONS,
     SKIN_COLOR_OPTIONS,
     HAIR_COLOR_OPTIONS,
-    EARRINGS_OPTIONS,
     GLASSES_OPTIONS,
-    FEATURES_OPTIONS,
 } from './Avatar';
+export {CategoryType} from '@/types/CategoryType';
