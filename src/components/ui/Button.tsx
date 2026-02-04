@@ -7,12 +7,13 @@ import Animated, {useAnimatedStyle, useSharedValue, withTiming, interpolateColor
 interface ButtonProps extends PressableProps {
     children: ReactNode;
     textClassName?: string;
+    className?: string;
 }
 
 const BORDER_HEIGHT = 2;
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
-export default function Button({children, textClassName = '', disabled, onPressIn, onPressOut, ...props}: ButtonProps) {
+export default function Button({children, textClassName = '', className = '', disabled, onPressIn, onPressOut, ...props}: ButtonProps) {
     const pressed = useSharedValue(0);
 
     const containerStyle = useAnimatedStyle(() => ({
@@ -29,7 +30,7 @@ export default function Button({children, textClassName = '', disabled, onPressI
     }));
 
     return (
-        <Animated.View style={[{borderRadius: 25, paddingBottom: BORDER_HEIGHT}, containerStyle]}>
+        <Animated.View className={className} style={[{borderRadius: 25, paddingBottom: BORDER_HEIGHT}, containerStyle]}>
             <Pressable
                 disabled={disabled}
                 onPressIn={(e) => {

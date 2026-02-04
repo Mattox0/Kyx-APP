@@ -9,6 +9,7 @@ import '@/assets/globals.css';
 import I18nProvider from "@/providers/TranslationProvider";
 import {useCustomFonts} from "@/hooks/use-fonts";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
+import {BottomSheetProvider} from "@/providers/BottomSheetProvider";
 
 SplashScreen.preventAutoHideAsync().catch(() => {
 });
@@ -23,11 +24,13 @@ const theme = {
 
 export default function RootLayout() {
     return (
-        <GestureHandlerRootView>
+        <GestureHandlerRootView style={{flex: 1}}>
             <SafeAreaProvider>
                 <ThemeProvider value={theme}>
                     <I18nProvider>
-                        <App/>
+                        <BottomSheetProvider>
+                            <App/>
+                        </BottomSheetProvider>
                     </I18nProvider>
                 </ThemeProvider>
             </SafeAreaProvider>

@@ -27,7 +27,7 @@ export default function Index() {
                 <View className="px-8 text-center mb-4">
                     <Text className="text-center">{i18n.t("home.text.helperText")}</Text>
                 </View>
-                <Button onPress={() => router.replace('/create-profile')}>
+                <Button onPress={() => router.push('/create-profile')}>
                     {i18n.t("home.buttons.createParty")}
                 </Button>
                 <Button>

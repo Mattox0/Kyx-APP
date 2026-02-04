@@ -2,13 +2,13 @@ import {Image} from 'expo-image';
 import {useMemo} from 'react';
 
 export interface AvatarOptions {
-    hair?: string[];
-    hairColor?: string[];
-    eyes?: string[];
-    eyebrows?: string[];
-    mouth?: string[];
-    skinColor?: string[];
-    glasses?: string[];
+    hair?: string;
+    hairColor?: string;
+    eyes?: string;
+    eyebrows?: string;
+    mouth?: string;
+    skinColor?: string;
+    glasses?: string;
 }
 
 interface AvatarProps {
@@ -44,7 +44,13 @@ export const MOUTH_OPTIONS = [
     'variant25', 'variant26', 'variant27', 'variant28', 'variant29', 'variant30'
 ];
 
-export const SKIN_COLOR_OPTIONS = ['f2d3b1', 'ecad80', '9e5622', '763900'];
+export const SKIN_COLOR_OPTIONS = [
+    'ffe5d9', 'ffd7c4', 'f5cba7', 'f2d3b1', 'e8beac',
+    'd4a574', 'c68642', 'b5651d', '8d5524', '6b4423',
+    '4a3728', '3b2219', '2c1608', '7eb6ff', '4a90d9',
+    '98d989', '5cb85c', 'd9a0d9', '9b59b6', 'f39c12',
+    'e74c3c', '95a5a6', 'f5f5dc',
+];
 
 export const HAIR_COLOR_OPTIONS = [
     '000000', '0C0C0C', '1C1C1C', '2C1608', '3D2314', '4E3B31', '5C4033',
@@ -56,26 +62,26 @@ export const HAIR_COLOR_OPTIONS = [
 export const GLASSES_OPTIONS = ['variant01', 'variant02', 'variant03', 'variant04', 'variant05'];
 
 export const DEFAULT_OPTIONS: AvatarOptions = {
-    hair: ['short01'],
-    hairColor: ['0e0e0e'],
-    eyes: ['variant01'],
-    eyebrows: ['variant01'],
-    mouth: ['variant01'],
-    skinColor: ['f2d3b1'],
+    hair: 'short01',
+    hairColor: '0e0e0e',
+    eyes: 'variant01',
+    eyebrows: 'variant01',
+    mouth: 'variant01',
+    skinColor: 'f2d3b1',
 };
 
 function buildAvatarUrl(options: AvatarOptions, seed?: string): string {
     const params = new URLSearchParams();
 
     if (seed) params.append('seed', seed);
-    if (options.hair?.[0]) params.append('hair', options.hair[0]);
-    if (options.hairColor?.[0]) params.append('hairColor', options.hairColor[0]);
-    if (options.eyes?.[0]) params.append('eyes', options.eyes[0]);
-    if (options.eyebrows?.[0]) params.append('eyebrows', options.eyebrows[0]);
-    if (options.mouth?.[0]) params.append('mouth', options.mouth[0]);
-    if (options.skinColor?.[0]) params.append('skinColor', options.skinColor[0]);
-    if (options.glasses?.[0]) {
-        params.append('glasses', options.glasses[0]);
+    if (options.hair) params.append('hair', options.hair);
+    if (options.hairColor) params.append('hairColor', options.hairColor);
+    if (options.eyes) params.append('eyes', options.eyes);
+    if (options.eyebrows) params.append('eyebrows', options.eyebrows);
+    if (options.mouth) params.append('mouth', options.mouth);
+    if (options.skinColor) params.append('skinColor', options.skinColor);
+    if (options.glasses) {
+        params.append('glasses', options.glasses);
         params.append('glassesProbability', '100');
     }
 
