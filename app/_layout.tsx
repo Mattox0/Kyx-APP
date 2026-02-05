@@ -10,6 +10,8 @@ import I18nProvider from "@/providers/TranslationProvider";
 import {useCustomFonts} from "@/hooks/use-fonts";
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {BottomSheetProvider} from "@/providers/BottomSheetProvider";
+import {UserProvider} from "@/providers/UserProvider";
+import useUser from "@/hooks/use-user";
 
 SplashScreen.preventAutoHideAsync().catch(() => {
 });
@@ -29,7 +31,9 @@ export default function RootLayout() {
                 <ThemeProvider value={theme}>
                     <I18nProvider>
                         <BottomSheetProvider>
-                            <App/>
+                            <UserProvider>
+                                <App/>
+                            </UserProvider>
                         </BottomSheetProvider>
                     </I18nProvider>
                 </ThemeProvider>
@@ -41,16 +45,17 @@ export default function RootLayout() {
 
 const App = () => {
     const [isAppReady, setIsAppReady] = useState(true);
+    const { isLoading } = useUser();
     const {fontsLoaded, fontError} = useCustomFonts();
 
     useEffect(() => {
         if (fontError) {
             console.error('Error loading fonts:', fontError);
         }
-        if (fontsLoaded || isAppReady) {
+        if (fontsLoaded && isAppReady && !isLoading) {
             SplashScreen.hideAsync();
         }
-    }, [isAppReady, fontsLoaded, fontError]);
+    }, [isAppReady, fontsLoaded, fontError, isLoading]);
 
     if (!isAppReady) {
         return null;

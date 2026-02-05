@@ -39,7 +39,10 @@ export const Page = ({
                     otherButtons={headerButtons}
                 />
             )}
-            <Container className={`flex-1 px-4 ${showHeader ? "mt-24" : ""} ${containerClassName}`}>
+            <Container
+                className={`flex-1 px-4 ${showHeader ? "mt-24" : ""} ${containerClassName}`}
+                {...(scrollable && { contentContainerStyle: { flexGrow: 1 } })}
+            >
                 {children}
             </Container>
             {bottomChildren}

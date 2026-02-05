@@ -33,14 +33,19 @@ import Animated, {
     interpolate,
     Extrapolation,
 } from "react-native-reanimated";
+import useUser from "@/hooks/use-user";
+import {buildAvatarUrl} from "@/components/avatar/Avatar";
 
 const AVATAR_THRESHOLD = 120;
 
 export default function CreateProfilePage() {
     const router = useRouter();
     const i18n = useTranslations();
-    const [gender, setGender] = useState<Gender>(Gender.MALE);
-    const [avatarOptions, setAvatarOptions] = useState<AvatarOptions>(DEFAULT_OPTIONS);
+    const { setUser, user } = useUser();
+
+    const [name, setName] = useState<string>(user?.name || '');
+    const [gender, setGender] = useState<Gender>(user?.gender || Gender.MALE);
+    const [avatarOptions, setAvatarOptions] = useState<AvatarOptions>(user?.avatarOptions || DEFAULT_OPTIONS);
     const [selectedCategory, setSelectedCategory] = useState<CategoryType>('hair');
 
     const scrollY = useSharedValue(0);
@@ -79,8 +84,18 @@ export default function CreateProfilePage() {
     }, [router]);
 
     const handleSave = useCallback(() => {
-        console.log('Avatar options:', avatarOptions);
-        router.back();
+        setUser({
+            gender,
+            name,
+            avatarUrl: buildAvatarUrl(avatarOptions),
+            avatarOptions: avatarOptions
+        })
+        if (!router.canGoBack()) {
+            router.push('/');
+            return;
+        } else {
+            router.back();
+        }
     }, [avatarOptions, router]);
 
     const updateOption = useCallback((
@@ -173,7 +188,6 @@ export default function CreateProfilePage() {
         }
     };
 
-    // Faire la couleur du skin et ajoute le color picker
     return (
         <SafeAreaView className="flex-1">
             <Header
@@ -199,7 +213,11 @@ export default function CreateProfilePage() {
                 </View>
 
                 <View className="px-10 mb-6">
-                    <Input placeholder={i18n.t("profile.input.placeholder")} />
+                    <Input
+                        value={name}
+                        onChangeText={setName}
+                        placeholder={i18n.t("profile.input.placeholder")}
+                    />
                 </View>
 
                 <View className="flex-row gap-10 justify-center mb-6">

@@ -70,7 +70,7 @@ export const DEFAULT_OPTIONS: AvatarOptions = {
     skinColor: 'f2d3b1',
 };
 
-function buildAvatarUrl(options: AvatarOptions, seed?: string): string {
+export function buildAvatarUrl(options: AvatarOptions, seed?: string): string {
     const params = new URLSearchParams();
 
     if (seed) params.append('seed', seed);
