@@ -23,7 +23,7 @@ export const Page = ({
                          onBack,
                          scrollable = true,
                          showHeader = true,
-                         containerClassName = '',
+                         containerClassName,
                          headerButtons,
                          bottomChildren
                      }: PageProps) => {
@@ -40,7 +40,7 @@ export const Page = ({
                 />
             )}
             <Container
-                className={`flex-1 px-4 ${showHeader ? "mt-24" : ""} ${containerClassName}`}
+                className={`flex-1 ${containerClassName ?? `px-4 ${showHeader ? "mt-24" : ""}`}`}
                 {...(scrollable && { contentContainerStyle: { flexGrow: 1 } })}
             >
                 {children}

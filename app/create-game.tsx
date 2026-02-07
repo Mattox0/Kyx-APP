@@ -34,7 +34,7 @@ export default function CreateGamePage() {
 
     useEffect(() => {
         chevronOffset.value = withRepeat(
-            withTiming(-8, {duration: 600, easing: Easing.inOut(Easing.ease)}),
+            withTiming(-20, {duration: 600, easing: Easing.inOut(Easing.ease)}),
             -1,
             true
         );
