@@ -76,7 +76,8 @@ const App = () => {
             <Stack
                 screenOptions={{
                     contentStyle: {backgroundColor: 'transparent'},
-                    headerShown: false
+                    headerShown: false,
+                    animation: 'none',
                 }}
             />
         </View>

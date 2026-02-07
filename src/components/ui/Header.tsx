@@ -27,7 +27,7 @@ export default function Header({
     const insets = useSafeAreaInsets();
     return (
         <View
-            className="absolute w-full px-4"
+            className="absolute z-10 w-full px-4"
             style={{paddingTop: insets.top + 16}}
         >
             <View className="flex-row items-start justify-between">

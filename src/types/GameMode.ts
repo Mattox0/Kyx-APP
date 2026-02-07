@@ -6,12 +6,12 @@ export const GameModes = [
     },
     {
         name: "Je n'ai\njamais",
-        description: "Les joueurs doivent se signaler s'ils ont déjà réalisé l'action décrite dans l'affirmation affichée",
+        description: "Les joueurs indiquent s’ils ont déjà vécu la situation décrite par l’affirmation",
         tags: ["4 Modes", "Local ou en ligne"]
     },
     {
         name: 'Tu\npréfères ?',
-        description: "Les joueurs doivent choisir entre deux options et expliquer leur choix.",
+        description: "Les joueurs doivent choisir entre deux options et expliquer leur choix",
         tags: ["5 Modes", "Local ou en ligne"]
     }
 ]
