@@ -1,10 +1,11 @@
-import {ReactNode} from "react";
+import {FC, ReactNode} from "react";
 import {View, TouchableOpacity, Image} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
 import SettingIcon from "@/assets/icons/settings.svg";
 import ArrowLeftIcon from "@/assets/icons/arrow-left.svg";
 import {useSafeAreaInsets} from "react-native-safe-area-context";
 import {Text} from "@/components/ui/Text";
+import {SvgProps} from "react-native-svg";
 
 interface HeaderProps {
     backButtonAction?: () => void;
@@ -14,7 +15,7 @@ interface HeaderProps {
 }
 
 export interface HeaderButton {
-    icon: ReactNode;
+    icon: FC<SvgProps>;
     action: () => void;
 }
 
@@ -74,7 +75,7 @@ export default function Header({
                             onPress={button.action}
                             className="w-10 h-10 items-center justify-center border border-[#2F3247] bg-white/5  rounded-2xl p-7"
                         >
-                            {button.icon}
+                            <button.icon width={24} height={24} color="#99A1AF" />
                         </TouchableOpacity>
                     ))}
                 </View>

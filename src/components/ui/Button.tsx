@@ -59,7 +59,7 @@ export default function Button({children, textClassName = '', className = '', di
                         gradientStyle
                     ]}
                 >
-                    <Text className={`font-bold text-lg ${textClassName}`}>
+                    <Text className={`font-bold text-lg text-center ${textClassName}`}>
                         {children}
                     </Text>
                 </AnimatedLinearGradient>

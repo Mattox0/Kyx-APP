@@ -91,7 +91,10 @@ export default function CreateGamePage() {
                             </View>
 
                             <View className="w-full pb-20">
-                                <Button onPress={() => {}}>
+                                <Button onPress={() => router.push({
+                                    pathname: "/mode-selection",
+                                    params: {game: item.id},
+                                })}>
                                     {i18n.t("game.launch")}
                                 </Button>
                             </View>
