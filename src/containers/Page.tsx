@@ -41,7 +41,7 @@ export const Page = ({
             )}
             <Container
                 className={`flex-1 ${containerClassName ?? `px-4 ${showHeader ? "mt-24" : ""}`}`}
-                {...(scrollable && { contentContainerStyle: { flexGrow: 1 } })}
+                {...(scrollable && { contentContainerStyle: { flexGrow: 1, paddingBottom: bottomChildren ? 40 : 0 } })}
             >
                 {children}
             </Container>

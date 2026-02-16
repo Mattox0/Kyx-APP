@@ -1,5 +1,8 @@
 {
     "save": "Valider",
     "cancel": "Annuler",
-    "confirm": "Confirmer"
+    "confirm": "Confirmer",
+    "networkErrorTitle": "Problème de connexion",
+    "networkErrorSubtitle": "Vérifie ta connexion internet et réessaie.",
+    "retry": "Réessayer"
 }

@@ -1,6 +1,6 @@
 import {createContext, ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
 import * as SecureStore from 'expo-secure-store';
-import {User} from "@/types/User";
+import {User} from "@/types/api/User";
 
 const USER_STORAGE_KEY = 'user';
 

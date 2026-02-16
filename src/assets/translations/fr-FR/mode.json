@@ -1,7 +1,14 @@
 {
     "buttons": {
+        "play": "Lancer",
         "playLocal": "Lancer sur ce téléphone",
         "playOnline": "Lancer une partie multijoueur",
-        "selectAllModes": "Sélectionner tous les modes"
+        "selectAllModes": "Sélectionner tous les modes",
+        "unselectAllModes": "Déselectionner tous les modes"
+    },
+    "instructions":{
+        "confirm": "J'ai compris",
+        "howToPlay": "Comment jouer ?",
+        "example": "Exemple"
     }
 }

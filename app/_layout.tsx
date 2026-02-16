@@ -12,6 +12,9 @@ import {GestureHandlerRootView} from "react-native-gesture-handler";
 import {BottomSheetProvider} from "@/providers/BottomSheetProvider";
 import {UserProvider} from "@/providers/UserProvider";
 import useUser from "@/hooks/use-user";
+import {QueryClientProvider} from "@tanstack/react-query";
+import {queryClient} from "@/lib/queryClient";
+import NetworkErrorHandler from "@/components/NetworkErrorHandler";
 
 SplashScreen.preventAutoHideAsync().catch(() => {
 });
@@ -28,15 +31,18 @@ export default function RootLayout() {
     return (
         <GestureHandlerRootView style={{flex: 1}}>
             <SafeAreaProvider>
-                <ThemeProvider value={theme}>
-                    <I18nProvider>
-                        <BottomSheetProvider>
-                            <UserProvider>
-                                <App/>
-                            </UserProvider>
-                        </BottomSheetProvider>
-                    </I18nProvider>
-                </ThemeProvider>
+                <QueryClientProvider client={queryClient}>
+                    <ThemeProvider value={theme}>
+                        <I18nProvider>
+                            <BottomSheetProvider>
+                                <UserProvider>
+                                    <NetworkErrorHandler/>
+                                    <App/>
+                                </UserProvider>
+                            </BottomSheetProvider>
+                        </I18nProvider>
+                    </ThemeProvider>
+                </QueryClientProvider>
             </SafeAreaProvider>
         </GestureHandlerRootView>
     );
