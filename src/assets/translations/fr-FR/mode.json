@@ -2,7 +2,9 @@
     "buttons": {
         "play": "Lancer",
         "playLocal": "Lancer sur ce téléphone",
+        "playLocalDescription": "Jouez ensemble sur cet appareil",
         "playOnline": "Lancer une partie multijoueur",
+        "playOnlineDescription": "Jouez à distance avec vos amis, il faut que tout le monde possède l'application",
         "selectAllModes": "Sélectionner tous les modes",
         "unselectAllModes": "Déselectionner tous les modes"
     },

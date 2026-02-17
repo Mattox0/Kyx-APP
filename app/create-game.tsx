@@ -11,10 +11,12 @@ import {GameModes} from "@/types/GameMode";
 import Animated, {Easing, Extrapolation, interpolate, interpolateColor, useAnimatedStyle, useSharedValue, withRepeat, withTiming} from "react-native-reanimated";
 import {useRouter} from "expo-router";
 import {Page} from "@/containers/Page";
+import useGame from "@/hooks/use-game";
 
 export default function CreateGamePage() {
     const i18n = useTranslations();
     const router = useRouter();
+    const { setGame } = useGame();
     const {width: screenWidth, height: screenHeight} = useWindowDimensions();
     const insets = useSafeAreaInsets();
     const carouselRef = useRef<ICarouselInstance>(null);
@@ -91,10 +93,13 @@ export default function CreateGamePage() {
                             </View>
 
                             <View className="w-full pb-20">
-                                <Button onPress={() => router.push({
-                                    pathname: "/mode-selection",
-                                    params: {game: item.id},
-                                })}>
+                                <Button onPress={() => {
+                                    setGame(item);
+                                    router.push({
+                                        pathname: "/mode-selection",
+                                        params: {game: item.id},
+                                    })
+                                }}>
                                     {i18n.t("game.launch")}
                                 </Button>
                             </View>

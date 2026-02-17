@@ -28,11 +28,12 @@ export default function Header({
     const insets = useSafeAreaInsets();
     return (
         <View
+            pointerEvents="box-none"
             className="absolute z-10 w-full px-4"
             style={{paddingTop: insets.top + 16}}
         >
-            <View className="flex-row items-start justify-between">
-                <View className="flex-1 flex-row justify-start">
+            <View pointerEvents="box-none" className="flex-row items-start justify-between">
+                <View pointerEvents="box-none" className="flex-1 flex-row justify-start">
                     {backButtonAction && (
                         <TouchableOpacity
                             onPress={backButtonAction}
@@ -43,7 +44,7 @@ export default function Header({
                     )}
                 </View>
 
-                <View className="flex-1 items-center">
+                <View pointerEvents="box-none" className="flex-1 items-center">
                     {logoAction && (
                         <View>
                             <Text className="font-kavoon text-5xl">
@@ -59,7 +60,7 @@ export default function Header({
                     )}
                 </View>
 
-                <View className="flex-1 items-end gap-4">
+                <View pointerEvents="box-none" className="flex-1 items-end gap-4">
                     {showSettings && (
                         <TouchableOpacity
                             onPress={() => console.log("open settings")}
