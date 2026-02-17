@@ -1,6 +1,7 @@
 import {createContext, ReactNode, useMemo, useState} from 'react';
 import {GameMode} from "@/types/GameMode";
 import {Mode} from "@/types/api/Mode";
+import {GameUser} from "@/types/api/User";
 
 type GameContextType = {
     game: GameMode | null;
@@ -9,6 +10,8 @@ type GameContextType = {
     setModes: (modes: Mode[]) => void;
     onlineMode: boolean | null;
     setOnlineMode: (onlineMode: boolean) => void;
+    users: GameUser[] | null;
+    setUsers: (gameUsers: GameUser[]) => void;
 };
 
 export const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -20,6 +23,7 @@ type GameProviderProps = {
 export function GameProvider({ children }: GameProviderProps) {
     const [game, setGame] = useState<GameMode | null>(null);
     const [modes, setModes] = useState<Mode[] | null>(null);
+    const [users, setUsers] = useState<GameUser[] | null>(null);
     const [onlineMode, setOnlineMode] = useState<boolean | null>(null);
 
     const value = useMemo(() => ({
@@ -29,7 +33,9 @@ export function GameProvider({ children }: GameProviderProps) {
         setModes,
         onlineMode,
         setOnlineMode,
-    }), [game]);
+        users,
+        setUsers,
+    }), [game, modes, onlineMode, users]);
 
     return (
         <GameContext.Provider value={value}>

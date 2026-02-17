@@ -7,3 +7,15 @@ export interface User {
     avatarUrl?: string;
     avatarOptions?: AvatarOptions;
 }
+
+export interface LocalUser {
+    id: string;
+    name: string;
+    gender: Gender;
+}
+
+export interface OnlineUser extends LocalUser {
+
+}
+
+export type GameUser = LocalUser | OnlineUser;

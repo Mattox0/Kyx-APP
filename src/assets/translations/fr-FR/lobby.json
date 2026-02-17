@@ -1,0 +1,7 @@
+{
+    "local": {
+        "placeholder": "Nom du joueur",
+        "nbPlayers": "{{nb}} joueurs",
+        "readyToPlay": "Prêt à jouer"
+    }
+}

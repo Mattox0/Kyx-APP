@@ -90,7 +90,7 @@ export default function ModeSelection() {
                     goBack();
                 }
             }}
-            containerClassName="mt-24 px-4"
+            containerClassName="mt-24 px-4 mb-8"
             logoAction={() => {}}
             headerButtons={showPlayOptions ? [] : [{
                 icon: BookIcon,
@@ -180,7 +180,7 @@ export default function ModeSelection() {
                         </View>
                     </View>
 
-                    <View className="mt-8 gap-4 mb-8">
+                    <View className="mt-8 gap-4">
                         {isPending ? (
                             <>
                                 <ModeCardSkeleton />
