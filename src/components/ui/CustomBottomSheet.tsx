@@ -24,6 +24,8 @@ interface CustomBottomSheetProps {
     secondaryButtonDisabled?: boolean;
     initialIndex?: number;
     backdropPress?: BackdropPressBehavior;
+    snapPoints?: (string | number)[];
+    topInset?: number;
     children?: ReactNode;
 }
 
@@ -39,6 +41,8 @@ const CustomBottomSheet = forwardRef<CustomBottomSheetRef, CustomBottomSheetProp
          secondaryButtonDisabled = false,
          initialIndex = -1,
          backdropPress = "close",
+         snapPoints,
+         topInset,
          children
      }, ref) => {
         const bottomSheetRef = useRef<BottomSheet>(null);
@@ -95,7 +99,9 @@ const CustomBottomSheet = forwardRef<CustomBottomSheetRef, CustomBottomSheetProp
             <BottomSheet
                 ref={bottomSheetRef}
                 index={initialIndex}
-                enableDynamicSizing
+                {...(snapPoints !== undefined && { snapPoints })}
+                {...(topInset !== undefined && { topInset })}
+                enableDynamicSizing={!snapPoints}
                 enablePanDownToClose={false}
                 backdropComponent={renderBackdrop}
                 keyboardBlurBehavior="restore"

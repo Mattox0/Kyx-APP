@@ -2,6 +2,7 @@ import {DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {SplashScreen, Stack} from 'expo-router';
 import 'react-native-reanimated';
 import {configureReanimatedLogger, ReanimatedLogLevel} from 'react-native-reanimated';
+
 configureReanimatedLogger({level: ReanimatedLogLevel.warn, strict: false});
 import {useEffect, useState} from "react";
 import {LinearGradient} from "expo-linear-gradient";
@@ -37,14 +38,14 @@ export default function RootLayout() {
                 <QueryClientProvider client={queryClient}>
                     <ThemeProvider value={theme}>
                         <I18nProvider>
-                            <BottomSheetProvider>
-                                <UserProvider>
-                                    <GameProvider>
+                            <UserProvider>
+                                <GameProvider>
+                                    <BottomSheetProvider>
                                         <NetworkErrorHandler/>
                                         <App/>
-                                    </GameProvider>
-                                </UserProvider>
-                            </BottomSheetProvider>
+                                    </BottomSheetProvider>
+                                </GameProvider>
+                            </UserProvider>
                         </I18nProvider>
                     </ThemeProvider>
                 </QueryClientProvider>
