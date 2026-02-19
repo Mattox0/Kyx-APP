@@ -7,7 +7,7 @@ import {useCallback, useState} from "react";
 import {useRouter} from "expo-router";
 import Input from "@/components/ui/Input";
 import {LinearGradient} from "expo-linear-gradient";
-import PlusIcon from "@/assets/icons/icon.svg"
+import PlusIcon from "@/assets/icons/plus.svg"
 import {Text} from "@/components/ui/Text";
 import LocalUserCard from "@/components/cards/LocalUserCard";
 import {LocalUser} from "@/types/api/User";

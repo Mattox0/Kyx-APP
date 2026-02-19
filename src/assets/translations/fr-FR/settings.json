@@ -3,5 +3,18 @@
     "game": {
         "title": "Jeu",
         "createQuestion": "Proposer une nouvelle question"
+    },
+    "suggestion": {
+        "title": "Proposer une nouvelle question",
+        "gameLabel": "Jeu",
+        "gamePlaceholder": "Sélectionner un jeu",
+        "modeLabel": "Mode de jeu",
+        "modePlaceholder": "Sélectionner un mode",
+        "messageLabel": "Votre suggestion",
+        "messagePlaceholder": "Décrivez votre question ou suggestion...",
+        "submit": "Ajouter",
+        "isCreating": "Création en cours ...",
+        "successTitle": "Suggestion envoyée !",
+        "successSubtitle": "Merci pour ta contribution"
     }
 }

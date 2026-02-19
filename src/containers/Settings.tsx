@@ -1,16 +1,23 @@
 import {useState} from "react";
 import SettingsMain from "@/components/settings/SettingsMain";
+import SettingsSuggestion from "@/components/settings/_pages/SettingsSuggestion";
+import {useRouter} from "expo-router";
 
 export type SettingsSection = 'main' | 'createQuestion'// | 'profile' | 'notifications' | ...
 
-interface SettingsProps {
-    onClose: () => void;
-}
-
-export default function Settings({ onClose }: SettingsProps) {
+export default function Settings() {
     const [section, setSection] = useState<SettingsSection>('main');
+    const router = useRouter();
 
-    // if (section === 'profile') return <SettingsProfile onBack={() => setSection('main')} />;
+    const onClose = () => {
+        if (router.canGoBack()) {
+            router.back();
+        } else {
+            router.push("/");
+        }
+    }
+
+    if (section === 'createQuestion') return <SettingsSuggestion onBack={() => setSection('main')} onClose={onClose} />;
 
     return (
         <SettingsMain
