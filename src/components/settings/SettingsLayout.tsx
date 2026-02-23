@@ -17,7 +17,7 @@ export default function SettingsLayout({ children, onClose, onBack, title }: Set
 
     return (
         <View className="bg-background px-4 flex-1" style={{paddingTop: insets.top}}>
-            <View className="flex-row items-center py-4 border-b-2 border-gray">
+            <View className="flex-row items-center py-4 w-full">
                 <View className="w-12">
                     {onBack && (
                         <Pressable
@@ -40,7 +40,10 @@ export default function SettingsLayout({ children, onClose, onBack, title }: Set
                     )}
                 </View>
             </View>
-            {children}
+          <View className="items-center">
+            <View className="w-4/5 h-1 bg-gray rounded-full" />
+          </View>
+          {children}
         </View>
     )
 }

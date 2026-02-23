@@ -16,5 +16,11 @@
         "isCreating": "Création en cours ...",
         "successTitle": "Suggestion envoyée !",
         "successSubtitle": "Merci pour ta contribution"
+    },
+    "app": {
+        "title": "Application",
+        "shareApp": "Partager l'application",
+        "chatApp": "Nous contacter",
+        "reviewApp": "Noter l'application"
     }
 }

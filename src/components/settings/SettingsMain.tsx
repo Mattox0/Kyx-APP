@@ -5,6 +5,9 @@ import useTranslations from "@/hooks/use-translations";
 import {Avatar} from "@/components/avatar";
 import PenIcon from "@/assets/icons/pen.svg";
 import NoteIcon from "@/assets/icons/note.svg";
+import StarIcon from "@/assets/icons/star.svg";
+import ShareIcon from "@/assets/icons/share.svg";
+import ChatIcon from "@/assets/icons/chat.svg";
 import {useRouter} from "expo-router";
 import useUser from "@/hooks/use-user";
 import SettingsGroup from "@/components/settings/SettingsGroup";
@@ -37,11 +40,20 @@ export default function SettingsMain({ onNavigate, onClose }: SettingsMainProps)
                 )}
             </View>
 
-            <View className="gap-4 mt-4">
+            <View className="gap-8 mt-4">
                 <SettingsGroup
                     title={i18n.t("settings.game.title")}
                     items={[
                         { icon: NoteIcon, label: i18n.t("settings.game.createQuestion"), onPress: () => onNavigate('createQuestion')},
+                    ]}
+                />
+
+                <SettingsGroup
+                    title={i18n.t("settings.app.title")}
+                    items={[
+                      { icon: StarIcon, label: i18n.t("settings.app.reviewApp"), onPress: () => {}},
+                      { icon: ShareIcon, label: i18n.t("settings.app.shareApp"), onPress: () => {}},
+                      { icon: ChatIcon, label: i18n.t("settings.app.chatApp"), onPress: () => {}},
                     ]}
                 />
             </View>
