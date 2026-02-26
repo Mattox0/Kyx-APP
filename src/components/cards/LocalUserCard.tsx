@@ -16,7 +16,7 @@ interface LocalUserCardProps {
 }
 
 export default function LocalUserCard({ user, setUser, deleteUser }: LocalUserCardProps) {
-    const isMale = user.gender === Gender.MALE;
+    const isMale = user.gender === Gender.MAN;
 
     return (
         <Animated.View entering={FadeInDown.duration(400)} className="flex flex-row items-center border-2 border-border bg-background p-4 rounded-2xl">
@@ -33,7 +33,7 @@ export default function LocalUserCard({ user, setUser, deleteUser }: LocalUserCa
                 <MaleIcon width={40} height={40} color="#2B7FFF" style={{opacity: isMale ? 1 : 0.5}} />
                 <Switch
                     value={!isMale}
-                    onChange={(value) => setUser(user, value ? Gender.FEMALE : Gender.MALE)}
+                    onChange={(value) => setUser(user, value ? Gender.FEMALE : Gender.MAN)}
                 />
                 <FemaleIcon width={40} height={40} color="#F6339A" style={{opacity: isMale ? 0.5 : 1}} />
             </View>

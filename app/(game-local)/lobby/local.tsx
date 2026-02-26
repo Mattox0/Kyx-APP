@@ -1,32 +1,37 @@
-import {Pressable, View} from "react-native";
-import {ScrollView} from "react-native-gesture-handler";
+import { Pressable, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import Button from "@/components/ui/Button";
-import {Page} from "@/containers/Page";
+import { Page } from "@/containers/Page";
 import useTranslations from "@/hooks/use-translations";
-import {useCallback, useState} from "react";
-import {useRouter} from "expo-router";
+import { useCallback, useState } from "react";
+import { useRouter } from "expo-router";
 import Input from "@/components/ui/Input";
-import {LinearGradient} from "expo-linear-gradient";
+import { LinearGradient } from "expo-linear-gradient";
 import PlusIcon from "@/assets/icons/plus.svg"
-import {Text} from "@/components/ui/Text";
+import { Text } from "@/components/ui/Text";
 import LocalUserCard from "@/components/cards/LocalUserCard";
-import {LocalUser} from "@/types/api/User";
-import {Gender} from "@/types/Gender";
-import Animated, {FadeIn} from "react-native-reanimated";
+import { LocalUser } from "@/types/api/User";
+import { Gender } from "@/types/Gender";
+import Animated, { FadeIn } from "react-native-reanimated";
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import useGame from "@/hooks/use-game";
+import useGameLocal from "@/hooks/use-game-local";
+import { useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/api";
+import { GameQuestion } from "@/providers/GameLocalProvider";
 
 export default function LocalPage() {
     const i18n = useTranslations();
     const router = useRouter();
-    const { setUsers: setGameUsers } = useGame();
+    const { game, setUsers: setGameUsers, modes } = useGame();
+    const { initQuestions } = useGameLocal();
     const [userToAdd, setUserToAdd] = useState<string>("");
     const [users, setUsers] = useState<LocalUser[]>([]);
 
     const addUser = useCallback(() => {
         if (!userToAdd.trim()) return;
-        setUsers(prev => [...prev, { name: userToAdd, gender: Gender.MALE, id: uuidv4() }]);
+        setUsers(prev => [...prev, { name: userToAdd, gender: Gender.MAN, id: uuidv4() }]);
         setUserToAdd("");
     }, [userToAdd]);
 
@@ -46,9 +51,17 @@ export default function LocalPage() {
         setUsers(prev => prev.filter(user => user.id !== localUser.id));
     }
 
-    const createGame = () => {
-        setGameUsers(users);
-    }
+    const { mutate: startGame, isPending } = useMutation({
+        mutationFn: async () => {
+            const response = await api.post<GameQuestion[]>(`/${game?.id}/create-party/solo`, { users, modes: modes?.map(mode => mode.id) ?? [] });
+            return response.data;
+        },
+        onSuccess: (data) => {
+            setGameUsers(users);
+            initQuestions(data);
+            router.push("/game/never-have/local");
+        },
+    });
 
     return (
         <Page
@@ -58,7 +71,7 @@ export default function LocalPage() {
             logoAction={() => {}}
             bottomChildren={
                 <View className="absolute bottom-8 px-6 flex-row gap-2 pb-2">
-                    <Button className="flex-1" disabled={users.length < 2} onPress={createGame}>
+                    <Button className="flex-1" disabled={users.length < 2 || isPending} onPress={() => startGame()}>
                         {i18n.t("mode.buttons.play")}
                     </Button>
                 </View>

@@ -4,7 +4,7 @@ import Constants from "expo-constants";
 const apiUrl = Constants.expoConfig?.extra?.apiUrl as string;
 
 export const api = axios.create({
-    baseURL: apiUrl,
+    baseURL: apiUrl + "/api",
     timeout: 30000,
     headers: {
         "Content-Type": "application/json",

@@ -17,3 +17,5 @@ export interface TruthDare {
     id: string;
     question: string;
 }
+
+export type Question = NeverHave | TruthDare | Prefer;

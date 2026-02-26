@@ -46,6 +46,7 @@ export default function ModeSelection() {
 
     useEffect(() => {
         if (data) {
+            setModes(data);
             setSelectedModes(data);
         }
     }, [data]);
