@@ -1,11 +1,5 @@
 import { createContext, ReactNode, useCallback, useMemo, useState } from "react";
-import { GameUser } from "@/types/api/User";
-import { Question } from "@/types/api/Question";
-
-export interface GameQuestion {
-    question: Question;
-    userTarget?: GameUser;
-}
+import { GameQuestion } from "@/types/GameQuestion";
 
 type GameLocalContextType = {
     questions: GameQuestion[] | null;

@@ -1,3 +1,16 @@
 {
-    "launch": "Lancer"
+    "launch": "Lancer",
+    "report": {
+        "title": "Signaler une incohérence",
+        "description": "Cette question te semble incorrecte ou inappropriée ?",
+        "confirm": "Signaler",
+        "cancel": "Annuler"
+    },
+    "neverHave": {
+        "title": "Je n'ai jamais"
+    },
+    "truthDare": {
+        "dare": "Action",
+        "truth": "Vérité"
+    }
 }

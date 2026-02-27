@@ -1,8 +1,14 @@
-import { View, useWindowDimensions } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import { Pressable, useWindowDimensions, View } from "react-native";
 import { Text } from "@/components/ui/Text";
-import { GameQuestion } from "@/providers/GameLocalProvider";
-import { Prefer } from "@/types/api/Question";
+import { SvgUri } from "react-native-svg";
+import Constants from "expo-constants";
+import DotsIcon from "@/assets/icons/dots.svg";
+import useBottomSheet from "@/hooks/use-bottom-sheet";
+import { ReportBottomSheet } from "@/components/bottom-sheet/ReportBottomSheet";
+import useTranslations from "@/hooks/use-translations";
+import { GameQuestion } from "@/types/GameQuestion";
+import { ChallengeType } from "@/types/ChallengeType";
+import { Gender } from "@/types/Gender";
 
 interface GameCardProps {
     gameQuestion: GameQuestion;
@@ -10,10 +16,13 @@ interface GameCardProps {
 
 export default function GameCard({ gameQuestion }: GameCardProps) {
     const { width } = useWindowDimensions();
+    const { showBottomSheet } = useBottomSheet();
+    const i18n = useTranslations();
+    const iconUri = Constants.expoConfig?.extra?.apiUrl + "/" + gameQuestion.question.mode.icon;
 
     return (
         <View
-            className="rounded-3xl overflow-hidden border border-border relative"
+            className="relative overflow-hidden rounded-3xl border border-border bg-background"
             style={{
                 width: width - 32,
                 aspectRatio: 0.68,
@@ -24,40 +33,43 @@ export default function GameCard({ gameQuestion }: GameCardProps) {
                 elevation: 14,
             }}
         >
-            <LinearGradient
-                colors={["#3B344D", "#231C38"]}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 0.3, y: 1 }}
-                style={{ flex: 1 }}
-            >
-                <Text className="text-pink text-xs font-medium text-center mt-7 tracking-widest uppercase">
-                    Je nai jamais...
-                </Text>
+            <View className="absolute left-6 top-6 overflow-hidden rounded-xl">
+                <SvgUri uri={iconUri} width={40} height={40} />
+            </View>
 
-                <View className="flex-1 justify-center items-center px-7">
-                    <Text className="text-xl font-bold text-center leading-9">
-OUI                    </Text>
-                </View>
-
-                {gameQuestion.userTarget && (
-                    <View className="items-center pb-8">
-                        <LinearGradient
-                            colors={["#F6339A", "#AD46FF"]}
-                            start={{ x: 0, y: 0 }}
-                            end={{ x: 1, y: 0 }}
-                            style={{
-                                paddingHorizontal: 20,
-                                paddingVertical: 8,
-                                borderRadius: 20,
-                            }}
-                        >
-                            <Text className="text-xs font-semibold">
+            <View className="flex-1 items-center justify-center gap-4 px-7">
+                {gameQuestion.questionType === "never-have" && (
+                    <>
+                        <Text className="mb-8 font-bold text-2xl text-white">{i18n.t("game.neverHave.title")}</Text>
+                        <Text className="text-center text-lg text-white">{gameQuestion.question.question}</Text>
+                    </>
+                )}
+                {gameQuestion.questionType === "truth-dare" && (
+                    <>
+                        <Text className="font-bold text-3xl text-white">
+                            {gameQuestion.question.challengeType === ChallengeType.DARE
+                                ? i18n.t("game.truthDare.dare")
+                                : i18n.t("game.truthDare.truth")}
+                        </Text>
+                        {gameQuestion.userTarget && (
+                            <Text
+                                className={`text-2xl ${gameQuestion.userTarget.gender === Gender.MAN ? "text-[#2B7FFF]" : "text-[#F6339A]"}`}
+                            >
                                 {gameQuestion.userTarget.name}
                             </Text>
-                        </LinearGradient>
-                    </View>
+                        )}
+                        <Text className="text-center text-lg text-white">{gameQuestion.question.question}</Text>
+                    </>
                 )}
-            </LinearGradient>
+            </View>
+
+            <Pressable
+                onPress={() => showBottomSheet(<ReportBottomSheet />)}
+                className="absolute bottom-6 left-1/2 -translate-x-1/2"
+                hitSlop={12}
+            >
+                <DotsIcon width={20} height={20} color="#FFFFFF" />
+            </Pressable>
         </View>
     );
 }

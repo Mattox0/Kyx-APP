@@ -1,21 +1,25 @@
-export interface NeverHave {
+import { Mode } from "@/types/api/Mode";
+import { ChallengeType } from "@/types/ChallengeType";
+
+export interface Q {
     id: string;
-    question: string;
     createdAt: Date;
     updatedAt: Date;
+    mode: Mode;
 }
 
-export interface Prefer {
-    id: string;
+export interface NeverHave extends Q {
+    question: string;
+}
+
+export interface Prefer extends Q {
     choiceOne: string;
     choiceTwo: string;
-    createdAt: Date;
-    updatedAt: Date;
 }
 
-export interface TruthDare {
-    id: string;
+export interface TruthDare extends Q {
     question: string;
+    challengeType: ChallengeType;
 }
 
 export type Question = NeverHave | TruthDare | Prefer;

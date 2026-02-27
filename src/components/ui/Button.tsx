@@ -8,12 +8,13 @@ interface ButtonProps extends PressableProps {
     children: ReactNode;
     textClassName?: string;
     className?: string;
+    iconOnly?: boolean;
 }
 
 const BORDER_HEIGHT = 2;
 const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
 
-export default function Button({children, textClassName = '', className = '', disabled, onPressIn, onPressOut, ...props}: ButtonProps) {
+export default function Button({children, textClassName = '', className = '', iconOnly = false, disabled, onPressIn, onPressOut, ...props}: ButtonProps) {
     const pressed = useSharedValue(0);
 
     const containerStyle = useAnimatedStyle(() => ({
@@ -51,7 +52,7 @@ export default function Button({children, textClassName = '', className = '', di
                     style={[
                         {
                             borderRadius: 25,
-                            paddingHorizontal: 24,
+                            paddingHorizontal: iconOnly ? 12 : 24,
                             paddingVertical: 12,
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -59,9 +60,11 @@ export default function Button({children, textClassName = '', className = '', di
                         gradientStyle
                     ]}
                 >
-                    <Text className={`font-bold text-lg text-center ${textClassName}`}>
-                        {children}
-                    </Text>
+                    {iconOnly ? children : (
+                        <Text className={`font-bold text-lg text-center ${textClassName}`}>
+                            {children}
+                        </Text>
+                    )}
                 </AnimatedLinearGradient>
             </Pressable>
         </Animated.View>
