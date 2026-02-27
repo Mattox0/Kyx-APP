@@ -76,7 +76,7 @@ export default function SettingsSuggestion({onBack, onClose}: SettingsSuggestion
                             options={GameModes}
                             selected={selectedGame}
                             onSelect={handleGameSelect}
-                            getLabel={(g) => g.name.replace('\n', ' ')}
+                            getLabel={(g) => i18n.t(g.name).replace('\n', ' ')}
                             getId={(g) => g.id}
                         />
 

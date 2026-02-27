@@ -1,35 +1,43 @@
+import { WordingKey } from "@/utils/i18n-service";
+
 export interface GameMode {
-    id: string;
-    name: string;
-    description: string;
+    id: GameModeId;
+    name: WordingKey;
+    description: WordingKey;
     tags: string[];
-    howToPlay: string;
-    example: string;
+    howToPlay: WordingKey;
+    example: WordingKey;
+}
+
+export enum GameModeId {
+    TRUTHDARE = "truth-dare",
+    NEVERHAVE = "never-have",
+    PREFER = "prefer"
 }
 
 export const GameModes: GameMode[] = [
     {
-        id: "truth-dare",
-        name: 'Action ou\nvérité',
-        description: 'Les joueurs doivent choisir entre Action ou Vérité, et doivent relever le défi ou répondre à la question posée',
+        id: GameModeId.TRUTHDARE,
+        name: "mode.games.truth-dare.name",
+        description: "mode.games.truth-dare.description",
         tags: ["4 Modes", "Local ou en ligne"],
-        howToPlay: "Les joueurs se mettent en cercle et chacun leur tour, ils choisissent entre \"Action\" ou \"Vérité\". L'application propose alors un défi à réaliser ou une question à laquelle répondre honnêtement. Un jeu parfait pour créer des fous rires, briser la glace et découvrir de nouveaux côtés de vos amis",
-        example: "<b>Action</b> : Imite la personne à ta gauche\n<b>Vérité</b> : Raconte ton moment le plus gênant"
+        howToPlay: "mode.games.truth-dare.howToPlay",
+        example: "mode.games.truth-dare.example",
     },
     {
-        id: "never-have",
-        name: "Je n'ai\njamais",
-        description: "Les joueurs indiquent s’ils ont déjà vécu la situation décrite par l’affirmation",
+        id: GameModeId.NEVERHAVE,
+        name: "mode.games.never-have.name",
+        description: "mode.games.never-have.description",
         tags: ["4 Modes", "Local ou en ligne"],
-        howToPlay: "Le mode affiche des affirmations commençant par \"Je n'ai jamais...\" et tous ceux qui l'ont déjà fait doivent se signaler. C'est un jeu parfait pour mieux connaître vos amis, partager des anecdotes amusantes et passer un bon moment ensemble",
-        example: "<b>Je n’ai jamais</b> repensé à mon ex"
+        howToPlay: "mode.games.never-have.howToPlay",
+        example: "mode.games.never-have.example",
     },
     {
-        id: "prefer",
-        name: 'Tu\npréfères ?',
-        description: "Les joueurs doivent choisir entre deux options et expliquer leur choix",
+        id: GameModeId.PREFER,
+        name: "mode.games.prefer.name",
+        description: "mode.games.prefer.description",
         tags: ["5 Modes", "Local ou en ligne"],
-        howToPlay: "L'application propose deux options et chaque joueur doit choisir celle qu'il préfère, même si les deux choix sont difficiles. Ensuite, débattez ensemble pour comprendre et défendre vos choix.\nUn jeu idéal pour lancer des débats animés et découvrir les préférences surprenantes de vos amis.",
-        example: "<b>Tu préfères</b> avoir la capacité de voler ou être invisible ?"
-    }
+        howToPlay: "mode.games.prefer.howToPlay",
+        example: "mode.games.prefer.example",
+    },
 ]

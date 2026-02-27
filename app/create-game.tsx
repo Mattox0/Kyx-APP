@@ -77,11 +77,11 @@ export default function CreateGamePage() {
                             <View className="flex-1 items-center justify-center overflow-visible">
                                 <View className="overflow-visible">
                                     <Text className="font-kavoon font-bold text-5xl text-center mb-20 -rotate-[30deg] pt-2">
-                                        {item.name}
+                                        {i18n.t(item.name)}
                                     </Text>
                                 </View>
                                 <Text className="text-center text-gray mb-6 text-base">
-                                    {item.description}
+                                    {i18n.t(item.description)}
                                 </Text>
                                 <View className="flex-row flex-wrap justify-center gap-2 mb-12">
                                     {item.tags.map((tag) => (

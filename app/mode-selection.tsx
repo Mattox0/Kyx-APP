@@ -98,8 +98,8 @@ export default function ModeSelection() {
                 action: () => {
                     showBottomSheet(
                         <ModeInformationsBottomSheet
-                            howToPlayText={gameData?.howToPlay}
-                            exampleText={gameData?.example}
+                            howToPlayText={gameData ? i18n.t(gameData.howToPlay) : undefined}
+                            exampleText={gameData ? i18n.t(gameData.example) : undefined}
                         />
                     )
                 }
@@ -172,7 +172,7 @@ export default function ModeSelection() {
                 <>
                     <View className="overflow-visible">
                         <Text className="font-kavoon font-bold text-3xl text-center mb-8 -rotate-[25deg] pt-8">
-                            {gameData?.name}
+                            {gameData ? i18n.t(gameData.name) : ""}
                         </Text>
                         <View className="self-center">
                             <Button textClassName="px-2" onPress={selectAll} disabled={isPending}>

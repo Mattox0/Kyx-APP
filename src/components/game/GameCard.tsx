@@ -64,7 +64,7 @@ export default function GameCard({ gameQuestion }: GameCardProps) {
             </View>
 
             <Pressable
-                onPress={() => showBottomSheet(<ReportBottomSheet />)}
+                onPress={() => showBottomSheet(<ReportBottomSheet questionId={gameQuestion.question.id} />)}
                 className="absolute bottom-6 left-1/2 -translate-x-1/2"
                 hitSlop={12}
             >

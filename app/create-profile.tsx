@@ -44,7 +44,7 @@ export default function CreateProfilePage() {
     const { setUser, user } = useUser();
 
     const [name, setName] = useState<string>(user?.name || '');
-    const [gender, setGender] = useState<Gender>(user?.gender || Gender.MALE);
+    const [gender, setGender] = useState<Gender>(user?.gender || Gender.MAN);
     const [avatarOptions, setAvatarOptions] = useState<AvatarOptions>(user?.avatarOptions || DEFAULT_OPTIONS);
     const [selectedCategory, setSelectedCategory] = useState<CategoryType>('hair');
 
@@ -221,7 +221,7 @@ export default function CreateProfilePage() {
                 </View>
 
                 <View className="flex-row gap-10 justify-center mb-6">
-                    <Pressable onPress={() => setGender(Gender.MALE)} className={`bg-background rounded-2xl p-2 border-2  ${gender === Gender.MALE ? 'border-[#2B7FFF]' : 'border-transparent opacity-50'}`}>
+                    <Pressable onPress={() => setGender(Gender.MAN)} className={`bg-background rounded-2xl p-2 border-2  ${gender === Gender.MAN ? 'border-[#2B7FFF]' : 'border-transparent opacity-50'}`}>
                         <MaleIcon width={60} height={60} color="#2B7FFF" />
                     </Pressable>
 

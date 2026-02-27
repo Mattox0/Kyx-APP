@@ -38,7 +38,7 @@ export default function CardCount({ total, currentCount, progress }: CardCountPr
                 </Animated.View>
             </View>
 
-            <View className="flex-row gap-2 items-center">
+            <View className="flex-row gap-2 items-center justify-between" style={{ minWidth: 85 }}>
                 <CardsIcon width={28} height={28} color="#FFFFFF" />
                 <Text className="text-sm font-medium">{currentCount}/{total}</Text>
             </View>

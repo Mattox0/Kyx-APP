@@ -90,6 +90,7 @@ const App = () => {
                     contentStyle: {backgroundColor: 'transparent'},
                     headerShown: false,
                     animation: 'none',
+                    gestureEnabled: false,
                 }}
             />
         </View>

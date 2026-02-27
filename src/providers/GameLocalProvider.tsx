@@ -8,6 +8,7 @@ type GameLocalContextType = {
     total: number;
     isFirst: boolean;
     isLast: boolean;
+    isFinished: boolean;
     progress: number;
     initQuestions: (gameQuestions: GameQuestion[]) => void;
     nextQuestion: () => void;
@@ -23,6 +24,7 @@ type GameLocalProviderProps = {
 export function GameLocalProvider({ children }: GameLocalProviderProps) {
     const [questions, setQuestions] = useState<GameQuestion[] | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [isFinished, setIsFinished] = useState(false);
 
     const total = questions?.length ?? 0;
     const currentQuestion = questions ? (questions[currentIndex] ?? null) : null;
@@ -33,11 +35,17 @@ export function GameLocalProvider({ children }: GameLocalProviderProps) {
     const initQuestions = useCallback((gameQuestions: GameQuestion[]) => {
         setQuestions(gameQuestions);
         setCurrentIndex(0);
+        setIsFinished(false);
     }, []);
 
     const nextQuestion = useCallback(() => {
-        setCurrentIndex(prev => Math.min(prev + 1, (questions?.length ?? 1) - 1));
-    }, [questions?.length]);
+        const maxIndex = (questions?.length ?? 1) - 1;
+        if (currentIndex >= maxIndex) {
+            setIsFinished(true);
+        } else {
+            setCurrentIndex(prev => prev + 1);
+        }
+    }, [currentIndex, questions?.length]);
 
     const previousQuestion = useCallback(() => {
         setCurrentIndex(prev => Math.max(prev - 1, 0));
@@ -50,11 +58,12 @@ export function GameLocalProvider({ children }: GameLocalProviderProps) {
         total,
         isFirst,
         isLast,
+        isFinished,
         progress,
         initQuestions,
         nextQuestion,
         previousQuestion,
-    }), [questions, currentIndex, currentQuestion, total, isFirst, isLast, progress]);
+    }), [questions, currentIndex, currentQuestion, total, isFirst, isLast, isFinished, progress]);
 
     return (
         <GameLocalContext.Provider value={value}>

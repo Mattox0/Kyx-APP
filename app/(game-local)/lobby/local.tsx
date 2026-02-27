@@ -4,7 +4,7 @@ import Button from "@/components/ui/Button";
 import { Page } from "@/containers/Page";
 import useTranslations from "@/hooks/use-translations";
 import { useCallback, useState } from "react";
-import { useRouter } from "expo-router";
+import { RelativePathString, useRouter } from "expo-router";
 import Input from "@/components/ui/Input";
 import { LinearGradient } from "expo-linear-gradient";
 import PlusIcon from "@/assets/icons/plus.svg"
@@ -19,7 +19,7 @@ import useGame from "@/hooks/use-game";
 import useGameLocal from "@/hooks/use-game-local";
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/api";
-import { GameQuestion } from "@/providers/GameLocalProvider";
+import { GameQuestion } from "@/types/GameQuestion";
 
 export default function LocalPage() {
     const i18n = useTranslations();
@@ -59,7 +59,9 @@ export default function LocalPage() {
         onSuccess: (data) => {
             setGameUsers(users);
             initQuestions(data);
-            router.push("/game/never-have/local");
+            if (game?.id) {
+                router.push(`/game/${game?.id}/local` as RelativePathString);
+            }
         },
     });
 

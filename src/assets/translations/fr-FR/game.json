@@ -3,14 +3,33 @@
     "report": {
         "title": "Signaler une incohérence",
         "description": "Cette question te semble incorrecte ou inappropriée ?",
-        "confirm": "Signaler",
-        "cancel": "Annuler"
+        "confirm": "Envoyer",
+        "cancel": "Annuler",
+        "reportIncoming": "Envoi en cours...",
+        "informations": {
+            "label": "Informations complémentaires"
+        },
+        "placeholder": "Décris le problème...",
+        "options": {
+            "inappropriate": "Contenu inapproprié ou offensant",
+            "incorrect": "Question incorrecte",
+            "offTopic": "Hors sujet",
+            "other": "Autre"
+        }
     },
     "neverHave": {
         "title": "Je n'ai jamais"
     },
+    "prefer": {
+        "title": "Tu préfères"
+    },
     "truthDare": {
         "dare": "Action",
         "truth": "Vérité"
+    },
+    "finished": {
+        "title": "Toutes les questions ont été jouées !",
+        "description": "Vous avez répondu à toutes les questions.",
+        "replay": "Rejouer"
     }
 }
