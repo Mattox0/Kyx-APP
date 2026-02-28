@@ -4,6 +4,8 @@ import {useRouter} from "expo-router";
 import useTranslations from "@/hooks/use-translations";
 import {Pressable, View} from "react-native";
 import Button from "@/components/ui/Button";
+import {useMutation} from "@tanstack/react-query";
+import {authClient} from "@/lib/auth";
 import RandomIcon from "@/assets/icons/random.svg";
 import MaleIcon from "@/assets/icons/male.svg";
 import FemaleIcon from "@/assets/icons/female.svg";
@@ -34,14 +36,13 @@ import Animated, {
     Extrapolation,
 } from "react-native-reanimated";
 import useUser from "@/hooks/use-user";
-import {buildAvatarUrl} from "@/components/avatar/Avatar";
 
 const AVATAR_THRESHOLD = 120;
 
 export default function CreateProfilePage() {
     const router = useRouter();
     const i18n = useTranslations();
-    const { setUser, user } = useUser();
+    const { user } = useUser();
 
     const [name, setName] = useState<string>(user?.name || '');
     const [gender, setGender] = useState<Gender>(user?.gender || Gender.MAN);
@@ -83,20 +84,20 @@ export default function CreateProfilePage() {
         }
     }, [router]);
 
-    const handleSave = useCallback(() => {
-        setUser({
-            gender,
+    const saveMutation = useMutation({
+        mutationFn: () => authClient.updateUser({
             name,
-            avatarUrl: buildAvatarUrl(avatarOptions),
-            avatarOptions: avatarOptions
-        })
-        if (!router.canGoBack()) {
-            router.push('/');
-            return;
-        } else {
-            router.back();
-        }
-    }, [avatarOptions, router]);
+            // @ts-ignore — champs additionnels Better Auth
+            gender,
+            avatarOptions: avatarOptions,
+        }),
+        onSuccess: () => {
+            if (!router.canGoBack()) router.push('/');
+            else router.back();
+        },
+    });
+
+    const handleSave = () => saveMutation.mutate();
 
     const updateOption = useCallback((
         key: keyof AvatarOptions,
@@ -248,7 +249,7 @@ export default function CreateProfilePage() {
             </Animated.View>
 
             <View className="absolute bottom-0 w-full px-4 mb-8">
-                <Button onPress={handleSave}>
+                <Button onPress={handleSave} disabled={saveMutation.isPending}>
                     {i18n.t("common.save")}
                 </Button>
             </View>

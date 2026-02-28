@@ -1,59 +1,46 @@
-import {createContext, ReactNode, useCallback, useEffect, useMemo, useState} from 'react';
-import * as SecureStore from 'expo-secure-store';
-import {User} from "@/types/api/User";
-
-const USER_STORAGE_KEY = 'user';
+import { createContext, ReactNode, useMemo } from 'react';
+import { User } from "@/types/api/User";
+import { authClient } from "@/lib/auth";
+import { buildAvatarUrl } from "@/components/avatar/Avatar";
+import { AvatarOptions } from "@/components/avatar";
+import { Gender } from "@/types/Gender";
 
 type UserContextType = {
     user: User | null;
-    setUser: (user: User | null) => void;
     isLoading: boolean;
 };
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
-type UserProviderProps = {
-    children: ReactNode;
-};
+export function UserProvider({ children }: { children: ReactNode }) {
+    const { data: session, isPending } = authClient.useSession();
 
-export function UserProvider({ children }: UserProviderProps) {
-    const [user, setUserState] = useState<User | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const user = useMemo((): User | null => {
+        if (!session?.user) return null;
 
-    useEffect(() => {
-        const loadUser = async () => {
-            try {
-                const stored = await SecureStore.getItemAsync(USER_STORAGE_KEY);
-                if (stored) {
-                    setUserState(JSON.parse(stored));
-                }
-            } catch (e) {
-                console.error('Failed to load user from secure storage', e);
-            } finally {
-                setIsLoading(false);
-            }
+        const { name, gender, avatarOptions: raw } = session.user as typeof session.user & {
+            gender: Gender;
+            avatarOptions?: string;
         };
-        loadUser();
-    }, []);
 
-    const setUser = useCallback(async (newUser: User | null) => {
-        setUserState(newUser);
-        try {
-            if (newUser) {
-                await SecureStore.setItemAsync(USER_STORAGE_KEY, JSON.stringify(newUser));
-            } else {
-                await SecureStore.deleteItemAsync(USER_STORAGE_KEY);
+        let avatarOptions: AvatarOptions | undefined;
+        if (raw) {
+            try {
+                avatarOptions = typeof raw === 'string' ? JSON.parse(raw) : raw;
+            } catch {
+                avatarOptions = undefined;
             }
-        } catch (e) {
-            console.error('Failed to save user to secure storage', e);
         }
-    }, []);
 
-    const value = useMemo(() => ({
-        user,
-        setUser,
-        isLoading,
-    }), [user, setUser, isLoading]);
+        return {
+            name,
+            gender,
+            avatarOptions,
+            avatarUrl: avatarOptions ? buildAvatarUrl(avatarOptions) : undefined,
+        };
+    }, [session]);
+
+    const value = useMemo(() => ({ user, isLoading: isPending }), [user, isPending]);
 
     return (
         <UserContext.Provider value={value}>

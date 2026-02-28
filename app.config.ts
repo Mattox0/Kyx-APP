@@ -101,6 +101,7 @@ const config: ExpoConfig = {
             projectId: loadedEnv.projectId,
         },
         apiUrl: loadedEnv.apiUrl,
+        slug: loadedEnv.slug,
     }
 }
 

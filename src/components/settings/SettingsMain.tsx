@@ -8,10 +8,15 @@ import NoteIcon from "@/assets/icons/note.svg";
 import StarIcon from "@/assets/icons/star.svg";
 import ShareIcon from "@/assets/icons/share.svg";
 import ChatIcon from "@/assets/icons/chat.svg";
+import ArrowLeftIcon from "@/assets/icons/arrow-left.svg";
+import CrossIcon from "@/assets/icons/cross.svg";
 import {useRouter} from "expo-router";
 import useUser from "@/hooks/use-user";
+import useBottomSheet from "@/hooks/use-bottom-sheet";
 import SettingsGroup from "@/components/settings/SettingsGroup";
 import SettingsLayout from "@/components/settings/SettingsLayout";
+import DeleteAccountSheet from "@/components/settings/DeleteAccountSheet";
+import {authClient} from "@/lib/auth";
 
 interface SettingsMainProps {
     onNavigate: (section: SettingsSection) => void;
@@ -22,12 +27,30 @@ export default function SettingsMain({ onNavigate, onClose }: SettingsMainProps)
     const i18n = useTranslations();
     const router = useRouter();
     const { user } = useUser();
+    const { showBottomSheet, hideBottomSheet } = useBottomSheet();
+
+    const handleLogout = async () => {
+        await authClient.signOut();
+        router.replace("/");
+    };
+
+    const handleDeleteAccount = () => {
+        showBottomSheet(
+            <DeleteAccountSheet
+                onSuccess={() => {
+                    hideBottomSheet();
+                    router.replace("/");
+                }}
+                onCancel={hideBottomSheet}
+            />
+        );
+    };
 
     return (
         <SettingsLayout title={i18n.t("settings.title")} onClose={onClose}>
             <View className="items-center justify-center my-4">
                 <Pressable
-                    onPress={() => router.push('/create-profile')}
+                    onPress={() => user ? router.push('/create-profile') : router.push('/auth?redirect=/create-profile')}
                     className="relative mb-8"
                 >
                     <Avatar options={user?.avatarOptions} />
@@ -56,6 +79,16 @@ export default function SettingsMain({ onNavigate, onClose }: SettingsMainProps)
                       { icon: ChatIcon, label: i18n.t("settings.app.chatApp"), onPress: () => {}},
                     ]}
                 />
+
+                {user && (
+                    <SettingsGroup
+                        title={i18n.t("settings.account.title")}
+                        items={[
+                            { icon: ArrowLeftIcon, label: i18n.t("settings.account.logout"), onPress: handleLogout },
+                            { icon: CrossIcon, label: i18n.t("settings.account.deleteAccount"), onPress: handleDeleteAccount, danger: true },
+                        ]}
+                    />
+                )}
             </View>
         </SettingsLayout>
     );

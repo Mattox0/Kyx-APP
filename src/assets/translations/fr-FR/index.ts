@@ -5,6 +5,7 @@ import game from "@/assets/translations/fr-FR/game.json";
 import mode from "@/assets/translations/fr-FR/mode.json";
 import lobby from "@/assets/translations/fr-FR/lobby.json";
 import settings from "@/assets/translations/fr-FR/settings.json";
+import auth from "@/assets/translations/fr-FR/auth.json";
 
 export default {
     common,
@@ -14,4 +15,5 @@ export default {
     mode,
     lobby,
     settings,
+    auth,
 };

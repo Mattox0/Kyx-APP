@@ -8,6 +8,7 @@ import {useRouter} from "expo-router";
 import {Avatar} from "@/components/avatar";
 import useUser from "@/hooks/use-user";
 import PenIcon from "@/assets/icons/pen.svg";
+import FriendIcon from "@/assets/icons/friends.svg";
 
 export default function Index() {
     const i18n = useTranslations();
@@ -17,6 +18,10 @@ export default function Index() {
     return (
         <Page
             scrollable={true}
+            headerButtons={[{
+                icon: FriendIcon,
+                action: () => user ? router.push('/') : router.push('/auth?redirect=/create-profile')
+            }]}
             bottomChildren={
                 <View className="px-8 flex-col gap-2 pb-2">
                     <View className="px-8 text-center mb-4">
@@ -35,13 +40,16 @@ export default function Index() {
                 <Logo />
             </View>
             <View className="items-center justify-center">
-                <Pressable onPress={() => router.push('/create-profile')} className="relative mb-8">
+                <Pressable
+                    onPress={() => user ? router.push('/create-profile') : router.push('/auth?redirect=/create-profile')}
+                    className="relative mb-8"
+                >
                     <Avatar options={user?.avatarOptions} />
                     <View className="absolute bottom-0 right-0">
                         <PenIcon width={24} height={24} color="#FFFFFF"/>
                     </View>
                 </Pressable>
-                <Text className="font-bold text-2xl">{i18n.t("home.text.welcome", {username: user ? `, ${user?.name}` : ""})}</Text>
+                <Text className="font-bold text-2xl">{i18n.t("home.text.welcome", {username: !!user?.name ? `, ${user.name}` : ""})}</Text>
             </View>
             <View className="px-8 text-center my-4">
                 <Text className="text-center">{i18n.t("home.text.instructions")}</Text>

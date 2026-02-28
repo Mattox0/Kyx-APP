@@ -88,7 +88,8 @@ export function buildAvatarUrl(options: AvatarOptions, seed?: string): string {
     return `https://api.dicebear.com/9.x/adventurer/svg?${params.toString()}`;
 }
 
-export default function Avatar({options = DEFAULT_OPTIONS, size = 120, seed}: AvatarProps) {
+export default function Avatar({options, size = 120, seed}: AvatarProps) {
+    if (!options) options = DEFAULT_OPTIONS;
     const uri = useMemo(() => buildAvatarUrl(options, seed), [options, seed]);
 
     return (

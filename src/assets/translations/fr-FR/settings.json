@@ -22,5 +22,14 @@
         "shareApp": "Partager l'application",
         "chatApp": "Nous contacter",
         "reviewApp": "Noter l'application"
+    },
+    "account": {
+        "title": "Compte",
+        "logout": "Se déconnecter",
+        "deleteAccount": "Supprimer mon compte",
+        "deleteTitle": "Supprimer le compte",
+        "deleteSubtitle": "Cette action est irréversible. Toutes tes données seront définitivement supprimées.",
+        "deleteConfirm": "Oui, supprimer mon compte",
+        "deleteCancel": "Annuler"
     }
 }

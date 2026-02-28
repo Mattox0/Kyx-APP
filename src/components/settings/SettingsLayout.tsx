@@ -1,4 +1,4 @@
-import {Pressable, View} from "react-native";
+import {Pressable, ScrollView, View} from "react-native";
 import {Text} from "@/components/ui/Text";
 import CrossIcon from "@/assets/icons/cross.svg";
 import {ReactNode} from "react";
@@ -43,7 +43,9 @@ export default function SettingsLayout({ children, onClose, onBack, title }: Set
           <View className="items-center">
             <View className="w-4/5 h-1 bg-gray rounded-full" />
           </View>
-          {children}
+          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 32 }}>
+            {children}
+          </ScrollView>
         </View>
     )
 }

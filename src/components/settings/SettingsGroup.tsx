@@ -8,6 +8,7 @@ export interface SettingsGroupItem {
     icon: FC<SvgProps>;
     label: string;
     onPress: () => void;
+    danger?: boolean;
 }
 
 interface SettingsGroupProps {
@@ -28,10 +29,10 @@ export default function SettingsGroup({ title, items }: SettingsGroupProps) {
                         onPress={item.onPress}
                         className={`flex-row items-center gap-4 py-4 pl-4 pr-2 ${index < items.length - 1 ? "border-b border-border" : ""}`}
                     >
-                        <View className="w-10 h-10 items-center justify-center bg-white/5 rounded-xl">
-                            <item.icon width={20} height={20} color="#99A1AF" />
+                        <View className={`w-10 h-10 items-center justify-center rounded-xl ${item.danger ? "bg-red/10" : "bg-white/5"}`}>
+                            <item.icon width={20} height={20} color={item.danger ? "#AE2525" : "#99A1AF"} />
                         </View>
-                        <Text className="flex-1 font-medium">{item.label}</Text>
+                        <Text className={`flex-1 font-medium ${item.danger ? "text-red" : ""}`}>{item.label}</Text>
                         <ChevronUpIcon
                             width={30}
                             height={30}
