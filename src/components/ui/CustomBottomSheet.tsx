@@ -47,6 +47,7 @@ const CustomBottomSheet = forwardRef<CustomBottomSheetRef, CustomBottomSheetProp
      }, ref) => {
         const bottomSheetRef = useRef<BottomSheet>(null);
         const [isSheetOpen, setIsSheetOpen] = useState(initialIndex >= 0);
+        const isClosingRef = useRef(false);
 
         useImperativeHandle(ref, () => ({
             open: () => {
@@ -76,7 +77,9 @@ const CustomBottomSheet = forwardRef<CustomBottomSheetRef, CustomBottomSheetProp
             const keyboardHideListener = Keyboard.addListener(
                 eventName,
                 () => {
-                    bottomSheetRef.current?.snapToIndex(0);
+                    if (!isClosingRef.current) {
+                        bottomSheetRef.current?.snapToIndex(0);
+                    }
                 }
             );
 
@@ -108,6 +111,12 @@ const CustomBottomSheet = forwardRef<CustomBottomSheetRef, CustomBottomSheetProp
                 android_keyboardInputMode="adjustResize"
                 animateOnMount={true}
                 onChange={(index) => {
+                    if (index < 0) {
+                        isClosingRef.current = true;
+                        Keyboard.dismiss();
+                    } else {
+                        isClosingRef.current = false;
+                    }
                     setIsSheetOpen(index >= 0);
                 }}
                 style={{

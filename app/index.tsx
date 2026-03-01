@@ -20,7 +20,7 @@ export default function Index() {
             scrollable={true}
             headerButtons={[{
                 icon: FriendIcon,
-                action: () => user ? router.push('/') : router.push('/auth?redirect=/create-profile')
+                action: () => user ? router.push('/friends') : router.push('/auth?redirect=/create-profile')
             }]}
             bottomChildren={
                 <View className="px-8 flex-col gap-2 pb-2">

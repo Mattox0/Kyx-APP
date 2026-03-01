@@ -14,9 +14,18 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-    const token = await SecureStore.getItemAsync(`${slug}.better-auth.session_token`);
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+    const cookieJson = await SecureStore.getItemAsync(`${slug}_cookie`);
+    if (cookieJson) {
+        try {
+            const cookies: Record<string, { value: string; expires?: string }> = JSON.parse(cookieJson);
+            const cookieHeader = Object.entries(cookies)
+                .filter(([, c]) => !c.expires || new Date(c.expires) > new Date())
+                .map(([key, c]) => `${key}=${c.value}`)
+                .join('; ');
+            if (cookieHeader) {
+                config.headers.Cookie = cookieHeader;
+            }
+        } catch {}
     }
     return config;
 });

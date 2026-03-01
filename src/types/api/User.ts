@@ -2,10 +2,12 @@ import {Gender} from "@/types/Gender";
 import {AvatarOptions} from "@/components/avatar";
 
 export interface User {
+    id: string;
     name: string;
     gender: Gender;
     avatarUrl?: string;
     avatarOptions?: AvatarOptions;
+    friendCode: string;
 }
 
 export interface LocalUser {

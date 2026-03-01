@@ -1,3 +1,6 @@
 export enum TanstackQueryKey {
-    "MODES" = "MODES"
+    "MODES" = "MODES",
+    "FRIENDS" = "FRIENDS",
+    "FRIEND_REQUESTS_SENT" = "FRIEND_REQUESTS_SENT",
+    "FRIEND_REQUESTS_RECEIVED" = "FRIEND_REQUESTS_RECEIVED",
 }

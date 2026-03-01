@@ -1,0 +1,29 @@
+{
+    "title": "Amis",
+    "myCode": "Ton code ami",
+    "codeCopied": "Code copié !",
+    "tapToCopy": "Appuie pour copier",
+    "tabs": {
+        "friends": "Amis",
+        "requests": "Envoyées",
+        "received": "Reçues"
+    },
+    "addFriend": {
+        "title": "Ajouter un ami",
+        "placeholder": "Code ami"
+    },
+    "noFriends": "Tu n'as pas encore d'amis",
+    "noRequests": "Aucune demande envoyée",
+    "noRequestsReceived": "Aucune demande reçue",
+    "waiting": "En attente",
+    "accept": "Accepter",
+    "decline": "Refuser",
+    "add": {
+        "title": "Ajouter un ami",
+        "inputLabel": "Code ami",
+        "inputPlaceholder": "EX: KYX42A",
+        "submit": "Envoyer la demande",
+        "successMessage": "Demande envoyée !",
+        "errorMessage": "Code invalide ou introuvable"
+    }
+}
