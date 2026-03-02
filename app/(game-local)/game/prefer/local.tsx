@@ -20,16 +20,17 @@ export default function Prefer() {
     const router = useRouter();
     const i18n = useTranslations();
     const { showBottomSheet } = useBottomSheet();
-    const { total, currentIndex, progress, currentQuestion, nextQuestion, isFinished } = useGameLocal();
+    const { total, currentIndex, progress, currentQuestion, nextQuestion, isFinished, endGame } = useGameLocal();
     const { bottom } = useSafeAreaInsets();
 
     const goBack = useCallback(() => {
+        endGame();
         if (router.canGoBack()) {
             router.back();
         } else {
             router.push("/");
         }
-    }, [router]);
+    }, [router, endGame]);
 
     const preferQuestion = currentQuestion?.questionType === "prefer" ? currentQuestion : null;
     const iconUri = preferQuestion

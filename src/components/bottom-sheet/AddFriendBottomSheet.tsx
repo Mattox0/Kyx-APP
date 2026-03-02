@@ -11,18 +11,26 @@ import {api} from '@/lib/api';
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {TanstackQueryKey} from '@/types/TanstackQueryKey';
 
-export default function AddFriendBottomSheet() {
+interface AddFriendBottomSheetProps {
+    onSuccess?: () => void;
+}
+
+export default function AddFriendBottomSheet({onSuccess}: AddFriendBottomSheetProps) {
     const {hideBottomSheet} = useBottomSheet();
     const i18n = useTranslations();
     const [code, setCode] = useState('');
+    const [error, setError] = useState<'not_found' | 'already_exists' | null>(null);
     const inputRef = useRef<TextInput>(null);
     const queryClient = useQueryClient();
 
-    const {mutate, isError} = useMutation({
-        mutationFn: () => api.post('/friend/request', { friendCode : code }),
-        onSuccess: () => {
+    const {mutate} = useMutation({
+        mutationFn: () => api.post('/friend/request', {friendCode: code}, {validateStatus: (s) => s < 500}),
+        onSuccess: (res) => {
+            if (res.status === 404) { setError('not_found'); return; }
+            if (res.status === 409) { setError('already_exists'); return; }
             queryClient.invalidateQueries({queryKey: [TanstackQueryKey.FRIEND_REQUESTS_SENT]});
             hideBottomSheet();
+            onSuccess?.();
         },
     });
 
@@ -49,7 +57,7 @@ export default function AddFriendBottomSheet() {
                 <BottomSheetTextInput
                     ref={inputRef as never}
                     value={code}
-                    onChangeText={(text) => { setCode(text.toUpperCase()) }}
+                    onChangeText={(text) => { setCode(text.toUpperCase()); setError(null); }}
                     autoCapitalize="characters"
                     maxLength={6}
                     style={{position: 'absolute', opacity: 0, width: 0, height: 0}}
@@ -78,8 +86,11 @@ export default function AddFriendBottomSheet() {
                     })}
                 </Pressable>
 
-                {isError && (
+                {error === 'not_found' && (
                     <Text className="text-red text-sm mt-2 text-center">{i18n.t('friends.add.errorMessage')}</Text>
+                )}
+                {error === 'already_exists' && (
+                    <Text className="text-yellow text-sm mt-2 text-center">{i18n.t('friends.add.alreadyFriendMessage')}</Text>
                 )}
             </View>
         </CustomBottomSheet>

@@ -8,7 +8,7 @@ import NoteIcon from "@/assets/icons/note.svg";
 import StarIcon from "@/assets/icons/star.svg";
 import ShareIcon from "@/assets/icons/share.svg";
 import ChatIcon from "@/assets/icons/chat.svg";
-import ArrowLeftIcon from "@/assets/icons/arrow-left.svg";
+import PowerIcon from "@/assets/icons/power.svg";
 import CrossIcon from "@/assets/icons/cross.svg";
 import {useRouter} from "expo-router";
 import useUser from "@/hooks/use-user";
@@ -84,7 +84,7 @@ export default function SettingsMain({ onNavigate, onClose }: SettingsMainProps)
                     <SettingsGroup
                         title={i18n.t("settings.account.title")}
                         items={[
-                            { icon: ArrowLeftIcon, label: i18n.t("settings.account.logout"), onPress: handleLogout },
+                            { icon: PowerIcon, label: i18n.t("settings.account.logout"), onPress: handleLogout },
                             { icon: CrossIcon, label: i18n.t("settings.account.deleteAccount"), onPress: handleDeleteAccount, danger: true },
                         ]}
                     />

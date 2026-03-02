@@ -1,5 +1,5 @@
 import {Text} from "@/components/ui/Text";
-import {useCallback, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "expo-router";
 import useTranslations from "@/hooks/use-translations";
 import {Pressable, View} from "react-native";
@@ -47,6 +47,10 @@ export default function CreateProfilePage() {
     const [name, setName] = useState<string>(user?.name || '');
     const [gender, setGender] = useState<Gender>(user?.gender || Gender.MAN);
     const [avatarOptions, setAvatarOptions] = useState<AvatarOptions>(user?.avatarOptions || DEFAULT_OPTIONS);
+
+    useEffect(() => {
+        if (user?.name && !name) setName(user.name);
+    }, [user?.name]);
     const [selectedCategory, setSelectedCategory] = useState<CategoryType>('hair');
 
     const scrollY = useSharedValue(0);

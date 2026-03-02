@@ -25,7 +25,7 @@ interface GameFinishedProps {
 
 export default function GameFinished({ onBack }: GameFinishedProps) {
     const i18n = useTranslations();
-    const { initQuestions } = useGameLocal();
+    const { initQuestions, endGame } = useGameLocal();
     const { game, modes, users } = useGame();
 
     const badgeScale = useSharedValue(0);
@@ -36,6 +36,8 @@ export default function GameFinished({ onBack }: GameFinishedProps) {
     const descY = useSharedValue(24);
     const buttonOpacity = useSharedValue(0);
     const buttonY = useSharedValue(24);
+
+    useEffect(() => { endGame(); }, []);
 
     useEffect(() => {
         badgeScale.value = withSpring(1, { damping: 10, stiffness: 150 });

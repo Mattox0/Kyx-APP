@@ -18,10 +18,11 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const user = useMemo((): User | null => {
         if (!session?.user) return null;
 
-        const { name, gender, avatarOptions: raw, friendCode } = session.user as typeof session.user & {
+        const { name, gender, avatarOptions: raw, friendCode, id } = session.user as typeof session.user & {
             gender: Gender;
             avatarOptions?: string;
             friendCode: string;
+            id: string;
         };
 
         let avatarOptions: AvatarOptions | undefined;
@@ -38,7 +39,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
             gender,
             avatarOptions,
             avatarUrl: avatarOptions ? buildAvatarUrl(avatarOptions) : undefined,
-            friendCode
+            friendCode,
+            id
         };
     }, [session]);
 

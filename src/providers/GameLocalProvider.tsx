@@ -1,5 +1,6 @@
-import { createContext, ReactNode, useCallback, useMemo, useState } from "react";
+import { createContext, ReactNode, useCallback, useMemo, useRef, useState } from "react";
 import { GameQuestion } from "@/types/GameQuestion";
+import { api } from "@/lib/api";
 
 type GameLocalContextType = {
     questions: GameQuestion[] | null;
@@ -10,9 +11,12 @@ type GameLocalContextType = {
     isLast: boolean;
     isFinished: boolean;
     progress: number;
+    gameId: string | null;
+    setGameId: (gameId: string) => void;
     initQuestions: (gameQuestions: GameQuestion[]) => void;
     nextQuestion: () => void;
     previousQuestion: () => void;
+    endGame: () => void;
 };
 
 export const GameLocalContext = createContext<GameLocalContextType | undefined>(undefined);
@@ -25,6 +29,14 @@ export function GameLocalProvider({ children }: GameLocalProviderProps) {
     const [questions, setQuestions] = useState<GameQuestion[] | null>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFinished, setIsFinished] = useState(false);
+    const [gameId, setGameId] = useState<string | null>(null);
+    const hasEndedRef = useRef(false);
+
+    const endGame = useCallback(() => {
+        if (!gameId || hasEndedRef.current) return;
+        hasEndedRef.current = true;
+        api.post(`/game/${gameId}/ended`).catch(() => {});
+    }, [gameId]);
 
     const total = questions?.length ?? 0;
     const currentQuestion = questions ? (questions[currentIndex] ?? null) : null;
@@ -60,10 +72,13 @@ export function GameLocalProvider({ children }: GameLocalProviderProps) {
         isLast,
         isFinished,
         progress,
+        gameId,
+        setGameId,
         initQuestions,
         nextQuestion,
         previousQuestion,
-    }), [questions, currentIndex, currentQuestion, total, isFirst, isLast, isFinished, progress]);
+        endGame,
+    }), [questions, currentIndex, currentQuestion, total, isFirst, isLast, isFinished, progress, gameId]);
 
     return (
         <GameLocalContext.Provider value={value}>

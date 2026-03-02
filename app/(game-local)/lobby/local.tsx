@@ -3,7 +3,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import Button from "@/components/ui/Button";
 import { Page } from "@/containers/Page";
 import useTranslations from "@/hooks/use-translations";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { RelativePathString, useRouter } from "expo-router";
 import Input from "@/components/ui/Input";
 import { LinearGradient } from "expo-linear-gradient";
@@ -20,12 +20,14 @@ import useGameLocal from "@/hooks/use-game-local";
 import { useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { GameQuestion } from "@/types/GameQuestion";
+import useUser from "@/hooks/use-user";
 
 export default function LocalPage() {
     const i18n = useTranslations();
     const router = useRouter();
+    const { user } = useUser();
     const { game, setUsers: setGameUsers, modes } = useGame();
-    const { initQuestions } = useGameLocal();
+    const { initQuestions, setGameId } = useGameLocal();
     const [userToAdd, setUserToAdd] = useState<string>("");
     const [users, setUsers] = useState<LocalUser[]>([]);
 
@@ -43,6 +45,12 @@ export default function LocalPage() {
         }
     }, [router]);
 
+    useEffect(() => {
+        if (user) {
+            setUsers([{ name: user.name, gender: user.gender, id: user.id }])
+        }
+    }, [user]);
+
     const updateUser = (localUser: LocalUser, gender: Gender) => {
         setUsers(prev => prev.map(user => user.id === localUser.id ? { ...user, gender } : user));
     }
@@ -53,12 +61,13 @@ export default function LocalPage() {
 
     const { mutate: startGame, isPending } = useMutation({
         mutationFn: async () => {
-            const response = await api.post<GameQuestion[]>(`/${game?.id}/create-party/solo`, { users, modes: modes?.map(mode => mode.id) ?? [] });
+            const response = await api.post<{ gameId: string, questions: GameQuestion[]}>(`/${game?.id}/create-party/local`, { users, modes: modes?.map(mode => mode.id) ?? [] });
             return response.data;
         },
         onSuccess: (data) => {
             setGameUsers(users);
-            initQuestions(data);
+            setGameId(data.gameId);
+            initQuestions(data.questions);
             if (game?.id) {
                 router.push(`/game/${game?.id}/local` as RelativePathString);
             }

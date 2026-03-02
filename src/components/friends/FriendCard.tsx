@@ -10,9 +10,10 @@ interface FriendCardProps {
     name: string;
     gender: Gender;
     avatarOptions?: AvatarOptions;
+    friendCode: string;
 }
 
-export default function FriendCard({name, gender, avatarOptions}: FriendCardProps) {
+export default function FriendCard({name, gender, avatarOptions, friendCode}: FriendCardProps) {
     const isMale = gender === Gender.MAN;
 
     return (
@@ -23,7 +24,10 @@ export default function FriendCard({name, gender, avatarOptions}: FriendCardProp
             style={{borderRadius: 24, borderWidth: 1, borderColor: '#2F3247', flexDirection: 'row', alignItems: 'center', padding: 12, gap: 16}}
         >
             <Avatar options={avatarOptions} size={56} />
-            <Text className="flex-1 font-semibold text-base">{name}</Text>
+            <View style={{flex: 1}}>
+                <Text className="font-semibold text-base">{name}</Text>
+                <Text className="text-xs text-gray">{friendCode}</Text>
+            </View>
             <View
                 style={{
                     width: 36, height: 36, borderRadius: 18,

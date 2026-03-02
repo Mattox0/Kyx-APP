@@ -12,7 +12,7 @@
         "title": "Ajouter un ami",
         "placeholder": "Code ami"
     },
-    "noFriends": "Tu n'as pas encore d'amis",
+    "noFriends": "Tu n'as pas encore d'amis\n\nTu pourras rejoindre la partie de tes amis directement depuis cet écran",
     "noRequests": "Aucune demande envoyée",
     "noRequestsReceived": "Aucune demande reçue",
     "waiting": "En attente",
@@ -24,6 +24,7 @@
         "inputPlaceholder": "EX: KYX42A",
         "submit": "Envoyer la demande",
         "successMessage": "Demande envoyée !",
-        "errorMessage": "Code invalide ou introuvable"
+        "errorMessage": "Code invalide ou introuvable",
+        "alreadyFriendMessage": "Vous êtes déjà amis ou une demande est déjà en cours"
     }
 }

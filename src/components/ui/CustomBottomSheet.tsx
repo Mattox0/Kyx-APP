@@ -134,7 +134,7 @@ const CustomBottomSheet = forwardRef<CustomBottomSheetRef, CustomBottomSheetProp
                 <BottomSheetView className="px-6 pt-2 pb-10">
                     {title && (
                         <Text
-                            className={`text-xl font-bold mb-3 text-center text-black`}>
+                            className={`text-xl font-bold mb-3 text-center`}>
                             {title}
                         </Text>
                     )}

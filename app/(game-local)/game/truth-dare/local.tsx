@@ -14,19 +14,20 @@ import GameFinished from "@/components/game/GameFinished";
 
 export default function TruthDare() {
     const router = useRouter();
-    const { total, currentIndex, progress, isFinished } = useGameLocal();
+    const { total, currentIndex, progress, isFinished, endGame } = useGameLocal();
     const { width } = useWindowDimensions();
     const { bottom } = useSafeAreaInsets();
     const swipeX = useSharedValue(0);
     const cardSliderRef = useRef<CardSliderHandle>(null);
 
     const goBack = useCallback(() => {
+        endGame();
         if (router.canGoBack()) {
             router.back();
         } else {
             router.push("/");
         }
-    }, [router]);
+    }, [router, endGame]);
 
     const rightOverlayStyle = useAnimatedStyle(() => ({
         opacity: interpolate(swipeX.value, [0, width / 2], [0, 1], "clamp"),
