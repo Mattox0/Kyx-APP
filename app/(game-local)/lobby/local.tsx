@@ -69,7 +69,7 @@ export default function LocalPage() {
             setGameId(data.gameId);
             initQuestions(data.questions);
             if (game?.id) {
-                router.push(`/game/${game?.id}/local` as RelativePathString);
+                router.push(`/(game-local)/game/${game?.id}` as RelativePathString);
             }
         },
     });

@@ -8,3 +8,5 @@ export type PreferQuestion = GameQuestionBase & { questionType: "prefer"; questi
 export type TruthDareQuestion = GameQuestionBase & { questionType: "truth-dare"; question: TruthDare };
 
 export type GameQuestion = NeverHaveQuestion | PreferQuestion | TruthDareQuestion;
+
+export type OnlineGameQuestion = GameQuestion & { questionNumber: number };

@@ -18,7 +18,11 @@
         }
     },
     "neverHave": {
-        "title": "Je n'ai jamais"
+        "title": "Je n'ai jamais",
+        "question": "<b>Je n'ai jamais </b>{{question}}",
+        "have": "J'ai déjà",
+        "never": "Jamais !",
+        "skip": "N'a pas répondu"
     },
     "prefer": {
         "title": "Tu préfères"
@@ -37,6 +41,10 @@
         "players": "Joueurs ({{count}})",
         "cancel": "Quitter",
         "start": "Démarrer",
-        "waiting": "En attente de joueurs...\n\nVous pourrez démarrer la partie à partir de 2 joueurs !"
+        "waiting": "En attente de joueurs...\n\nVous pourrez démarrer la partie à partir de 2 joueurs !",
+        "waitingForAnswers": {
+            "one": "1 joueur n'a pas encore répondu.\n\nAttendez que tous les joueurs aient répondu pour continuer !",
+            "other": "{{count}} joueurs n'ont pas encore répondu.\n\nAttendez que tous les joueurs aient répondu pour continuer !"
+        }
     }
 }

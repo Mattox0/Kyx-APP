@@ -19,6 +19,8 @@ export interface LocalUser {
 export interface OnlineUser extends User {
     socketId: string;
     isHost: boolean;
+    hasAnswered: boolean;
+    answer: string | null;
 }
 
 export type GameUser = LocalUser | OnlineUser;

@@ -29,7 +29,7 @@ export default function LobbyOnlinePage() {
     useEffect(() => {
         if (status === GameStatus.IN_PROGRESS && game?.gameType) {
             const route = GameTypeToRoute[game.gameType];
-            router.push(`/(game-online)/game/${route}?code=${code}` as RelativePathString);
+            router.replace(`/(game-online)/game/${route}?code=${code}` as RelativePathString);
         }
     }, [status])
 

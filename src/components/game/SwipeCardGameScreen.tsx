@@ -12,7 +12,7 @@ import Animated, { interpolate, useAnimatedStyle, useSharedValue, withSpring, wi
 import { LinearGradient } from "expo-linear-gradient";
 import GameFinished from "@/components/game/GameFinished";
 
-export default function NeverHave() {
+export default function SwipeCardGameScreen() {
     const router = useRouter();
     const { total, currentIndex, progress, isFinished, endGame } = useGameLocal();
     const { width } = useWindowDimensions();

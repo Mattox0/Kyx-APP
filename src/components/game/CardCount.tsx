@@ -3,15 +3,18 @@ import { View } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { LinearGradient } from "expo-linear-gradient";
 import CardsIcon from "@/assets/icons/cards.svg";
+import UserCheckIcon from "@/assets/icons/user-check.svg";
 import { Text } from "@/components/ui/Text";
 
 interface CardCountProps {
     total: number;
     currentCount: number;
     progress: number;
+    totalUserCount?: number;
+    userCount?: number;
 }
 
-export default function CardCount({ total, currentCount, progress }: CardCountProps) {
+export default function CardCount({ total, currentCount, progress, totalUserCount, userCount }: CardCountProps) {
     const progressValue = useSharedValue(0);
 
     useEffect(() => {
@@ -24,6 +27,12 @@ export default function CardCount({ total, currentCount, progress }: CardCountPr
 
     return (
         <View className="flex-row items-center gap-2 px-2">
+            {totalUserCount !== undefined && userCount !== undefined && (
+                <View className="flex-row gap-2 items-center justify-between">
+                    <UserCheckIcon width={28} height={28} color="#FFFFFF" />
+                    <Text className="text-sm font-medium">{userCount}/{totalUserCount}</Text>
+                </View>
+            )}
             <View
                 className="flex-1 rounded-full overflow-hidden"
                 style={{ height: 6, backgroundColor: '#F4F4F4' }}
@@ -38,7 +47,7 @@ export default function CardCount({ total, currentCount, progress }: CardCountPr
                 </Animated.View>
             </View>
 
-            <View className="flex-row gap-2 items-center justify-between" style={{ minWidth: 85 }}>
+            <View className="flex-row gap-2 items-center justify-between" style={{ minWidth: 80 }}>
                 <CardsIcon width={28} height={28} color="#FFFFFF" />
                 <Text className="text-sm font-medium">{currentCount}/{total}</Text>
             </View>

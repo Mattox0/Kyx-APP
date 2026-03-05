@@ -6,8 +6,11 @@ import { OnlineUser } from "@/types/api/User";
 import { GameStatus } from "@/types/GameStatus";
 import { GameSession } from "@/types/api/GameSession";
 import { useLocalSearchParams } from "expo-router";
+import { GameQuestion, OnlineGameQuestion } from "@/types/GameQuestion";
 
 const apiUrl = Constants.expoConfig?.extra?.apiUrl as string;
+
+export type QuestionResults = Record<string, number>;
 
 type GameOnlineContextType = {
     players: OnlineUser[];
@@ -16,9 +19,16 @@ type GameOnlineContextType = {
     isKicked: boolean;
     code: string | null;
     game: GameSession | null;
+    currentQuestion: GameQuestion | null;
+    questionResults: QuestionResults | null;
+    cardsCount: number | null;
     status: GameStatus | null;
+    answersCount: number;
+    progress: number;
     kickUser: (userId: string) => void;
     startGame: () => void;
+    submitAnswer: (answer: string | null) => void;
+    nextQuestion: () => void;
 };
 
 export const GameOnlineContext = createContext<GameOnlineContextType | undefined>(undefined);
@@ -34,6 +44,10 @@ export function GameOnlineProvider({ children }: { children: ReactNode }) {
     const [isKicked, setIsKicked] = useState(false);
     const [status, setStatus] = useState<GameStatus | null>(null);
     const [game, setGame] = useState<GameSession | null>(null);
+    const [currentQuestion, setCurrentQuestion] = useState<GameQuestion | null>(null);
+    const [questionResults, setQuestionResults] = useState<QuestionResults | null>(null);
+    const [cardsCount, setCardsCount] = useState<number | null>(null);
+    const [answersCount, setAnswersCount] = useState<number>(0);
 
     const kickUser = useCallback((userId: string) => {
         socketRef.current?.emit('kickUser', { userId });
@@ -42,6 +56,16 @@ export function GameOnlineProvider({ children }: { children: ReactNode }) {
     const startGame = useCallback(() => {
         socketRef.current?.emit('startGame');
     }, []);
+
+    const submitAnswer = useCallback((answer: string | null) => {
+        socketRef.current?.emit('submitAnswer', { answer });
+    }, []);
+
+    const nextQuestion = useCallback(() => {
+        socketRef.current?.emit('nextQuestion');
+    }, []);
+
+    const progress = useMemo(() => cardsCount ? (cardsCount + 1) / 100 : 0, [cardsCount]);
 
     useEffect(() => {
         if (!code) return;
@@ -60,26 +84,37 @@ export function GameOnlineProvider({ children }: { children: ReactNode }) {
             socket.on("connect", () => setIsConnected(true));
             socket.on("disconnect", () => setIsConnected(false));
 
-            socket.on("game", ({ game }: { game: GameSession }) => {
+            socket.on("game", (game: GameSession) => {
                 setGame(game);
-            });
-
-            socket.on("playerJoined", ({ player, players }: { player: OnlineUser, players: OnlineUser[] }) => {
-                setPlayers(players);
-                setMyUser(players.find(p => p.socketId === socket.id) || null);
-            });
-
-            socket.on("playerLeft", ({ userId, players }: { userId: string, players: OnlineUser[] }) => {
-                setPlayers(players);
             });
 
             socket.on("kicked", () => {
                 setIsKicked(true);
             });
 
-            socket.on("status", ({ status }: { status: GameStatus }) => {
+            socket.on("status", (status: GameStatus) => {
                 setStatus(status);
-            })
+            });
+
+            socket.on("currentQuestion", (question: OnlineGameQuestion) => {
+                const { questionNumber, ...questionWithoutCards } = question;
+                setQuestionResults(null);
+                setCardsCount(questionNumber);
+                setCurrentQuestion(questionWithoutCards);
+            });
+
+            socket.on("players", (players: OnlineUser[]) => {
+                setPlayers(players);
+                setMyUser(players.find(p => p.socketId === socket.id) || null);
+            });
+
+            socket.on("answersCount", (count: number) => {
+                setAnswersCount(count);
+            });
+
+            socket.on("results", (results: QuestionResults) => {
+                setQuestionResults(results);
+            });
         })();
 
         return () => {
@@ -99,9 +134,16 @@ export function GameOnlineProvider({ children }: { children: ReactNode }) {
         code,
         game,
         status,
+        currentQuestion,
+        questionResults,
+        cardsCount,
+        progress,
+        answersCount,
         kickUser,
-        startGame
-    }), [players, isConnected, isKicked, code, game, myUser, status]);
+        startGame,
+        submitAnswer,
+        nextQuestion
+    }), [players, isConnected, isKicked, code, game, myUser, status, currentQuestion, questionResults, cardsCount, progress, answersCount]);
 
     return (
         <GameOnlineContext.Provider value={value}>

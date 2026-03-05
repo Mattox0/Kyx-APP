@@ -3,19 +3,20 @@ import { Text } from "@/components/ui/Text";
 import { SvgUri } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
-import { Prefer } from "@/types/api/Question";
 import { useEffect } from "react";
 
 const ICON_SIZE = 100;
 
 interface PreferCardProps {
-    question: Prefer;
+    choiceOne: string;
+    choiceTwo: string;
+    questionId?: string;
     iconUri?: string;
     onChoiceOne: () => void;
     onChoiceTwo: () => void;
 }
 
-export default function PreferCard({ question, iconUri, onChoiceOne, onChoiceTwo }: PreferCardProps) {
+export default function PreferCard({ choiceOne, choiceTwo, questionId, iconUri, onChoiceOne, onChoiceTwo }: PreferCardProps) {
     const pressedOne = useSharedValue(0);
     const pressedTwo = useSharedValue(0);
     const contentOpacity = useSharedValue(1);
@@ -23,7 +24,7 @@ export default function PreferCard({ question, iconUri, onChoiceOne, onChoiceTwo
     useEffect(() => {
         contentOpacity.value = 0;
         contentOpacity.value = withTiming(1, { duration: 350 });
-    }, [question.id]);
+    }, [questionId]);
 
     const choiceOneStyle = useAnimatedStyle(() => ({
         transform: [{ scale: withTiming(1 - pressedOne.value * 0.03, { duration: 100 }) }],
@@ -54,7 +55,7 @@ export default function PreferCard({ question, iconUri, onChoiceOne, onChoiceTwo
                     >
                         <Animated.View style={contentStyle}>
                             <Text className="text-white text-xl font-bold text-center leading-7">
-                                {question.choiceOne}
+                                {choiceOne}
                             </Text>
                         </Animated.View>
                     </LinearGradient>
@@ -76,7 +77,7 @@ export default function PreferCard({ question, iconUri, onChoiceOne, onChoiceTwo
                     >
                         <Animated.View style={contentStyle}>
                             <Text className="text-white text-xl font-bold text-center leading-7">
-                                {question.choiceTwo}
+                                {choiceTwo}
                             </Text>
                         </Animated.View>
                     </LinearGradient>

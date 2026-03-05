@@ -16,7 +16,7 @@ import useBottomSheet from "@/hooks/use-bottom-sheet";
 import { ReportBottomSheet } from "@/components/bottom-sheet/ReportBottomSheet";
 import GameFinished from "@/components/game/GameFinished";
 
-export default function Prefer() {
+export default function PreferLocalPage() {
     const router = useRouter();
     const i18n = useTranslations();
     const { showBottomSheet } = useBottomSheet();
@@ -57,7 +57,9 @@ export default function Prefer() {
 
                 {preferQuestion && iconUri && (
                     <PreferCard
-                        question={preferQuestion.question}
+                        choiceOne={preferQuestion.question.choiceOne}
+                        choiceTwo={preferQuestion.question.choiceTwo}
+                        questionId={preferQuestion.question.id}
                         iconUri={iconUri}
                         onChoiceOne={nextQuestion}
                         onChoiceTwo={nextQuestion}
