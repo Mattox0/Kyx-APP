@@ -10,7 +10,7 @@ import BookIcon from "@/assets/icons/book.svg";
 import OnlineIcon from "@/assets/icons/online.svg";
 import LocalPhoneIcon from "@/assets/icons/local-phone.svg";
 import {GameMode, GameModes} from "@/types/GameMode";
-import {useQuery} from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import {TanstackQueryKey} from "@/types/TanstackQueryKey";
 import {api} from "@/lib/api";
 import {Mode} from "@/types/api/Mode";
@@ -33,10 +33,24 @@ export default function ModeSelection() {
             const response = await api.get(`/mode/game/${game}`);
             return response.data;
         },
-    })
+    });
+
 
     const [gameData, setGameData] = useState<GameMode | null>(null);
     const [selectedModes, setSelectedModes] = useState<Mode[]>([]);
+
+    const { mutate: createOnlineGame } = useMutation({
+        mutationFn: async () => {
+            const response = await api.post<{ gameId: string; code: string; }>(`/${game}/create-party/online`, { modes: selectedModes?.map(mode => mode.id) ?? [] });
+            return response.data;
+        },
+        onSuccess: (data) => {
+            router.push({
+                pathname: "/(game-online)/lobby/online",
+                params: { gameId: data.gameId, code: data.code, gameType: game },
+            });
+        },
+    });
 
     useEffect(() => {
         if (game) {
@@ -119,9 +133,7 @@ export default function ModeSelection() {
                     <Animated.View entering={FadeInDown.duration(500).delay(100)} className="w-full">
                         <Pressable onPress={() => {
                             setOnlineMode(true);
-                            router.push({
-                                pathname: "/lobby/online"
-                            })
+                            createOnlineGame();
                         }}>
                             <LinearGradient
                                 colors={['#2A2344', '#332850']}
@@ -146,7 +158,7 @@ export default function ModeSelection() {
                         <Pressable onPress={() => {
                             setOnlineMode(false);
                             router.push({
-                                pathname: "/lobby/local"
+                                pathname: "/(game-local)/lobby/local"
                             })
                         }}>
                             <LinearGradient

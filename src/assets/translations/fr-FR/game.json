@@ -31,5 +31,12 @@
         "title": "Toutes les questions ont été jouées !",
         "description": "Vous avez répondu à toutes les questions.",
         "replay": "Rejouer"
+    },
+    "online": {
+        "inviteCode": "Code de la partie",
+        "players": "Joueurs ({{count}})",
+        "cancel": "Quitter",
+        "start": "Démarrer",
+        "waiting": "En attente de joueurs...\n\nVous pourrez démarrer la partie à partir de 2 joueurs !"
     }
 }

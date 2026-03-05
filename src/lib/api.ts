@@ -1,9 +1,8 @@
 import axios from "axios";
 import Constants from "expo-constants";
-import * as SecureStore from "expo-secure-store";
+import { getCookieHeader } from "@/utils/auth";
 
 const apiUrl = Constants.expoConfig?.extra?.apiUrl as string;
-const slug = Constants.expoConfig?.extra?.slug as string;
 
 export const api = axios.create({
     baseURL: apiUrl + "/api",
@@ -14,18 +13,9 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use(async (config) => {
-    const cookieJson = await SecureStore.getItemAsync(`${slug}_cookie`);
-    if (cookieJson) {
-        try {
-            const cookies: Record<string, { value: string; expires?: string }> = JSON.parse(cookieJson);
-            const cookieHeader = Object.entries(cookies)
-                .filter(([, c]) => !c.expires || new Date(c.expires) > new Date())
-                .map(([key, c]) => `${key}=${c.value}`)
-                .join('; ');
-            if (cookieHeader) {
-                config.headers.Cookie = cookieHeader;
-            }
-        } catch {}
+    const cookieHeader = await getCookieHeader();
+    if (cookieHeader) {
+        config.headers.Cookie = cookieHeader;
     }
     return config;
 });

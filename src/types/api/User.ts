@@ -16,8 +16,9 @@ export interface LocalUser {
     gender: Gender;
 }
 
-export interface OnlineUser extends LocalUser {
-
+export interface OnlineUser extends User {
+    socketId: string;
+    isHost: boolean;
 }
 
 export type GameUser = LocalUser | OnlineUser;
