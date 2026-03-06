@@ -1,50 +1,74 @@
-# Welcome to your Expo app 👋
+# Kyx
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Application mobile de jeux de soirée — bientôt disponible sur iOS et Android.
 
-## Get started
+Interface administrateur (Nextjs) : https://github.com/Mattox0/KYX-ADMIN
 
-1. Install dependencies
+Backend (NestJS) : https://github.com/Mattox0/Kyx-BO
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## Le projet
 
-   ```bash
-   npx expo start
-   ```
+Kyx permet de jouer à des jeux de soirée entre amis, en local sur un seul téléphone ou en ligne dans un lobby partagé.
 
-In the output, you'll find options to open the app in a
+L'inscription est facultative — l'app est entièrement accessible sans compte. Se connecter débloque les fonctionnalités sociales (amis, parties en ligne).
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Jeux
 
-## Get a fresh project
+### Vérité ou Défi
+Questions et défis piochés aléatoirement, à tour de rôle entre les joueurs.
 
-When you're ready, run:
+### Je n'ai jamais
+Chaque joueur révèle ce qu'il n'a jamais fait. Ceux qui l'ont fait boivent (ou perdent un point).
+
+### Préfères-tu
+Deux options s'affrontent. Les joueurs swipent pour choisir leur camp, puis le groupe se retrouve face à face.
+
+---
+
+## Modes de jeu
+
+Chaque jeu est jouable dans deux modes :
+
+- **Local** — tous les joueurs autour du même téléphone. Les joueurs sont créés directement dans l'app, sans compte.
+- **En ligne** — chaque joueur rejoint un lobby depuis son propre téléphone via un code de partie. Nécessite un compte.
+
+---
+
+## Fonctionnalités
+
+- **Profil personnalisable** — pseudo et avatar généré avec DiceBear (coiffure, yeux, sourcils, bouche, lunettes, couleur de peau)
+- **Système d'amis** — envoi et réception de demandes, liste d'amis
+- **Lobby en temps réel** — synchronisation via WebSockets, les joueurs se rejoignent avant le lancement
+- **Questions par catégorie** — les modes de jeu et questions sont gérés depuis l'interface admin
+
+---
+
+## Stack technique
+
+| Domaine | Technologie |
+|---|---|
+| Framework | Expo SDK 54 + Expo Router |
+| Styling | NativeWind (Tailwind CSS) |
+| Auth | Better Auth |
+| Temps réel | Socket.IO |
+| State serveur | TanStack React Query |
+| Animations | React Native Reanimated 4 |
+| Persistance locale | expo-secure-store |
+| i18n | i18n-js (français) |
+
+---
+
+## Développement
 
 ```bash
-npm run reset-project
+make install          # Installer les dépendances
+make start            # Démarrer le serveur de dev (API prod)
+APP_ENV=dev make start  # Démarrer avec l'API locale
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+L'app nécessite un **dev client** (pas Expo Go) — voir `make install-ios` / `make install-android`.
+Les builds de production se font via EAS : `make build-local-ios` / `make build-local-android`.
