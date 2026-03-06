@@ -3,7 +3,6 @@ import { Text } from "@/components/ui/Text";
 import { OnlineUser } from "@/types/api/User";
 import { ScrollView } from "react-native-gesture-handler";
 import { parseStyledText } from "@/utils/parseStyledText";
-import useTranslations from "@/hooks/use-translations";
 import { Avatar } from "@/components/avatar";
 
 export interface ResultEntry {
@@ -19,11 +18,10 @@ interface ResultsScreenProps {
 }
 
 export default function ResultsScreen({ question, entries }: ResultsScreenProps) {
-    const i18n = useTranslations();
     return (
         <ScrollView>
             <Text className="text-center text-2xl mt-5 mb-4">
-                {parseStyledText(i18n.t("game.neverHave.question", { question: question }))}
+                {parseStyledText(question)}
             </Text>
 
             <View className="justify-center gap-6 mt-8">

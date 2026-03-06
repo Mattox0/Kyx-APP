@@ -17,6 +17,7 @@ import useBottomSheet from "@/hooks/use-bottom-sheet";
 import { ReportBottomSheet } from "@/components/bottom-sheet/ReportBottomSheet";
 import WaitingScreen from "@/components/game/WaitingScreen";
 import ResultsScreen, { ResultEntry } from "@/components/game/ResultsScreen";
+import GameFinishedOnline from "@/components/game/GameFinishedOnline";
 
 type Phase = "question" | "waiting" | "results";
 
@@ -33,6 +34,8 @@ export default function NeverHaveOnlinePage() {
         answersCount,
         myUser,
         nextQuestion,
+        startGame,
+        isGameOver,
     } = useGameOnline();
     const { showBottomSheet } = useBottomSheet();
     const { bottom } = useSafeAreaInsets();
@@ -99,6 +102,18 @@ export default function NeverHaveOnlinePage() {
         [submitAnswer]
     );
 
+    if (isGameOver) {
+        return (
+            <GameFinishedOnline
+                isHost={myUser?.isHost ?? false}
+                onReplay={startGame}
+                onBack={goBack}
+            />
+        );
+    }
+
+    console.log(currentQuestion);
+
     return (
         <View className="flex-1">
             <Page onBack={goBack} containerClassName="mt-24 px-4" scrollable={false} logoAction={() => {}}>
@@ -136,7 +151,7 @@ export default function NeverHaveOnlinePage() {
                 {phase === "waiting" && <WaitingScreen players={players} />}
 
                 {phase === "results" && (
-                    <ResultsScreen question={neverHaveQuestion?.question.question ?? ""} entries={resultEntries} />
+                    <ResultsScreen question={i18n.t("game.neverHave.question", { question: neverHaveQuestion?.question.question ?? "" })} entries={resultEntries} />
                 )}
             </Page>
 

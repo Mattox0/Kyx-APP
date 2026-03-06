@@ -25,7 +25,8 @@
         "skip": "N'a pas répondu"
     },
     "prefer": {
-        "title": "Tu préfères"
+        "title": "Tu préfères",
+        "titleBold": "<b>Tu préfères</b>",
     },
     "truthDare": {
         "dare": "Action",

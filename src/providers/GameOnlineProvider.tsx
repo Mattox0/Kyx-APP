@@ -17,6 +17,7 @@ type GameOnlineContextType = {
     myUser: OnlineUser | null;
     isConnected: boolean;
     isKicked: boolean;
+    isGameOver: boolean;
     code: string | null;
     game: GameSession | null;
     currentQuestion: GameQuestion | null;
@@ -48,6 +49,7 @@ export function GameOnlineProvider({ children }: { children: ReactNode }) {
     const [questionResults, setQuestionResults] = useState<QuestionResults | null>(null);
     const [cardsCount, setCardsCount] = useState<number | null>(null);
     const [answersCount, setAnswersCount] = useState<number>(0);
+    const [isGameOver, setIsGameOver] = useState(false);
 
     const kickUser = useCallback((userId: string) => {
         socketRef.current?.emit('kickUser', { userId });
@@ -101,6 +103,7 @@ export function GameOnlineProvider({ children }: { children: ReactNode }) {
                 setQuestionResults(null);
                 setCardsCount(questionNumber);
                 setCurrentQuestion(questionWithoutCards);
+                setIsGameOver(false);
             });
 
             socket.on("players", (players: OnlineUser[]) => {
@@ -114,6 +117,10 @@ export function GameOnlineProvider({ children }: { children: ReactNode }) {
 
             socket.on("results", (results: QuestionResults) => {
                 setQuestionResults(results);
+            });
+
+            socket.on("gameOver", () => {
+                setIsGameOver(true);
             });
         })();
 
@@ -131,6 +138,7 @@ export function GameOnlineProvider({ children }: { children: ReactNode }) {
         myUser,
         isConnected,
         isKicked,
+        isGameOver,
         code,
         game,
         status,
@@ -143,7 +151,7 @@ export function GameOnlineProvider({ children }: { children: ReactNode }) {
         startGame,
         submitAnswer,
         nextQuestion
-    }), [players, isConnected, isKicked, code, game, myUser, status, currentQuestion, questionResults, cardsCount, progress, answersCount]);
+    }), [players, isConnected, isKicked, isGameOver, code, game, myUser, status, currentQuestion, questionResults, cardsCount, progress, answersCount]);
 
     return (
         <GameOnlineContext.Provider value={value}>
