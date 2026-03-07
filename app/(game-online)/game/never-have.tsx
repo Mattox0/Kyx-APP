@@ -48,7 +48,7 @@ export default function NeverHaveOnlinePage() {
 
     useEffect(() => {
         setPhase("question");
-    }, [neverHaveQuestion?.question.id]);
+    }, [currentQuestion]);
 
     useEffect(() => {
         if (myUser?.hasAnswered) setPhase("waiting");
@@ -111,8 +111,6 @@ export default function NeverHaveOnlinePage() {
             />
         );
     }
-
-    console.log(currentQuestion);
 
     return (
         <View className="flex-1">

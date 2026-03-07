@@ -41,7 +41,7 @@ const CardSlider = forwardRef<CardSliderHandle, CardSliderProps>(
                     onSwipedLeft={() => onSwipedLeft?.()}
                     onSwipedRight={() => onSwipedRight?.()}
                     onSwipedAborted={() => onSwipedAborted?.()}
-                    keyExtractor={(q) => q.question.id}
+                    keyExtractor={(q) => q?.question?.id ?? ""}
                     stackSize={5}
                     stackSeparation={12}
                     stackScale={4}

@@ -9,6 +9,8 @@ import useTranslations from "@/hooks/use-translations";
 import { GameQuestion } from "@/types/GameQuestion";
 import { ChallengeType } from "@/types/ChallengeType";
 import { Gender } from "@/types/Gender";
+import Avatar from "@/components/avatar/Avatar";
+import { OnlineUser } from "@/types/api/User";
 
 interface GameCardProps {
     gameQuestion: GameQuestion;
@@ -46,8 +48,11 @@ export default function GameCard({ gameQuestion }: GameCardProps) {
                 )}
                 {gameQuestion.questionType === "truth-dare" && (
                     <>
+                        {"avatarOptions" in (gameQuestion.userTarget ?? {}) && (
+                            <Avatar options={(gameQuestion.userTarget as OnlineUser).avatarOptions} size={72} />
+                        )}
                         <Text className="font-bold text-3xl text-white">
-                            {gameQuestion.question.challengeType === ChallengeType.DARE
+                            {gameQuestion.question.type === ChallengeType.DARE
                                 ? i18n.t("game.truthDare.dare")
                                 : i18n.t("game.truthDare.truth")}
                         </Text>

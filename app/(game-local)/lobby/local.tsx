@@ -21,6 +21,9 @@ import { useMutation } from "@tanstack/react-query";
 import { api } from "@/lib/api";
 import { GameQuestion } from "@/types/GameQuestion";
 import useUser from "@/hooks/use-user";
+import * as SecureStore from "expo-secure-store";
+
+const STORAGE_KEY = "local-lobby-users";
 
 export default function LocalPage() {
     const i18n = useTranslations();
@@ -30,6 +33,30 @@ export default function LocalPage() {
     const { initQuestions, setGameId } = useGameLocal();
     const [userToAdd, setUserToAdd] = useState<string>("");
     const [users, setUsers] = useState<LocalUser[]>([]);
+    const [loadedFromStorage, setLoadedFromStorage] = useState(false);
+
+    useEffect(() => {
+        SecureStore.getItemAsync(STORAGE_KEY).then((json) => {
+            if (json) {
+                try {
+                    const saved = JSON.parse(json) as LocalUser[];
+                    if (saved.length > 0) {
+                        setUsers(saved);
+                        setLoadedFromStorage(true);
+                        return;
+                    }
+                } catch {}
+            }
+            setLoadedFromStorage(true);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (!loadedFromStorage) return;
+        if (users.length === 0 && user) {
+            setUsers([{ name: user.name, gender: user.gender, id: user.id }]);
+        }
+    }, [loadedFromStorage, user]);
 
     const addUser = useCallback(() => {
         if (!userToAdd.trim()) return;
@@ -45,12 +72,6 @@ export default function LocalPage() {
         }
     }, [router]);
 
-    useEffect(() => {
-        if (user) {
-            setUsers([{ name: user.name, gender: user.gender, id: user.id }])
-        }
-    }, [user]);
-
     const updateUser = (localUser: LocalUser, gender: Gender) => {
         setUsers(prev => prev.map(user => user.id === localUser.id ? { ...user, gender } : user));
     }
@@ -65,6 +86,7 @@ export default function LocalPage() {
             return response.data;
         },
         onSuccess: (data) => {
+            SecureStore.setItemAsync(STORAGE_KEY, JSON.stringify(users));
             setGameUsers(users);
             setGameId(data.gameId);
             initQuestions(data.questions);

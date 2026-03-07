@@ -21,8 +21,8 @@ export default function ModeCard({name, description, image, selected = false, on
             <View
                 className={`border-border border-2 bg-background rounded-2xl px-6 py-2 flex-row items-center gap-4 ${selected ? "border-pink" : "opacity-50"}`}
             >
-                <View className="rounded-xl overflow-hidden" style={{width: 80, height: 80}}>
-                    <SvgUri uri={imageUri} width={80} height={80} />
+                <View className="rounded-xl overflow-hidden" style={{width: 70, height: 70}}>
+                    <SvgUri uri={imageUri} width={70} height={70} />
                 </View>
                 <View className="flex-1">
                     <Text className="font-bold text-lg">{name}</Text>

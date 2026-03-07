@@ -47,7 +47,7 @@ export default function PreferOnlinePage() {
 
     useEffect(() => {
         setPhase("question");
-    }, [preferQuestion?.question.id]);
+    }, [currentQuestion]);
 
     useEffect(() => {
         if (myUser?.hasAnswered) setPhase("waiting");

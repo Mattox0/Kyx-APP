@@ -19,7 +19,7 @@ export interface Prefer extends Q {
 
 export interface TruthDare extends Q {
     question: string;
-    challengeType: ChallengeType;
+    type: ChallengeType;
 }
 
 export type Question = NeverHave | TruthDare | Prefer;

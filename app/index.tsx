@@ -9,11 +9,15 @@ import {Avatar} from "@/components/avatar";
 import useUser from "@/hooks/use-user";
 import PenIcon from "@/assets/icons/pen.svg";
 import FriendIcon from "@/assets/icons/friends.svg";
+import AvatarSkeleton from "@/components/skeletons/AvatarSkeleton";
+import useBottomSheet from "@/hooks/use-bottom-sheet";
+import JoinGameBottomSheet from "@/components/bottom-sheet/JoinGameBottomSheet";
 
 export default function Index() {
     const i18n = useTranslations();
     const router = useRouter();
-    const { user } = useUser();
+    const { user, isLoading } = useUser();
+    const { showBottomSheet } = useBottomSheet();
 
     return (
         <Page
@@ -30,7 +34,7 @@ export default function Index() {
                     <Button onPress={() => router.push('/create-game')}>
                         {i18n.t("home.buttons.createParty")}
                     </Button>
-                    <Button>
+                    <Button onPress={() => user ? showBottomSheet(<JoinGameBottomSheet />) : router.push('/auth')}>
                         {i18n.t("home.buttons.joinParty")}
                     </Button>
                 </View>
@@ -44,7 +48,7 @@ export default function Index() {
                     onPress={() => user ? router.push('/create-profile') : router.push('/auth?redirect=/create-profile')}
                     className="relative mb-8"
                 >
-                    <Avatar options={user?.avatarOptions} />
+                    {isLoading ? <AvatarSkeleton size={120} /> : <Avatar options={user?.avatarOptions} />}
                     <View className="absolute bottom-0 right-0">
                         <PenIcon width={24} height={24} color="#FFFFFF"/>
                     </View>

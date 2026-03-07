@@ -2,14 +2,17 @@ import {useMutation, useQuery, useQueryClient} from '@tanstack/react-query';
 import {api} from '@/lib/api';
 import {TanstackQueryKey} from '@/types/TanstackQueryKey';
 import {Friend, FriendRequest} from '@/types/api/Friend';
+import { GameSession } from "@/types/api/GameSession";
+import { Game } from "@/types/api/Game";
 
 export function useFriends(enabled: boolean) {
     const queryClient = useQueryClient();
 
-    const {data: friends, isPending: friendsPending} = useQuery<Friend[]>({
+    const {data: friends, isPending: friendsPending} = useQuery<(Friend & { currentGame: Game })[][]>({
         queryKey: [TanstackQueryKey.FRIENDS],
         queryFn: async () => (await api.get('/friend')).data,
         enabled,
+        refetchInterval: 20_000
     });
 
     const {data: requestsSent, isPending: requestsSentPending} = useQuery<FriendRequest[]>({

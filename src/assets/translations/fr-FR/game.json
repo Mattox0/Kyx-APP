@@ -30,7 +30,9 @@
     },
     "truthDare": {
         "dare": "Action",
-        "truth": "Vérité"
+        "truth": "Vérité",
+        "done": "C'est fait !",
+        "waiting": "Nous attendons {{name}}"
     },
     "finished": {
         "title": "Toutes les questions ont été jouées !",

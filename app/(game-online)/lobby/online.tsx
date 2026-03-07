@@ -4,20 +4,40 @@ import useGameOnline from "@/hooks/use-game-online";
 import { RelativePathString, useLocalSearchParams, useRouter } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
 import { Pressable, View } from "react-native";
-import Animated from "react-native-reanimated";
+import Animated, { FadeIn } from "react-native-reanimated";
 import Clipboard from "@react-native-clipboard/clipboard";
 import useTranslations from "@/hooks/use-translations";
 import { ScrollView } from "react-native-gesture-handler";
-import OnlineUserCard from "@/components/cards/OnlineUserCard";
+import OnlineUserCard, { FriendStatus } from "@/components/cards/OnlineUserCard";
 import Button from "@/components/ui/Button";
 import { GameStatus } from "@/types/GameStatus";
 import { GameTypeToRoute } from "@/types/GameType";
+import { useFriends } from "@/hooks/use-friends";
+import useUser from "@/hooks/use-user";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { api } from "@/lib/api";
+import { TanstackQueryKey } from "@/types/TanstackQueryKey";
 
 export default function LobbyOnlinePage() {
     const router = useRouter();
     const i18n = useTranslations();
     const { code } = useLocalSearchParams<{ code: string }>();
     const { players, myUser, kickUser, isKicked, startGame, status, game } = useGameOnline();
+    const { user } = useUser();
+    const { friends, requestsSent } = useFriends(!!user);
+    const queryClient = useQueryClient();
+
+    const { mutate: sendFriendRequest } = useMutation({
+        mutationFn: (friendCode: string) => api.post("/friend/request", { friendCode }, { validateStatus: (s) => s < 500 }),
+        onSuccess: () => queryClient.invalidateQueries({ queryKey: [TanstackQueryKey.FRIEND_REQUESTS_SENT] }),
+    });
+
+    const getFriendStatus = useCallback((playerId: string, playerFriendCode: string): FriendStatus => {
+        if (friends?.some((f) => f.friend.id === playerId || f.user.id === playerId)) return "friend";
+        if (requestsSent?.some((r) => r.userRequested.id === playerId)) return "sent";
+        return "none";
+    }, [friends, requestsSent]);
+
     const [copied, setCopied] = useState(false);
 
     useEffect(() => {
@@ -83,9 +103,19 @@ export default function LobbyOnlinePage() {
                 </Animated.View>
 
                 <ScrollView contentContainerClassName="gap-4" className="w-full">
-                    <Text className="text-sm text-gray">
-                        {i18n.t("game.online.players", { count: players.length })}
-                    </Text>
+                    <View className="flex-row justify-between items-center">
+                        <Text className="text-sm text-gray">
+                            {i18n.t("game.online.players", { count: players.length })}
+                        </Text>
+                        {players.length >= 2 && (
+                            <Animated.View entering={FadeIn.duration(300)} className="flex-row items-center gap-2">
+                                <View className="rounded-full h-3 w-3" style={{ backgroundColor: "#05DF72" }} />
+                                <Text className="text-sm" style={{ color: "#05DF72" }}>
+                                    {i18n.t("lobby.local.readyToPlay")}
+                                </Text>
+                            </Animated.View>
+                        )}
+                    </View>
                     {players.map((player) => (
                         <OnlineUserCard
                             key={player.id}
@@ -93,6 +123,8 @@ export default function LobbyOnlinePage() {
                             user={player}
                             isHost={myUser?.isHost ?? false}
                             onDelete={() => kickUser(player.id)}
+                            friendStatus={getFriendStatus(player.id, player.friendCode)}
+                            onAddFriend={() => sendFriendRequest(player.friendCode)}
                         />
                     ))}
                     {players.length === 1 && (

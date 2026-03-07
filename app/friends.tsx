@@ -130,7 +130,7 @@ export default function FriendsPage() {
                             <Animated.View entering={FadeInDown.duration(400).delay(250)} style={{gap: 12}}>
                                 {friends.map((friend) => (
                                     <Animated.View key={friend.friend.id} entering={FadeInDown.duration(300)} exiting={FadeOutDown.duration(300)} layout={LinearTransition.duration(300)}>
-                                        <FriendCard name={friend.friend.name} gender={friend.friend.gender} avatarOptions={friend.friend.avatarOptions} friendCode={friend.friend.friendCode} />
+                                        <FriendCard name={friend.friend.name} gender={friend.friend.gender} avatarOptions={friend.friend.avatarOptions} friendCode={friend.friend.friendCode} currentGame={friend.currentGame} />
                                     </Animated.View>
                                 ))}
                             </Animated.View>
