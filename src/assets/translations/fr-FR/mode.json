@@ -17,7 +17,28 @@
             "description": "Les joueurs doivent choisir entre deux options et expliquer leur choix",
             "howToPlay": "L'application propose deux options et chaque joueur doit choisir celle qu'il préfère, même si les deux choix sont difficiles. Ensuite, débattez ensemble pour comprendre et défendre vos choix.\nUn jeu idéal pour lancer des débats animés et découvrir les préférences surprenantes de vos amis.",
             "example": "<b>Tu préfères</b> avoir la capacité de voler ou être invisible ?"
+        },
+        "purity-test": {
+            "name": "Test de\npureté",
+            "description": "Découvrez votre score de pureté en répondant à une série de questions sur vos expériences de vie",
+            "howToPlay": "Répondez honnêtement à une liste de questions. Plus vous avez vécu de choses, plus votre score est bas. Comparez vos résultats avec vos amis pour voir qui est le plus sage... ou le plus fou !",
+            "example": "<b>As-tu déjà</b> menti à tes parents pour sortir ?"
+        },
+        "debats": {
+            "name": "Débats",
+            "description": "Affrontez-vous sur des sujets clivants et défendez votre point de vue face aux autres joueurs",
+            "howToPlay": "L'application propose un sujet de débat et chaque joueur doit défendre sa position. Les autres votent pour le meilleur argumentaire. Un jeu parfait pour tester votre éloquence et découvrir les opinions de vos amis.",
+            "example": "<b>Sujet</b> : Les ananas ont-ils leur place sur une pizza ?"
         }
+    },
+    "tags": {
+        "4modes": "4 Modes",
+        "5modes": "5 Modes",
+        "6categories": "6 Catégories",
+        "localOrOnline": "Local ou en ligne",
+        "local": "Local",
+        "multiplayer": "Multi-joueurs",
+        "soloOrGroup": "Solo ou groupe"
     },
     "buttons": {
         "play": "Lancer",
@@ -32,5 +53,6 @@
         "confirm": "J'ai compris",
         "howToPlay": "Comment jouer ?",
         "example": "Exemple"
-    }
+    },
+    "commingSoon": "Bientôt disponible"
 }

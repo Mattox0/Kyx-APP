@@ -71,36 +71,58 @@ export default function CreateGamePage() {
                     scrollAnimationDuration={300}
                     renderItem={({item}) => (
                         <View
-                            style={{width: screenWidth, height: carouselHeight}}
+                            style={{width: screenWidth, height: carouselHeight, overflow: "hidden"}}
                             className="items-center justify-center px-12"
                         >
+                            {item.comingSoon && (
+                                <View style={{
+                                    position: "absolute",
+                                    top: 75,
+                                    left: -48,
+                                    right: -48,
+                                    transform: [{rotate: "-8deg"}],
+                                    backgroundColor: "#F6339A",
+                                    paddingVertical: 10,
+                                    zIndex: 10,
+                                    alignItems: "center",
+                                }}>
+                                    <Text className="text-white font-bold text-lg uppercase" style={{ letterSpacing: 3}}>
+                                        {i18n.t("mode.comingSoon")}
+                                    </Text>
+                                </View>
+                            )}
+
                             <View className="flex-1 items-center justify-center overflow-visible">
                                 <View className="overflow-visible">
-                                    <Text className="font-kavoon font-bold text-5xl text-center mb-20 -rotate-[30deg] pt-2">
+                                    <Text style={{opacity: item.comingSoon ? 0.4 : 1}} className="font-kavoon font-bold text-5xl text-center mb-20 -rotate-[30deg] pt-2">
                                         {i18n.t(item.name)}
                                     </Text>
                                 </View>
-                                <Text className="text-center text-gray mb-6 text-base">
+                                <Text style={{opacity: item.comingSoon ? 0.4 : 1}} className="text-center text-gray mb-6 text-base">
                                     {i18n.t(item.description)}
                                 </Text>
-                                <View className="flex-row flex-wrap justify-center gap-2 mb-12">
+                                <View style={{opacity: item.comingSoon ? 0.4 : 1}} className="flex-row flex-wrap justify-center gap-2 mb-12">
                                     {item.tags.map((tag) => (
                                         <View key={tag} className="bg-yellow rounded-full px-4 py-2">
-                                            <Text className="text-sm uppercase">{tag}</Text>
+                                            <Text className="text-sm uppercase">{i18n.t(tag)}</Text>
                                         </View>
                                     ))}
                                 </View>
                             </View>
 
                             <View className="w-full pb-20">
-                                <Button onPress={() => {
-                                    setGame(item);
-                                    router.push({
-                                        pathname: "/mode-selection",
-                                        params: {game: item.id},
-                                    })
-                                }}>
-                                    {i18n.t("game.launch")}
+                                <Button
+                                    disabled={item.comingSoon}
+                                    onPress={() => {
+                                        if (item.comingSoon) return;
+                                        setGame(item);
+                                        router.push({
+                                            pathname: "/mode-selection",
+                                            params: {game: item.id},
+                                        });
+                                    }}
+                                >
+                                    {item.comingSoon ? "Bientôt disponible" : i18n.t("game.launch")}
                                 </Button>
                             </View>
                         </View>
