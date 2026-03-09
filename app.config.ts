@@ -6,8 +6,8 @@ type Environments = {
     [key in EnvName]: {
         envName: key;
         projectId: string;
-        bundleId: `com.kyx.app${key extends "prod" ? "" : `.${key}`}`;
-        package: `com.kyx.app${key extends "prod" ? "" : `.${key}`}`;
+        bundleId: `fr.app-kyx.kyx${key extends "prod" ? "" : `.${key}`}`;
+        package: `fr.app-kyx.kyx${key extends "prod" ? "" : `.${key}`}`;
         slug: `kyx${key extends "prod" ? "" : `-${key}`}`;
         apiUrl: string;
     }
@@ -16,17 +16,17 @@ type Environments = {
 const environments: Environments = {
     dev: {
         envName: "dev",
-        projectId: "",
-        bundleId: "com.kyx.app.dev",
-        package: "com.kyx.app.dev",
+        projectId: "eacca958-2932-446b-a2dc-6e4e4bfb78c2",
+        bundleId: "fr.app-kyx.kyx.dev",
+        package: "fr.app-kyx.kyx.dev",
         slug: "kyx-dev",
         apiUrl: "http://192.168.1.15:4005",
     },
     prod: {
         envName: "prod",
-        projectId: "",
-        bundleId: "com.kyx.app",
-        package: "com.kyx.app",
+        projectId: "eacca958-2932-446b-a2dc-6e4e4bfb78c2",
+        bundleId: "fr.app-kyx.kyx",
+        package: "fr.app-kyx.kyx",
         slug: "kyx",
         apiUrl: "https://app-kyx.fr",
     }

@@ -1,0 +1,25 @@
+{
+  "cli": {
+    "version": ">= 16.20.4",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "prod": {
+      "autoIncrement": true
+    }
+  },
+  "submit": {
+    "prod": {
+      "ios": {
+        "ascAppId": "6760316883"
+      }
+    }
+  }
+}

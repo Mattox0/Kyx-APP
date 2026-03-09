@@ -16,9 +16,7 @@
     "install:ios": "expo run:ios --device",
     "install:android": "expo run:android --device",
     "build:local:ios": "eas build -p ios --local --profile prod",
-    "build:local:ios:test": "eas build -p ios --local --profile test",
     "build:local:android": "eas build -p android --local --profile prod",
-    "build:local:android:test": "eas build -p android --local --profile test",
     "postinstall": "patch-package"
   },
   "dependencies": {

@@ -61,22 +61,10 @@ start-prod: ## Démarrer l'application en prod
 build-local-ios: ## Lancer un build de l'application pour IOS
 	@yarn build:local:ios
 
-.PHONY: build-local-ios-test
-build-local-ios-test: ## Lancer un build de test de l'application pour IOS
-	@yarn build:local:ios:test
-
 .PHONY: build-local-android
 build-local-android: ## Lancer un build de l'application pour Android
 	@yarn build:local:android
 
-.PHONY: build-local-android-test
-build-local-android-test: ## Lancer un build de l'application pour Android
-	@yarn build:local:android:test
-
 .PHONY: submit-iod
 submit-ios: ## Soumettre un build de l'application (IOS)
 	@eas submit --platform ios --profile prod
-
-.PHONY: submit-ios-test
-submit-ios-test: ## Soumettre un build de l'application (IOS)
-	@eas submit --platform ios --profile test
