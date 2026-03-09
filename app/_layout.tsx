@@ -1,6 +1,15 @@
+import * as Sentry from '@sentry/react-native';
 import {DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {SplashScreen, Stack} from 'expo-router';
 import 'react-native-reanimated';
+
+Sentry.init({
+    dsn: 'https://23dc0c06ccb8f9b49fc1e6e273046122@o4511016372469760.ingest.de.sentry.io/4511016373452880',
+    tracesSampleRate: 1.0,
+    _experiments: {
+        profilesSampleRate: 1.0,
+    },
+});
 import {configureReanimatedLogger, ReanimatedLogLevel} from 'react-native-reanimated';
 
 configureReanimatedLogger({level: ReanimatedLogLevel.warn, strict: false});
@@ -31,7 +40,7 @@ const theme = {
     },
 };
 
-export default function RootLayout() {
+function RootLayout() {
     return (
         <GestureHandlerRootView style={{flex: 1}}>
             <SafeAreaProvider>
@@ -54,6 +63,8 @@ export default function RootLayout() {
     );
 }
 
+
+export default Sentry.wrap(RootLayout);
 
 const App = () => {
     const [isAppReady, setIsAppReady] = useState(true);

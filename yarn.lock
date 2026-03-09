@@ -1994,6 +1994,143 @@
   resolved "https://registry.yarnpkg.com/@rtsao/scc/-/scc-1.1.0.tgz#927dd2fae9bc3361403ac2c7a00c32ddce9ad7e8"
   integrity sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==
 
+"@sentry-internal/browser-utils@10.42.0":
+  version "10.42.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/browser-utils/-/browser-utils-10.42.0.tgz#97b7f8652e66e2ad4b3f14e12c47e5f827d8d763"
+  integrity sha512-HCEICKvepxN4/6NYfnMMMlppcSwIEwtS66X6d1/mwaHdi2ivw0uGl52p7Nfhda/lIJArbrkWprxl0WcjZajhQA==
+  dependencies:
+    "@sentry/core" "10.42.0"
+
+"@sentry-internal/feedback@10.42.0":
+  version "10.42.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/feedback/-/feedback-10.42.0.tgz#5c965367ff839da8289a27b308f14eab152eb8d7"
+  integrity sha512-lpPcHsog10MVYFTWE0Pf8vQRqQWwZHJpkVl2FEb9/HDdHFyTBUhCVoWo1KyKaG7GJl9AVKMAg7bp9SSNArhFNQ==
+  dependencies:
+    "@sentry/core" "10.42.0"
+
+"@sentry-internal/replay-canvas@10.42.0":
+  version "10.42.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay-canvas/-/replay-canvas-10.42.0.tgz#091ca5a4d314aa599bd9f3988f57ed744f828249"
+  integrity sha512-am3m1Fj8ihoPfoYo41Qq4KeCAAICn4bySso8Oepu9dMNe9Lcnsf+reMRS2qxTPg3pZDc4JEMOcLyNCcgnAfrHw==
+  dependencies:
+    "@sentry-internal/replay" "10.42.0"
+    "@sentry/core" "10.42.0"
+
+"@sentry-internal/replay@10.42.0":
+  version "10.42.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/replay/-/replay-10.42.0.tgz#bcc9e5d9468389c0fb4de557432a6fbba739fdeb"
+  integrity sha512-Zh3EoaH39x2lqVY1YyVB2vJEyCIrT+YLUQxYl1yvP0MJgLxaR6akVjkgxbSUJahan4cX5DxpZiEHfzdlWnYPyQ==
+  dependencies:
+    "@sentry-internal/browser-utils" "10.42.0"
+    "@sentry/core" "10.42.0"
+
+"@sentry/babel-plugin-component-annotate@5.1.1":
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/@sentry/babel-plugin-component-annotate/-/babel-plugin-component-annotate-5.1.1.tgz#9eeef63099011155691a5ee59b0f796c141e8f85"
+  integrity sha512-x2wEpBHwsTyTF2rWsLKJlzrRF1TTIGOfX+ngdE+Yd5DBkoS58HwQv824QOviPGQRla4/ypISqAXzjdDPL/zalg==
+
+"@sentry/browser@10.42.0":
+  version "10.42.0"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-10.42.0.tgz#918af1109d7fd93720d75b80ae33b347883caacd"
+  integrity sha512-iXxYjXNEBwY1MH4lDSDZZUNjzPJDK7/YLwVIJq/3iBYpIQVIhaJsoJnf3clx9+NfJ8QFKyKfcvgae61zm+hgTA==
+  dependencies:
+    "@sentry-internal/browser-utils" "10.42.0"
+    "@sentry-internal/feedback" "10.42.0"
+    "@sentry-internal/replay" "10.42.0"
+    "@sentry-internal/replay-canvas" "10.42.0"
+    "@sentry/core" "10.42.0"
+
+"@sentry/cli-darwin@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli-darwin/-/cli-darwin-3.3.0.tgz#bdb7328d59b794ec93ea50f7608ec6a1293bd4ed"
+  integrity sha512-hifHfFP7Rv/5+RoMJcKy1EF1eLrWhmIBZ5O7mD3Y5wjvABosWF44lYJ7tfQ1Reu4yeYPr9UkXqnCf6ftPgeK9Q==
+
+"@sentry/cli-linux-arm64@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli-linux-arm64/-/cli-linux-arm64-3.3.0.tgz#5dafb34c9360d1341c2f6e7b3bdbe7b587f4446b"
+  integrity sha512-yNLmxu4mqep7YeJg29FQq9733EvWodZz9UillchtIzG3oX6DLGhf+ZGElSYNUMmNal4wEj30wOnXveMVLtNM0Q==
+
+"@sentry/cli-linux-arm@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli-linux-arm/-/cli-linux-arm-3.3.0.tgz#534d8a5a454fc38afaddba5c49c71ce06d45c5a9"
+  integrity sha512-HTr08OF3+UGCt1RjcU4h37gHLbthSUf7dZzz4SGVHB3hiFzywBtnz6VibFY/U9HCqJNU9nW+WpdLkOpqzer5TA==
+
+"@sentry/cli-linux-i686@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli-linux-i686/-/cli-linux-i686-3.3.0.tgz#fa9ed8c7f0e376a3b1325a3cab8f79d6610ba031"
+  integrity sha512-xpYeO9lU7ua0ksToOibJpYvG3HFgwqH9VG9gt2fym8lgANpqM+Nxk2tdjiVsqddeD7R3tRLMhj6PjKFxUnI8KQ==
+
+"@sentry/cli-linux-x64@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli-linux-x64/-/cli-linux-x64-3.3.0.tgz#8b4c731a577b2ebccdae99af2bc4dea8d7aa9e45"
+  integrity sha512-sWgX7/kzGFHQYfJFEE2/k8I8+XqumznPJ+nEUnowjQZPZNKcK0gfX4kToJQ7BbyVS5VmxS45F3iM46+p1L2law==
+
+"@sentry/cli-win32-arm64@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli-win32-arm64/-/cli-win32-arm64-3.3.0.tgz#403e3b7bbed8e07b43d59a74e29ce6e939cb13f2"
+  integrity sha512-GDKp3agjI56xxgSPH2Ycvd0rkwM6SawvIUIlY1SXXFU+2ecMTz+RqRKKVvyAF0p1lsTRMKtHQ2TzHpCYDPryig==
+
+"@sentry/cli-win32-i686@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli-win32-i686/-/cli-win32-i686-3.3.0.tgz#1da747086afc87606e60c3fde9bf365745911d81"
+  integrity sha512-5ZllXD0feaTWW7Va32HKx/j2TVnP2hQ6cfkrZP/cyst9Wz7YDq0Q44cbEQlMTpZREuSL0tAzG92omBR9wdca7A==
+
+"@sentry/cli-win32-x64@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli-win32-x64/-/cli-win32-x64-3.3.0.tgz#58ced7d35b5d006c75eea930f77ff862019b606b"
+  integrity sha512-kgycTi6S2Vj5ZK9lRtDR9HO7d5Ep/JopVkzcaNxhpI5TNwCd0odXb0fy5MA09PQgPQhkys+viLDPdnpem0AWEw==
+
+"@sentry/cli@3.3.0":
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/cli/-/cli-3.3.0.tgz#9723e1486850f30aa5c0dbe86a135d132fa8fdf0"
+  integrity sha512-E3a7LUkJLLOaxjbqdqnTiM5UUAgu/WmXKec6O9+mjh9p7N5znLMp8xZNokwQQKPqoPxwsInv2kvEAQdA/bhjzg==
+  dependencies:
+    progress "^2.0.3"
+    proxy-from-env "^1.1.0"
+    undici "^6.22.0"
+    which "^2.0.2"
+  optionalDependencies:
+    "@sentry/cli-darwin" "3.3.0"
+    "@sentry/cli-linux-arm" "3.3.0"
+    "@sentry/cli-linux-arm64" "3.3.0"
+    "@sentry/cli-linux-i686" "3.3.0"
+    "@sentry/cli-linux-x64" "3.3.0"
+    "@sentry/cli-win32-arm64" "3.3.0"
+    "@sentry/cli-win32-i686" "3.3.0"
+    "@sentry/cli-win32-x64" "3.3.0"
+
+"@sentry/core@10.42.0":
+  version "10.42.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-10.42.0.tgz#5b6e38d4fde9276588f507d082c9b46debd3d666"
+  integrity sha512-L4rMrXMqUKBanpjpMT+TuAVk6xAijz6AWM6RiEYpohAr7SGcCEc1/T0+Ep1eLV8+pwWacfU27OvELIyNeOnGzA==
+
+"@sentry/react-native@^8.3.0":
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/@sentry/react-native/-/react-native-8.3.0.tgz#9ce6dd539f15b1869126b000253bf71d1a6e48f7"
+  integrity sha512-D7i3i/nqbAjuEnQyhup2eRNVAtIgINRlytXUsz2LeRb38Ws1vTPlZikdUzlOE3gi02aDtFj78a2dEqXID+t3Ug==
+  dependencies:
+    "@sentry/babel-plugin-component-annotate" "5.1.1"
+    "@sentry/browser" "10.42.0"
+    "@sentry/cli" "3.3.0"
+    "@sentry/core" "10.42.0"
+    "@sentry/react" "10.42.0"
+    "@sentry/types" "10.42.0"
+
+"@sentry/react@10.42.0":
+  version "10.42.0"
+  resolved "https://registry.yarnpkg.com/@sentry/react/-/react-10.42.0.tgz#d30cce78fd8b93de4ae1f360c7c1344bed00b75e"
+  integrity sha512-uigyz6E3yPjjqIZpkGzRChww6gzMmqdCpK30M5aBYoaen29DDmSECHYA16sfgXeSwzQhnXyX7GxgOB+eKIr9dw==
+  dependencies:
+    "@sentry/browser" "10.42.0"
+    "@sentry/core" "10.42.0"
+
+"@sentry/types@10.42.0":
+  version "10.42.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-10.42.0.tgz#4c5076a2fdded9d4ff01840762b517c4808bc78f"
+  integrity sha512-KEZtRI1ldl0H77lTLxtnBTihiD0/mf7I26Y7S30mU96PzXFei9Lnm3v9YuDIjDM5R7KlFSmndg6K9Q2oBm8Wxg==
+  dependencies:
+    "@sentry/core" "10.42.0"
+
 "@sinclair/typebox@^0.27.8":
   version "0.27.8"
   resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.27.8.tgz#6667fac16c436b5434a387a34dedb013198f6e6e"
@@ -7851,7 +7988,7 @@ undici-types@~7.16.0:
   resolved "https://registry.yarnpkg.com/undici-types/-/undici-types-7.16.0.tgz#ffccdff36aea4884cbfce9a750a0580224f58a46"
   integrity sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==
 
-undici@^6.18.2:
+undici@^6.18.2, undici@^6.22.0:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/undici/-/undici-6.23.0.tgz#7953087744d9095a96f115de3140ca3828aff3a4"
   integrity sha512-VfQPToRA5FZs/qJxLIinmU59u0r7LXqoJkCzinq3ckNJp3vKEh7jTWN589YQ5+aoAC/TGRLyJLCPKcLQbM8r9g==
@@ -8109,7 +8246,7 @@ which-typed-array@^1.1.16, which-typed-array@^1.1.19:
     gopd "^1.2.0"
     has-tostringtag "^1.0.2"
 
-which@^2.0.1:
+which@^2.0.1, which@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/which/-/which-2.0.2.tgz#7c6a8dd0a636a0327e10b59c9286eee93f3f51b1"
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==

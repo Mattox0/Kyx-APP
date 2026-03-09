@@ -64,6 +64,11 @@ const config: ExpoConfig = {
         ],
     },
     plugins: [
+        ["@sentry/react-native/expo", {
+            organization: "kyx-s0",
+            project: "kyx-app",
+            url: "https://de.sentry.io",
+        }],
         "expo-router",
         [
             "expo-splash-screen",
