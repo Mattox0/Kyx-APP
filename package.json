@@ -18,7 +18,8 @@
     "build:local:ios": "eas build -p ios --local --profile prod",
     "build:local:ios:test": "eas build -p ios --local --profile test",
     "build:local:android": "eas build -p android --local --profile prod",
-    "build:local:android:test": "eas build -p android --local --profile test"
+    "build:local:android:test": "eas build -p android --local --profile test",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@better-auth/expo": "^1.4.20",
@@ -72,6 +73,7 @@
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
     "eslint-config-prettier": "^10.1.8",
+    "patch-package": "^8.0.1",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.5.11",
     "tailwindcss": "^3.4.17",

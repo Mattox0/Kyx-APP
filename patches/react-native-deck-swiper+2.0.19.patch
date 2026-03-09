@@ -1,0 +1,37 @@
+diff --git a/node_modules/react-native-deck-swiper/Swiper.js b/node_modules/react-native-deck-swiper/Swiper.js
+index ba9fafe..4414835 100644
+--- a/node_modules/react-native-deck-swiper/Swiper.js
++++ b/node_modules/react-native-deck-swiper/Swiper.js
+@@ -211,12 +211,11 @@ class Swiper extends Component {
+         x: 0,
+         y: 0
+       })
++      this.state.pan.setValue({
++        x: 0,
++        y: 0
++      })
+     }
+-
+-    this.state.pan.setValue({
+-      x: 0,
+-      y: 0
+-    })
+   }
+ 
+   validPanResponderRelease = () => {
+@@ -245,15 +244,6 @@ class Swiper extends Component {
+   onPanResponderRelease = (e, gestureState) => {
+     this.props.dragEnd && this.props.dragEnd()
+     if (this.state.panResponderLocked) {
+-      this.state.pan.setValue({
+-        x: 0,
+-        y: 0
+-      })
+-      this.state.pan.setOffset({
+-        x: 0,
+-        y: 0
+-      })
+-
+       return
+     }
+ 

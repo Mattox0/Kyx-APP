@@ -31,6 +31,8 @@ export function GameLocalProvider({ children }: GameLocalProviderProps) {
     const [isFinished, setIsFinished] = useState(false);
     const [gameId, setGameId] = useState<string | null>(null);
     const hasEndedRef = useRef(false);
+    const currentIndexRef = useRef(0);
+    currentIndexRef.current = currentIndex;
 
     const endGame = useCallback(() => {
         if (!gameId || hasEndedRef.current) return;
@@ -52,12 +54,12 @@ export function GameLocalProvider({ children }: GameLocalProviderProps) {
 
     const nextQuestion = useCallback(() => {
         const maxIndex = (questions?.length ?? 1) - 1;
-        if (currentIndex >= maxIndex) {
+        if (currentIndexRef.current >= maxIndex) {
             setIsFinished(true);
         } else {
             setCurrentIndex(prev => prev + 1);
         }
-    }, [currentIndex, questions?.length]);
+    }, [questions?.length]);
 
     const previousQuestion = useCallback(() => {
         setCurrentIndex(prev => Math.max(prev - 1, 0));

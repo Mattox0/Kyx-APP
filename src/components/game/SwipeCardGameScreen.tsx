@@ -14,11 +14,16 @@ import GameFinished from "@/components/game/GameFinished";
 
 export default function SwipeCardGameScreen() {
     const router = useRouter();
-    const { total, currentIndex, progress, isFinished, endGame } = useGameLocal();
+    const { total, currentIndex, progress, isFinished, endGame, questions, nextQuestion } = useGameLocal();
     const { width } = useWindowDimensions();
     const { bottom } = useSafeAreaInsets();
     const swipeX = useSharedValue(0);
     const cardSliderRef = useRef<CardSliderHandle>(null);
+
+    const handleSwiping = useCallback((x: number) => { swipeX.value = x; }, [swipeX]);
+    const handleSwipedAborted = useCallback(() => { swipeX.value = withSpring(0); }, [swipeX]);
+    const handleSwipedLeft = useCallback(() => { swipeX.value = withTiming(0, { duration: 300 }); }, [swipeX]);
+    const handleSwipedRight = useCallback(() => { swipeX.value = withTiming(0, { duration: 300 }); }, [swipeX]);
 
     const goBack = useCallback(() => {
         endGame();
@@ -53,10 +58,12 @@ export default function SwipeCardGameScreen() {
 
                 <CardSlider
                     ref={cardSliderRef}
-                    onSwiping={(x) => { swipeX.value = x; }}
-                    onSwipedAborted={() => { swipeX.value = withSpring(0); }}
-                    onSwipedLeft={() => { swipeX.value = withTiming(0, { duration: 300 }); }}
-                    onSwipedRight={() => { swipeX.value = withTiming(0, { duration: 300 }); }}
+                    questions={questions}
+                    onSwiped={nextQuestion}
+                    onSwiping={handleSwiping}
+                    onSwipedAborted={handleSwipedAborted}
+                    onSwipedLeft={handleSwipedLeft}
+                    onSwipedRight={handleSwipedRight}
                 />
             </Page>
 

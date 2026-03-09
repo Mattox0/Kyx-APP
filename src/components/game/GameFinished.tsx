@@ -75,7 +75,7 @@ export default function GameFinished({ onBack }: GameFinishedProps) {
 
     const { mutate: replay, isPending } = useMutation({
         mutationFn: async () => {
-            const response = await api.post<GameQuestion[]>(`/${game?.id}/create-party/solo`, {
+            const response = await api.post<GameQuestion[]>(`/${game?.id}/create-party/local`, {
                 users: users ?? [],
                 modes: modes?.map(mode => mode.id) ?? [],
             });
