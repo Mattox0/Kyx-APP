@@ -63,7 +63,17 @@ export default function GameCard({ gameQuestion }: GameCardProps) {
                                 {gameQuestion.userTarget.name}
                             </Text>
                         )}
-                        <Text className="text-center text-lg text-white">{gameQuestion.question.question}</Text>
+                        {gameQuestion.userMentioned && gameQuestion.question.question.includes('{user}') ? (
+                            <Text className="text-center text-lg text-white">
+                                {gameQuestion.question.question.split('{user}')[0]}
+                                <Text className={gameQuestion.userMentioned.gender === Gender.MAN ? 'text-[#2B7FFF]' : 'text-[#F6339A]'}>
+                                    {gameQuestion.userMentioned.name}
+                                </Text>
+                                {gameQuestion.question.question.split('{user}')[1]}
+                            </Text>
+                        ) : (
+                            <Text className="text-center text-lg text-white">{gameQuestion.question.question}</Text>
+                        )}
                     </>
                 )}
             </View>

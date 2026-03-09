@@ -1,7 +1,7 @@
 import { NeverHave, Prefer, TruthDare } from "@/types/api/Question";
 import { GameUser } from "@/types/api/User";
 
-type GameQuestionBase = { userTarget?: GameUser };
+type GameQuestionBase = { userTarget?: GameUser; userMentioned?: GameUser };
 
 export type NeverHaveQuestion = GameQuestionBase & { questionType: "never-have"; question: NeverHave };
 export type PreferQuestion = GameQuestionBase & { questionType: "prefer"; question: Prefer };

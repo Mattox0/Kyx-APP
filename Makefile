@@ -39,6 +39,24 @@ install-android: ## Installer l'application de développement sous Android
 	yarn install
 	yarn install:android
 
+.PHONY: install-ios-prod
+install-ios-prod: ## Installer l'application de production sous IOS
+	@echo "Exécuter 'yarn prebuild' ? (y/n)"
+	@./.dev/read-prebuild.sh ios
+	ENVIRONMENT=prod yarn install
+	ENVIRONMENT=prod yarn install:ios
+
+.PHONY: install-android-prod
+install-android-prod: ## Installer l'application de production sous Android
+	@echo "Exécuter 'yarn prebuild' ? (y/n)"
+	@./.dev/read-prebuild.sh android
+	ENVIRONMENT=prod yarn install
+	ENVIRONMENT=prod yarn install:android
+
+.PHONY: start-prod
+start-prod: ## Démarrer l'application en prod
+	ENVIRONMENT=prod yarn start
+
 .PHONY: build-local-ios
 build-local-ios: ## Lancer un build de l'application pour IOS
 	@yarn build:local:ios

@@ -28,7 +28,7 @@ const environments: Environments = {
         bundleId: "com.kyx.app",
         package: "com.kyx.app",
         slug: "kyx",
-        apiUrl: "https://api.kyx.com",
+        apiUrl: "https://app-kyx.fr",
     }
 }
 
