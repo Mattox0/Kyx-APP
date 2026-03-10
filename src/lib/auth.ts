@@ -8,6 +8,7 @@ const slug = Constants.expoConfig?.extra?.slug as string;
 
 export const authClient = createAuthClient({
     baseURL: apiUrl,
+    basePath: "/auth",
     plugins: [
         expoClient({
             scheme: slug,

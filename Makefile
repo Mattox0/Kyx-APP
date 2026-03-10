@@ -59,11 +59,11 @@ start-prod: ## Démarrer l'application en prod
 
 .PHONY: build-local-ios
 build-local-ios: ## Lancer un build de l'application pour IOS
-	@yarn build:local:ios
+	@export $(shell grep -v '^#' .env.local | xargs) && yarn build:local:ios
 
 .PHONY: build-local-android
 build-local-android: ## Lancer un build de l'application pour Android
-	@yarn build:local:android
+	@export $(shell grep -v '^#' .env.local | xargs) && yarn build:local:android
 
 .PHONY: submit-iod
 submit-ios: ## Soumettre un build de l'application (IOS)

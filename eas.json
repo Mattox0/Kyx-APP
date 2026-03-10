@@ -12,7 +12,10 @@
       "distribution": "internal"
     },
     "prod": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "APP_ENV": "prod"
+      }
     }
   },
   "submit": {
