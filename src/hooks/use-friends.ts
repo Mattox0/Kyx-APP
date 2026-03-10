@@ -8,7 +8,7 @@ import { Game } from "@/types/api/Game";
 export function useFriends(enabled: boolean) {
     const queryClient = useQueryClient();
 
-    const {data: friends, isPending: friendsPending} = useQuery<(Friend & { currentGame: Game })[][]>({
+    const {data: friends, isPending: friendsPending} = useQuery<(Friend & { currentGame: Game })[]>({
         queryKey: [TanstackQueryKey.FRIENDS],
         queryFn: async () => (await api.get('/friend')).data,
         enabled,

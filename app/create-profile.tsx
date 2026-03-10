@@ -47,10 +47,16 @@ export default function CreateProfilePage() {
     const [name, setName] = useState<string>(user?.name || '');
     const [gender, setGender] = useState<Gender>(user?.gender || Gender.MAN);
     const [avatarOptions, setAvatarOptions] = useState<AvatarOptions>(user?.avatarOptions || DEFAULT_OPTIONS);
+    const [initialized, setInitialized] = useState(false);
 
     useEffect(() => {
-        if (user?.name && !name) setName(user.name);
-    }, [user?.name]);
+        if (user && !initialized) {
+            if (user.name) setName(user.name);
+            if (user.gender) setGender(user.gender);
+            if (user.avatarOptions) setAvatarOptions(user.avatarOptions);
+            setInitialized(true);
+        }
+    }, [user, initialized]);
     const [selectedCategory, setSelectedCategory] = useState<CategoryType>('hair');
 
     const scrollY = useSharedValue(0);
@@ -119,7 +125,17 @@ export default function CreateProfilePage() {
     }, []);
 
     const randomChoice = useCallback(() => {
-        console.log("Choose random avatar options");
+        const pick = <T,>(arr: T[]) => arr[Math.floor(Math.random() * arr.length)];
+        const withGlasses = Math.random() < 0.3;
+        setAvatarOptions({
+            hair: pick(HAIR_OPTIONS),
+            hairColor: pick(HAIR_COLOR_OPTIONS),
+            eyes: pick(EYES_OPTIONS),
+            eyebrows: pick(EYEBROWS_OPTIONS),
+            mouth: pick(MOUTH_OPTIONS),
+            skinColor: pick(SKIN_COLOR_OPTIONS),
+            ...(withGlasses ? { glasses: pick(GLASSES_OPTIONS) } : {}),
+        });
     }, []);
 
     const renderCategoryContent = () => {

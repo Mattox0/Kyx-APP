@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import Constants from "expo-constants";
-import { getSessionToken } from "@/utils/auth";
+import { getCookieHeader } from "@/utils/auth";
 import { OnlineUser } from "@/types/api/User";
 import { GameStatus } from "@/types/GameStatus";
 import { GameSession } from "@/types/api/GameSession";
@@ -73,10 +73,10 @@ export function GameOnlineProvider({ children }: { children: ReactNode }) {
         if (!code) return;
 
         (async () => {
-            const token = await getSessionToken();
+            const cookie = await getCookieHeader();
 
             const socket = io(`${apiUrl}/game`, {
-                auth: { token },
+                auth: { cookie },
                 query: { code },
                 transports: ["websocket"],
             });
