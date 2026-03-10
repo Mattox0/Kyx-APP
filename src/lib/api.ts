@@ -5,7 +5,7 @@ import { getCookieHeader } from "@/utils/auth";
 const apiUrl = Constants.expoConfig?.extra?.apiUrl as string;
 
 export const api = axios.create({
-    baseURL: apiUrl + "/api",
+    baseURL: apiUrl,
     timeout: 30000,
     headers: {
         "Content-Type": "application/json",
