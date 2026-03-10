@@ -1,7 +1,7 @@
 import {Page} from "@/containers/Page";
 import {Text} from "@/components/ui/Text";
 import {Pressable, View} from "react-native";
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {useLocalSearchParams, useRouter} from "expo-router";
 import Button from "@/components/ui/Button";
 import ModeCard from "@/components/cards/ModeCard";
@@ -18,6 +18,7 @@ import ModeCardSkeleton from "@/components/skeletons/ModeCardSkeleton";
 import useBottomSheet from "@/hooks/use-bottom-sheet";
 import {ModeInformationsBottomSheet} from "@/components/bottom-sheet/ModeInformationsBottomSheet";
 import useGame from "@/hooks/use-game";
+import useUser from "@/hooks/use-user";
 import Animated, {FadeInDown} from "react-native-reanimated";
 import {LinearGradient} from "expo-linear-gradient";
 
@@ -26,7 +27,9 @@ export default function ModeSelection() {
     const i18n = useTranslations();
     const { showBottomSheet } = useBottomSheet();
     const { setModes, setOnlineMode } = useGame();
-    const { game } = useLocalSearchParams<{ game?: string }>();
+    const { user } = useUser();
+    const autoOnlineTriggered = useRef(false);
+    const { game, autoOnline } = useLocalSearchParams<{ game?: string; autoOnline?: string }>();
     const { isPending, data } = useQuery<Mode[]>({
         queryKey: [TanstackQueryKey.MODES, game],
         queryFn: async () => {
@@ -64,6 +67,14 @@ export default function ModeSelection() {
             setSelectedModes(data);
         }
     }, [data]);
+
+    useEffect(() => {
+        if (autoOnline === 'true' && user && selectedModes.length > 0 && !autoOnlineTriggered.current) {
+            autoOnlineTriggered.current = true;
+            setOnlineMode(true);
+            createOnlineGame();
+        }
+    }, [autoOnline, user, selectedModes.length]);
 
     const toggleMode = useCallback((mode: Mode) => {
         setSelectedModes(prev =>
@@ -132,6 +143,10 @@ export default function ModeSelection() {
                 <View className="flex-1 items-center justify-center gap-6 px-2">
                     <Animated.View entering={FadeInDown.duration(500).delay(100)} className="w-full">
                         <Pressable onPress={() => {
+                            if (!user) {
+                                router.push({ pathname: "/auth", params: { redirect: `/mode-selection?game=${game}&autoOnline=true` } });
+                                return;
+                            }
                             setOnlineMode(true);
                             createOnlineGame();
                         }}>

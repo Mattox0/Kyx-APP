@@ -27,6 +27,7 @@ import useUser from "@/hooks/use-user";
 import {QueryClientProvider} from "@tanstack/react-query";
 import {queryClient} from "@/lib/queryClient";
 import NetworkErrorHandler from "@/components/NetworkErrorHandler";
+import ApiErrorHandler from "@/components/ApiErrorHandler";
 import {GameProvider} from "@/providers/GameProvider";
 
 SplashScreen.preventAutoHideAsync().catch(() => {
@@ -51,6 +52,7 @@ function RootLayout() {
                                 <GameProvider>
                                     <BottomSheetProvider>
                                         <NetworkErrorHandler/>
+                                        <ApiErrorHandler/>
                                         <App/>
                                     </BottomSheetProvider>
                                 </GameProvider>

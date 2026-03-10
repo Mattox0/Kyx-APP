@@ -47,6 +47,7 @@ export function GameLocalProvider({ children }: GameLocalProviderProps) {
     const progress = total > 0 ? (currentIndex + 1) / total : 0;
 
     const initQuestions = useCallback((gameQuestions: GameQuestion[]) => {
+        hasEndedRef.current = false;
         setQuestions(gameQuestions);
         setCurrentIndex(0);
         setIsFinished(false);

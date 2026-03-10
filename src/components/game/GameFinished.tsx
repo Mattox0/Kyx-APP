@@ -25,7 +25,7 @@ interface GameFinishedProps {
 
 export default function GameFinished({ onBack }: GameFinishedProps) {
     const i18n = useTranslations();
-    const { initQuestions, endGame } = useGameLocal();
+    const { initQuestions, setGameId, endGame } = useGameLocal();
     const { game, modes, users } = useGame();
 
     const badgeScale = useSharedValue(0);
@@ -75,14 +75,15 @@ export default function GameFinished({ onBack }: GameFinishedProps) {
 
     const { mutate: replay, isPending } = useMutation({
         mutationFn: async () => {
-            const response = await api.post<GameQuestion[]>(`/${game?.id}/create-party/local`, {
+            const response = await api.post<{ gameId: string; questions: GameQuestion[] }>(`/${game?.id}/create-party/local`, {
                 users: users ?? [],
                 modes: modes?.map(mode => mode.id) ?? [],
             });
             return response.data;
         },
         onSuccess: (data) => {
-            initQuestions(data);
+            setGameId(data.gameId);
+            initQuestions(data.questions);
         },
     });
 

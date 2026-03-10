@@ -4,5 +4,8 @@
     "confirm": "Confirmer",
     "networkErrorTitle": "Problème de connexion",
     "networkErrorSubtitle": "Vérifie ta connexion internet et réessaie.",
-    "retry": "Réessayer"
+    "retry": "Réessayer",
+    "apiErrorTitle": "Oops, une erreur est survenue",
+    "apiErrorSubtitle": "Les développeurs ont été notifiés. Réessaie dans quelques instants.",
+    "close": "Fermer"
 }

@@ -20,7 +20,7 @@ const environments: Environments = {
         bundleId: "fr.app-kyx.kyx.dev",
         package: "fr.app-kyx.kyx.dev",
         slug: "kyx-dev",
-        apiUrl: "http://192.168.1.15:4005",
+        apiUrl: "http://192.168.1.80:4005",
     },
     prod: {
         envName: "prod",
@@ -73,9 +73,9 @@ const config: ExpoConfig = {
             "expo-splash-screen",
             {
                 preventAutoHide: true,
-                image: "./src/assets/env/icon.png",
-                backgroundColor: "#ffffff",
-                imageWidth: 200
+                image: "./src/assets/images/splashscreen.png",
+                backgroundColor: "#0A0E27",
+                resizeMode: "cover"
             }
         ],
         [
