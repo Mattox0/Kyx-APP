@@ -20,7 +20,7 @@ const environments: Environments = {
         bundleId: "fr.app-kyx.kyx.dev",
         package: "fr.app-kyx.kyx.dev",
         slug: "kyx-dev",
-        apiUrl: "http://192.168.1.80:4005",
+        apiUrl: "https://app-kyx.fr",
     },
     prod: {
         envName: "prod",

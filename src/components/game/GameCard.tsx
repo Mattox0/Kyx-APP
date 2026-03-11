@@ -43,7 +43,17 @@ export default function GameCard({ gameQuestion }: GameCardProps) {
                 {gameQuestion.questionType === "never-have" && (
                     <>
                         <Text className="mb-8 font-bold text-2xl text-white">{i18n.t("game.neverHave.title")}</Text>
-                        <Text className="text-center text-lg text-white">{gameQuestion.question.question}</Text>
+                        {gameQuestion.userMentioned && gameQuestion.question.question.includes('{user}') ? (
+                            <Text className="text-center text-lg text-white">
+                                {gameQuestion.question.question.split('{user}')[0]}
+                                <Text className={gameQuestion.userMentioned.gender === Gender.MAN ? 'text-[#2B7FFF]' : 'text-[#F6339A]'}>
+                                    {gameQuestion.userMentioned.name}
+                                </Text>
+                                {gameQuestion.question.question.split('{user}')[1]}
+                            </Text>
+                        ) : (
+                            <Text className="text-center text-lg text-white">{gameQuestion.question.question}</Text>
+                        )}
                     </>
                 )}
                 {gameQuestion.questionType === "truth-dare" && (

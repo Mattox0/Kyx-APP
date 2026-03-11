@@ -51,7 +51,7 @@ export default function GameFinished({ onBack }: GameFinishedProps) {
 
         buttonOpacity.value = withDelay(550, withTiming(1, { duration: 350 }));
         buttonY.value = withDelay(550, withSpring(0, { damping: 18, stiffness: 120 }));
-    });
+    }, []);
 
     const badgeStyle = useAnimatedStyle(() => ({
         opacity: badgeOpacity.value,

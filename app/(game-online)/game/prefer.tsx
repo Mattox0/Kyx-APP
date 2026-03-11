@@ -65,15 +65,22 @@ export default function PreferOnlinePage() {
         }
     }, [router]);
 
+    const resolveChoice = (text: string) => {
+        if (preferQuestion?.userMentioned && text.includes('{user}')) {
+            return text.replace('{user}', preferQuestion.userMentioned.name);
+        }
+        return text;
+    };
+
     const resultEntries = useMemo<ResultEntry[]>(() => [
         {
-            label: preferQuestion?.question.choiceOne ?? "",
+            label: resolveChoice(preferQuestion?.question.choiceOne ?? ""),
             percentage: Number(questionResults?.choiceOne ?? 0),
             color: "#F6339A",
             players: players.filter((p) => p.answer === "choiceOne"),
         },
         {
-            label: preferQuestion?.question.choiceTwo ?? "",
+            label: resolveChoice(preferQuestion?.question.choiceTwo ?? ""),
             percentage: Number(questionResults?.choiceTwo ?? 0),
             color: "#2B7FFF",
             players: players.filter((p) => p.answer === "choiceTwo"),
@@ -126,6 +133,7 @@ export default function PreferOnlinePage() {
                                 choiceTwo={preferQuestion.question.choiceTwo}
                                 questionId={preferQuestion.question.id}
                                 iconUri={iconUri}
+                                userMentioned={preferQuestion.userMentioned}
                                 onChoiceOne={() => handleAnswer("choiceOne")}
                                 onChoiceTwo={() => handleAnswer("choiceTwo")}
                             />

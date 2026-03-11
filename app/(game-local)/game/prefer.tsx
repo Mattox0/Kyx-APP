@@ -21,6 +21,7 @@ export default function PreferLocalPage() {
     const i18n = useTranslations();
     const { showBottomSheet } = useBottomSheet();
     const { total, currentIndex, progress, currentQuestion, nextQuestion, isFinished, endGame } = useGameLocal();
+    const preferQuestion = currentQuestion?.questionType === "prefer" ? currentQuestion : null;
     const { bottom } = useSafeAreaInsets();
 
     const goBack = useCallback(() => {
@@ -32,7 +33,6 @@ export default function PreferLocalPage() {
         }
     }, [router, endGame]);
 
-    const preferQuestion = currentQuestion?.questionType === "prefer" ? currentQuestion : null;
     const iconUri = preferQuestion
         ? Constants.expoConfig?.extra?.apiUrl + "/" + preferQuestion.question.mode.icon
         : null;
@@ -61,6 +61,7 @@ export default function PreferLocalPage() {
                         choiceTwo={preferQuestion.question.choiceTwo}
                         questionId={preferQuestion.question.id}
                         iconUri={iconUri}
+                        userMentioned={preferQuestion.userMentioned}
                         onChoiceOne={nextQuestion}
                         onChoiceTwo={nextQuestion}
                     />

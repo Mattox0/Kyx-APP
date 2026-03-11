@@ -4,6 +4,8 @@ import { SvgUri } from "react-native-svg";
 import { LinearGradient } from "expo-linear-gradient";
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from "react-native-reanimated";
 import { useEffect } from "react";
+import { Gender } from "@/types/Gender";
+import type { GameUser } from "@/types/api/User";
 
 const ICON_SIZE = 100;
 
@@ -12,11 +14,26 @@ interface PreferCardProps {
     choiceTwo: string;
     questionId?: string;
     iconUri?: string;
+    userMentioned?: GameUser;
     onChoiceOne: () => void;
     onChoiceTwo: () => void;
 }
 
-export default function PreferCard({ choiceOne, choiceTwo, questionId, iconUri, onChoiceOne, onChoiceTwo }: PreferCardProps) {
+function renderChoice(text: string, userMentioned?: GameUser): React.ReactNode {
+    if (!userMentioned || !text.includes('{user}')) return text;
+    const parts = text.split('{user}');
+    return (
+        <>
+            {parts[0]}
+            <Text style={{ color: userMentioned.gender === Gender.MAN ? '#2B7FFF' : '#F6339A' }}>
+                {userMentioned.name}
+            </Text>
+            {parts[1]}
+        </>
+    );
+}
+
+export default function PreferCard({ choiceOne, choiceTwo, questionId, iconUri, userMentioned, onChoiceOne, onChoiceTwo }: PreferCardProps) {
     const pressedOne = useSharedValue(0);
     const pressedTwo = useSharedValue(0);
     const contentOpacity = useSharedValue(1);
@@ -55,7 +72,7 @@ export default function PreferCard({ choiceOne, choiceTwo, questionId, iconUri, 
                     >
                         <Animated.View style={contentStyle}>
                             <Text className="text-white text-xl font-bold text-center leading-7">
-                                {choiceOne}
+                                {renderChoice(choiceOne, userMentioned)}
                             </Text>
                         </Animated.View>
                     </LinearGradient>
@@ -78,7 +95,7 @@ export default function PreferCard({ choiceOne, choiceTwo, questionId, iconUri, 
                     >
                         <Animated.View style={contentStyle}>
                             <Text className="text-white text-xl font-bold text-center leading-7">
-                                {choiceTwo}
+                                {renderChoice(choiceTwo, userMentioned)}
                             </Text>
                         </Animated.View>
                     </LinearGradient>
