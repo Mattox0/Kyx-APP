@@ -1,7 +1,8 @@
 {
     "title": "Créer votre personnage",
     "input": {
-        "placeholder": "Nom du joueur"
+        "placeholder": "Nom du joueur",
+        "required": "Le nom est obligatoire"
     },
     "category": {
         "skin": "Peau",

@@ -73,9 +73,13 @@ const config: ExpoConfig = {
             "expo-splash-screen",
             {
                 preventAutoHide: true,
-                image: "./src/assets/images/splashscreen.png",
                 backgroundColor: "#0A0E27",
-                resizeMode: "cover"
+                image: "./src/assets/images/splashscreen.jpg",
+                enableFullScreenImage_legacy: true,
+                android: {
+                    image: "./src/assets/images/splashscreen.jpg",
+                    imageWidth: 1290,
+                },
             }
         ],
         [

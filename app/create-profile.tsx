@@ -42,9 +42,10 @@ const AVATAR_THRESHOLD = 120;
 export default function CreateProfilePage() {
     const router = useRouter();
     const i18n = useTranslations();
-    const { user } = useUser();
+    const { user, isLoading } = useUser();
 
     const [name, setName] = useState<string>(user?.name || '');
+    const [nameError, setNameError] = useState<string | null>(null);
     const [gender, setGender] = useState<Gender>(user?.gender || Gender.MAN);
     const [avatarOptions, setAvatarOptions] = useState<AvatarOptions>(user?.avatarOptions || DEFAULT_OPTIONS);
     const [initialized, setInitialized] = useState(false);
@@ -57,6 +58,12 @@ export default function CreateProfilePage() {
             setInitialized(true);
         }
     }, [user, initialized]);
+
+    useEffect(() => {
+        if (!isLoading && !user) {
+            router.replace('/');
+        }
+    }, [isLoading, user]);
     const [selectedCategory, setSelectedCategory] = useState<CategoryType>('hair');
 
     const scrollY = useSharedValue(0);
@@ -87,12 +94,16 @@ export default function CreateProfilePage() {
     });
 
     const goBack = useCallback(() => {
+        if (!name.trim()) {
+            setNameError(i18n.t("profile.input.required"));
+            return;
+        }
         if (router.canGoBack()) {
             router.back()
         } else {
             router.replace('/')
         }
-    }, [router]);
+    }, [router, name]);
 
     const saveMutation = useMutation({
         mutationFn: () => authClient.updateUser({
@@ -107,7 +118,13 @@ export default function CreateProfilePage() {
         },
     });
 
-    const handleSave = () => saveMutation.mutate();
+    const handleSave = () => {
+        if (!name.trim()) {
+            setNameError(i18n.t("profile.input.required"));
+            return;
+        }
+        saveMutation.mutate();
+    };
 
     const updateOption = useCallback((
         key: keyof AvatarOptions,
@@ -236,8 +253,9 @@ export default function CreateProfilePage() {
                 <View className="px-10 mb-6">
                     <Input
                         value={name}
-                        onChangeText={setName}
+                        onChangeText={(text) => { setName(text); setNameError(null); }}
                         placeholder={i18n.t("profile.input.placeholder")}
+                        error={nameError ?? undefined}
                     />
                 </View>
 
@@ -269,7 +287,7 @@ export default function CreateProfilePage() {
             </Animated.View>
 
             <View className="absolute bottom-0 w-full px-4 mb-8">
-                <Button onPress={handleSave} disabled={saveMutation.isPending}>
+                <Button onPress={handleSave} disabled={saveMutation.isPending || !name.trim()}>
                     {i18n.t("common.save")}
                 </Button>
             </View>

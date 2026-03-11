@@ -34,7 +34,7 @@ export default function Index() {
                     <Button onPress={() => router.push('/create-game')}>
                         {i18n.t("home.buttons.createParty")}
                     </Button>
-                    <Button onPress={() => user ? showBottomSheet(<JoinGameBottomSheet />) : router.push('/auth')}>
+                    <Button onPress={() => user ? showBottomSheet(<JoinGameBottomSheet />) : router.push('/auth?redirect=/create-profile')}>
                         {i18n.t("home.buttons.joinParty")}
                     </Button>
                 </View>

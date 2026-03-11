@@ -106,7 +106,10 @@ export default function AuthScreen() {
             if (result.error) throw result.error;
             return result;
         },
-        onSuccess: () => router.replace((redirect ?? "/") as Href),
+        onSuccess: (result) => {
+            if (!result?.data) return;
+            router.replace((redirect ?? "/") as Href);
+        },
         onError: (error) => setFieldError(getErrorMessage(error)),
     });
 
@@ -117,7 +120,10 @@ export default function AuthScreen() {
             if (result.error) throw result.error;
             return result;
         },
-        onSuccess: () => router.replace((redirect ?? "/") as Href),
+        onSuccess: (result) => {
+            if (!result?.data) return;
+            router.replace((redirect ?? "/") as Href);
+        },
         onError: (error) => setFieldError(getErrorMessage(error)),
     });
 

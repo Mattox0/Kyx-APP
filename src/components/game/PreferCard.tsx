@@ -70,9 +70,10 @@ export default function PreferCard({ choiceOne, choiceTwo, questionId, iconUri, 
                     style={{ flex: 1 }}
                 >
                     <LinearGradient
-                        colors={["#615FFF", "#2B7FFF"]}
+                        colors={["#AD46FF", "#615FFF"]}
+                        locations={[0.375, 0.7981]}
                         start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 1 }}
+                        end={{ x: 1, y: 0 }}
                         style={{ flex: 1, alignItems: "center", justifyContent: "center", paddingHorizontal: 28, paddingVertical: 24 }}
                     >
                         <Animated.View style={contentStyle}>
