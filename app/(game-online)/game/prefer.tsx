@@ -17,6 +17,7 @@ import { ReportBottomSheet } from "@/components/bottom-sheet/ReportBottomSheet";
 import WaitingScreen from "@/components/game/WaitingScreen";
 import ResultsScreen, { ResultEntry } from "@/components/game/ResultsScreen";
 import GameFinishedOnline from "@/components/game/GameFinishedOnline";
+import type { GameUser } from "@/types/api/User";
 
 type Phase = "question" | "waiting" | "results";
 
@@ -65,22 +66,22 @@ export default function PreferOnlinePage() {
         }
     }, [router]);
 
-    const resolveChoice = (text: string) => {
-        if (preferQuestion?.userMentioned && text.includes('{user}')) {
-            return text.replace('{user}', preferQuestion.userMentioned.name);
+    const resolveChoice = useCallback((text: string, user?: GameUser) => {
+        if (user && text.includes('{user}')) {
+            return text.replace('{user}', user.name);
         }
         return text;
-    };
+    }, []);
 
     const resultEntries = useMemo<ResultEntry[]>(() => [
         {
-            label: resolveChoice(preferQuestion?.question.choiceOne ?? ""),
+            label: resolveChoice(preferQuestion?.question.choiceOne ?? "", preferQuestion?.userMentionedOne),
             percentage: Number(questionResults?.choiceOne ?? 0),
             color: "#F6339A",
             players: players.filter((p) => p.answer === "choiceOne"),
         },
         {
-            label: resolveChoice(preferQuestion?.question.choiceTwo ?? ""),
+            label: resolveChoice(preferQuestion?.question.choiceTwo ?? "", preferQuestion?.userMentionedTwo),
             percentage: Number(questionResults?.choiceTwo ?? 0),
             color: "#2B7FFF",
             players: players.filter((p) => p.answer === "choiceTwo"),
@@ -133,7 +134,8 @@ export default function PreferOnlinePage() {
                                 choiceTwo={preferQuestion.question.choiceTwo}
                                 questionId={preferQuestion.question.id}
                                 iconUri={iconUri}
-                                userMentioned={preferQuestion.userMentioned}
+                                userMentionedOne={preferQuestion.userMentionedOne}
+                                userMentionedTwo={preferQuestion.userMentionedTwo}
                                 onChoiceOne={() => handleAnswer("choiceOne")}
                                 onChoiceTwo={() => handleAnswer("choiceTwo")}
                             />

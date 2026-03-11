@@ -1,5 +1,5 @@
 import { Page } from "@/containers/Page";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import { useRouter } from "expo-router";
 import CardCount from "@/components/game/CardCount";
 import useGameOnline from "@/hooks/use-game-online";
@@ -13,6 +13,7 @@ import { parseStyledText } from "@/utils/parseStyledText";
 import Constants from "expo-constants";
 import useTranslations from "@/hooks/use-translations";
 import PreferCard from "@/components/game/PreferCard";
+import { Gender } from "@/types/Gender";
 import useBottomSheet from "@/hooks/use-bottom-sheet";
 import { ReportBottomSheet } from "@/components/bottom-sheet/ReportBottomSheet";
 import WaitingScreen from "@/components/game/WaitingScreen";
@@ -65,6 +66,30 @@ export default function NeverHaveOnlinePage() {
             router.push("/");
         }
     }, [router]);
+
+    const resolvedQuestionText = useMemo(() => {
+        const text = neverHaveQuestion?.question.question ?? "";
+        if (neverHaveQuestion?.userMentioned && text.includes('{user}')) {
+            return text.replace('{user}', neverHaveQuestion.userMentioned.name);
+        }
+        return text;
+    }, [neverHaveQuestion]);
+
+    const questionNode = useMemo((): ReactNode => {
+        const fullText = i18n.t("game.neverHave.question", { question: neverHaveQuestion?.question.question ?? "" });
+        if (neverHaveQuestion?.userMentioned && fullText.includes('{user}')) {
+            const parts = fullText.split('{user}');
+            const color = neverHaveQuestion.userMentioned.gender === Gender.MAN ? '#2B7FFF' : '#F6339A';
+            return (
+                <>
+                    {parseStyledText(parts[0])}
+                    <Text style={{ color }}>{neverHaveQuestion.userMentioned.name}</Text>
+                    {parseStyledText(parts[1])}
+                </>
+            );
+        }
+        return parseStyledText(fullText);
+    }, [neverHaveQuestion, i18n]);
 
     const resultEntries = useMemo<ResultEntry[]>(
         () => [
@@ -126,11 +151,7 @@ export default function NeverHaveOnlinePage() {
                 {phase === "question" && (
                     <>
                         <Text className="mb-4 mt-5 text-center text-2xl">
-                            {parseStyledText(
-                                i18n.t("game.neverHave.question", {
-                                    question: neverHaveQuestion?.question.question ?? "",
-                                })
-                            )}
+                            {questionNode}
                         </Text>
 
                         {neverHaveQuestion && iconUri && (
@@ -149,7 +170,7 @@ export default function NeverHaveOnlinePage() {
                 {phase === "waiting" && <WaitingScreen players={players} />}
 
                 {phase === "results" && (
-                    <ResultsScreen question={i18n.t("game.neverHave.question", { question: neverHaveQuestion?.question.question ?? "" })} entries={resultEntries} />
+                    <ResultsScreen question={i18n.t("game.neverHave.question", { question: resolvedQuestionText })} entries={resultEntries} />
                 )}
             </Page>
 

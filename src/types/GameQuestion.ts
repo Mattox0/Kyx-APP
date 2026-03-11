@@ -4,7 +4,7 @@ import { GameUser } from "@/types/api/User";
 type GameQuestionBase = { userTarget?: GameUser; userMentioned?: GameUser };
 
 export type NeverHaveQuestion = GameQuestionBase & { questionType: "never-have"; question: NeverHave };
-export type PreferQuestion = GameQuestionBase & { questionType: "prefer"; question: Prefer };
+export type PreferQuestion = { userTarget?: GameUser; userMentionedOne?: GameUser; userMentionedTwo?: GameUser; questionType: "prefer"; question: Prefer };
 export type TruthDareQuestion = GameQuestionBase & { questionType: "truth-dare"; question: TruthDare };
 
 export type GameQuestion = NeverHaveQuestion | PreferQuestion | TruthDareQuestion;
