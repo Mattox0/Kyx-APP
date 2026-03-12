@@ -14,8 +14,7 @@ interface PreferCardProps {
     choiceTwo: string;
     questionId?: string;
     iconUri?: string;
-    userMentionedOne?: GameUser;
-    userMentionedTwo?: GameUser;
+    userMentioned?: GameUser;
     onChoiceOne: () => void;
     onChoiceTwo: () => void;
 }
@@ -34,7 +33,7 @@ function renderChoice(text: string, userMentioned?: GameUser): React.ReactNode {
     );
 }
 
-export default function PreferCard({ choiceOne, choiceTwo, questionId, iconUri, userMentionedOne, userMentionedTwo, onChoiceOne, onChoiceTwo }: PreferCardProps) {
+export default function PreferCard({ choiceOne, choiceTwo, questionId, iconUri, userMentioned, onChoiceOne, onChoiceTwo }: PreferCardProps) {
     const pressedOne = useSharedValue(0);
     const pressedTwo = useSharedValue(0);
     const contentOpacity = useSharedValue(1);
@@ -73,7 +72,7 @@ export default function PreferCard({ choiceOne, choiceTwo, questionId, iconUri, 
                     >
                         <Animated.View style={contentStyle}>
                             <Text className="text-white text-xl font-bold text-center leading-7">
-                                {renderChoice(choiceOne, userMentionedOne)}
+                                {renderChoice(choiceOne, userMentioned)}
                             </Text>
                         </Animated.View>
                     </LinearGradient>
@@ -96,7 +95,7 @@ export default function PreferCard({ choiceOne, choiceTwo, questionId, iconUri, 
                     >
                         <Animated.View style={contentStyle}>
                             <Text className="text-white text-xl font-bold text-center leading-7">
-                                {renderChoice(choiceTwo, userMentionedTwo)}
+                                {renderChoice(choiceTwo, userMentioned)}
                             </Text>
                         </Animated.View>
                     </LinearGradient>

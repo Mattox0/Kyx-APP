@@ -75,13 +75,13 @@ export default function PreferOnlinePage() {
 
     const resultEntries = useMemo<ResultEntry[]>(() => [
         {
-            label: resolveChoice(preferQuestion?.question.choiceOne ?? "", preferQuestion?.userMentionedOne),
+            label: resolveChoice(preferQuestion?.question.choiceOne ?? "", preferQuestion?.userMentioned),
             percentage: Number(questionResults?.choiceOne ?? 0),
             color: "#F6339A",
             players: players.filter((p) => p.answer === "choiceOne"),
         },
         {
-            label: resolveChoice(preferQuestion?.question.choiceTwo ?? "", preferQuestion?.userMentionedTwo),
+            label: resolveChoice(preferQuestion?.question.choiceTwo ?? "", preferQuestion?.userMentioned),
             percentage: Number(questionResults?.choiceTwo ?? 0),
             color: "#2B7FFF",
             players: players.filter((p) => p.answer === "choiceTwo"),
@@ -134,8 +134,7 @@ export default function PreferOnlinePage() {
                                 choiceTwo={preferQuestion.question.choiceTwo}
                                 questionId={preferQuestion.question.id}
                                 iconUri={iconUri}
-                                userMentionedOne={preferQuestion.userMentionedOne}
-                                userMentionedTwo={preferQuestion.userMentionedTwo}
+                                userMentioned={preferQuestion.userMentioned}
                                 onChoiceOne={() => handleAnswer("choiceOne")}
                                 onChoiceTwo={() => handleAnswer("choiceTwo")}
                             />

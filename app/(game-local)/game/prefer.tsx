@@ -61,8 +61,7 @@ export default function PreferLocalPage() {
                         choiceTwo={preferQuestion.question.choiceTwo}
                         questionId={preferQuestion.question.id}
                         iconUri={iconUri}
-                        userMentionedOne={preferQuestion.userMentionedOne}
-                        userMentionedTwo={preferQuestion.userMentionedTwo}
+                        userMentioned={preferQuestion.userMentioned}
                         onChoiceOne={nextQuestion}
                         onChoiceTwo={nextQuestion}
                     />
